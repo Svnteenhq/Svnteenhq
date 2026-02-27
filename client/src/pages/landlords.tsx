@@ -797,7 +797,7 @@ const processSteps = [
   {
     number: '05',
     title: 'Commercial Let Begins',
-    body: 'Your Fixed Monthly Yield lands on day 1 of each calendar month. Whether the property has 2 guests or 30, your commercial lease payment is identical and unconditional.',
+    body: 'Your Fixed Monthly Yield lands on day 1 of each calendar month. Your commercial lease payment is identical and unconditional regardless of occupancy.',
     timeline: 'Ongoing',
     icon: DollarSign,
     highlight: true,
