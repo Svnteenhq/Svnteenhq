@@ -308,6 +308,36 @@ function ReliabilityIllustration() {
   );
 }
 
+function ManagedIllustration() {
+  const tasks = [
+    { label: 'Check-in', x: 40, done: true },
+    { label: 'Cleaning', x: 40, done: true },
+    { label: 'Maintenance', x: 40, done: true },
+    { label: 'Guest Support', x: 40, done: true },
+    { label: 'Check-out', x: 40, done: true },
+  ];
+  return (
+    <svg viewBox="0 0 300 200" className="w-full max-w-xs opacity-80">
+      <text x="150" y="18" fill="#FFFFFF" fontSize="10" textAnchor="middle" fontFamily="monospace">MANAGED BY SVNTEEN</text>
+      <rect x="30" y="30" width="240" height="145" rx="6" fill="#141414" stroke="#FFFFFF" strokeWidth="1" />
+      {tasks.map((task, i) => (
+        <g key={i}>
+          <rect x={task.x} y={42 + i * 25} width="180" height="18" rx="4"
+            fill="#1C1C1C" stroke="#2A2A2A" strokeWidth="0.5"
+          />
+          <text x={task.x + 22} y={54 + i * 25} fill="#B8B0A8" fontSize="8" fontFamily="monospace">
+            {task.label}
+          </text>
+          <circle cx={task.x + 10} cy={51 + i * 25} r="5" fill="none" stroke="#52B788" strokeWidth="1" />
+          <path d={`M${task.x + 7} ${51 + i * 25} l2 2 l4 -4`} stroke="#52B788" strokeWidth="1" fill="none" />
+          <text x="235" y={54 + i * 25} fill="#52B788" fontSize="7" textAnchor="middle" fontFamily="monospace">HANDLED</text>
+        </g>
+      ))}
+      <text x="150" y="192" fill="rgba(255,255,255,0.3)" fontSize="8" textAnchor="middle" fontFamily="monospace">YOU: COLLECT PAYMENT</text>
+    </svg>
+  );
+}
+
 function VoidIllustration() {
   const months = ['J','F','M','A','M','J','J','A','S','O','N','D'];
   const voidMonths = [0, 6, 7];
@@ -666,7 +696,7 @@ const valueAngles = [
     number: '03',
     angle: 'FULLY MANAGED BY US',
     sub: 'The Day-to-Day Angle',
-    illustration: 'reliability' as const,
+    illustration: 'managed' as const,
     content: "We handle everything so you don't have to. From guest check-in and check-out to professional cleaning, maintenance, and any issues that arise — it's all on us. You will never receive a call at 2am about a broken boiler or a difficult tenant. Your only involvement is receiving your fixed payment each month.",
     bullets: [
       'Guest management — check-in, check-out, vetting',
@@ -683,6 +713,7 @@ function ValueAnglesSection() {
     yield: <YieldIllustration />,
     reliability: <ReliabilityIllustration />,
     void: <VoidIllustration />,
+    managed: <ManagedIllustration />,
   };
 
   return (
