@@ -502,7 +502,7 @@ function HeroSection() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 font-medium text-sm rounded-lg border border-white/[0.12] text-white/50 transition-all duration-300 hover:border-white/30 hover:text-white/80 backdrop-blur-md"
+            className="px-8 py-4 font-medium text-sm rounded-lg border border-[#25D366]/40 text-[#25D366] transition-all duration-300 hover:border-[#25D366] hover:bg-[#25D366]/10 backdrop-blur-md"
             data-testid="link-whatsapp-hero"
             aria-label="Speak to us on WhatsApp"
           >
