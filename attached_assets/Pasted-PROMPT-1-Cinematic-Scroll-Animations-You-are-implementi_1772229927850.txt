@@ -1,0 +1,2106 @@
+PROMPT 1 — Cinematic Scroll Animations
+You are implementing world-class scroll-driven animations across the entire Svnteen website. Study how Linear.app, Stripe, and Vercel use scroll to create cinematic page experiences. Every section should feel like it was directed, not coded.
+
+Install: `npm install framer-motion` (already installed) and `npm install @studio-freight/lenis` for buttery smooth scrolling.
+
+---
+
+## STEP 1 — LENIS SMOOTH SCROLL
+
+In `client/src/main.tsx` or `client/src/App.tsx`, initialise Lenis:
+```typescript
+import Lenis from '@studio-freight/lenis';
+import { useEffect } from 'react';
+
+function SmoothScroll() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    return () => lenis.destroy();
+  }, []);
+
+  return null;
+}
+```
+
+Add `<SmoothScroll />` as the very first child inside your root App component. This replaces the jerky native scroll with the liquid scroll feel used by top-tier sites.
+
+---
+
+## STEP 2 — HERO PARALLAX
+
+On the Deal of the Day page and the Landlords page, the hero apartment image must move at 0.4x scroll speed (parallax depth effect):
+```tsx
+import { useScroll, useTransform, motion } from 'framer-motion';
+import { useRef } from 'react';
+
+function ParallaxHero({ imageSrc, children }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
+  return (
+    <div ref={ref} className="relative overflow-hidden" style={{ height: '100svh' }}>
+      <motion.div
+        style={{ y, scale }}
+        className="absolute inset-0 origin-center"
+      >
+        <img src={imageSrc} className="w-full h-full object-cover" alt="" fetchpriority="high" />
+      </motion.div>
+      <motion.div style={{ opacity }} className="absolute inset-0 z-10">
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+```
+
+Apply to: homepage hero, deal of the day hero, landlords page hero.
+
+---
+
+## STEP 3 — STAGGERED SECTION REVEALS
+
+Every section of content across the site should fade and slide up as it enters the viewport. Create a reusable component:
+```tsx
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+
+const VARIANTS = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.09,
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1], // custom spring-like easing
+    },
+  }),
+};
+
+export function Reveal({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      custom={delay}
+      variants={VARIANTS}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function RevealGroup({
+  children,
+  className,
+}: {
+  children: React.ReactNode[];
+  className?: string;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <div ref={ref} className={className}>
+      {React.Children.map(children, (child, i) => (
+        <motion.div
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          custom={i}
+          variants={VARIANTS}
+        >
+          {child}
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+```
+
+Wrap every section heading, card grid, and major content block across all pages in `<Reveal>` or `<RevealGroup>`. No section should appear static — everything must animate in.
+
+---
+
+## STEP 4 — NUMBER COUNT-UP ANIMATIONS
+
+Every metric number on the site (net profit, deal score, break-even %) should count up from 0 when it first enters the viewport:
+```tsx
+import { useInView, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+
+export function CountUp({
+  value,
+  prefix = '',
+  suffix = '',
+  duration = 1.5,
+  className,
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+  const motionVal = useMotionValue(0);
+  const spring = useSpring(motionVal, { duration: duration * 1000, bounce: 0 });
+
+  useEffect(() => {
+    if (inView) motionVal.set(value);
+  }, [inView, value, motionVal]);
+
+  useEffect(() => {
+    return spring.on('change', (latest) => {
+      if (ref.current) {
+        ref.current.textContent = prefix + Math.round(latest).toLocaleString('en-GB') + suffix;
+      }
+    });
+  }, [spring, prefix, suffix]);
+
+  return <span ref={ref} className={className}>{prefix}0{suffix}</span>;
+}
+```
+
+Apply to:
+- Net Monthly Profit on every deal card: `<CountUp value={847} prefix="£" suffix="/mo" />`
+- Deal score: `<CountUp value={81} suffix="/100" duration={1.2} />`
+- Break-even occupancy: `<CountUp value={48} suffix="%" />`
+- Stats on the homepage and landlords page
+- Any metric in the deal analyser results
+
+---
+
+## STEP 5 — HORIZONTAL SCROLL SECTIONS
+
+The scenario analysis cards (Bear / Base / Bull) and the testimonial section should use a horizontal scroll reveal — cards slide in from the right:
+```tsx
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+
+export function HorizontalReveal({ children }: { children: React.ReactNode[] }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+
+  return (
+    <div ref={ref} className="overflow-hidden">
+      <div className="flex gap-4">
+        {React.Children.map(children, (child, i) => {
+          const x = useTransform(
+            scrollYProgress,
+            [0.1, 0.5],
+            [80 + i * 30, 0]
+          );
+          const opacity = useTransform(scrollYProgress, [0.1 + i * 0.05, 0.4 + i * 0.05], [0, 1]);
+
+          return (
+            <motion.div style={{ x, opacity }}>
+              {child}
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## STEP 6 — PAGE TRANSITION
+
+Wrap every page component in this transition so navigation between pages feels like a premium app:
+```tsx
+// In App.tsx, wrap the Switch:
+import { AnimatePresence } from 'framer-motion';
+import { useLocation } from 'wouter';
+
+// Wrap routes:
+<AnimatePresence mode="wait">
+  <motion.div
+    key={location}
+    initial={{ opacity: 0, y: 12 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -12 }}
+    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {/* current page */}
+  </motion.div>
+</AnimatePresence>
+```
+
+Run `tsc --noEmit` after all changes. Zero errors required.
+
+PROMPT 2 — Typography System Overhaul
+You are implementing a world-class editorial typography system for Svnteen The Residency. Study how Monocle magazine, Bloomberg, and The New York Times use type as a design element — not just text. Type should feel considered and intentional on every single element.
+
+---
+
+## STEP 1 — LOAD PREMIUM FONTS
+
+In `client/index.html`, add these Google Fonts in the <head> (before any stylesheets):
+```html
+<!-- Primary display font — editorial, architectural -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+```
+
+Three fonts — three distinct roles:
+- `Cormorant Garamond` — editorial display headings (large, luxury, architectural)
+- `DM Sans` — body text, UI elements (clean, geometric, readable)
+- `DM Mono` — labels, stats, numbers, codes (technical precision)
+
+---
+
+## STEP 2 — GLOBAL TYPE VARIABLES
+
+In `client/src/index.css`, replace the existing type definitions with this system:
+```css
+:root {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+
+  /* Type scale */
+  --text-hero:    clamp(2.8rem, 6vw, 5.5rem);
+  --text-display: clamp(2rem, 4vw, 3.5rem);
+  --text-heading: clamp(1.4rem, 3vw, 2rem);
+  --text-title:   clamp(1.1rem, 2vw, 1.3rem);
+  --text-body:    1rem;
+  --text-small:   0.875rem;
+  --text-label:   0.75rem;
+  --text-micro:   0.625rem;
+
+  /* Leading */
+  --leading-tight:  1.1;
+  --leading-snug:   1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /* Tracking */
+  --tracking-tight:   -0.03em;
+  --tracking-normal:  -0.01em;
+  --tracking-wide:    0.08em;
+  --tracking-widest:  0.2em;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+}
+```
+
+---
+
+## STEP 3 — APPLY THE DISPLAY FONT
+
+Every major headline across the site should switch to `Cormorant Garamond`. This single change transforms a tech-looking site into a luxury brand. Target:
+
+**Homepage hero headline:**
+```css
+font-family: var(--font-display);
+font-size: var(--text-hero);
+font-weight: 300; /* light weight looks most architectural */
+letter-spacing: var(--tracking-tight);
+line-height: var(--leading-tight);
+font-style: italic; /* Cormorant italic is exceptional */
+```
+
+**Section headings (h2 level):**
+```css
+font-family: var(--font-display);
+font-size: var(--text-display);
+font-weight: 600;
+letter-spacing: var(--tracking-tight);
+line-height: var(--leading-tight);
+```
+
+**Card titles:**
+Stay DM Sans for readability — only major display headings use Cormorant.
+
+**All labels (section labels, pill text, stat labels):**
+```css
+font-family: var(--font-mono);
+font-size: var(--text-micro);
+font-weight: 400;
+letter-spacing: var(--tracking-widest);
+text-transform: uppercase;
+```
+
+**All metrics, numbers, scores:**
+```css
+font-family: var(--font-mono);
+font-feature-settings: 'tnum' 1; /* tabular numbers for alignment */
+```
+
+---
+
+## STEP 4 — LANDLORDS PAGE SPECIFIC
+
+The landlords page is the highest-stakes page. Apply these specific treatments:
+
+**Hero headline — italic Cormorant for gravitas:**
+```tsx
+<h1 style={{
+  fontFamily: 'var(--font-display)',
+  fontSize: 'var(--text-hero)',
+  fontWeight: 300,
+  fontStyle: 'italic',
+  letterSpacing: '-0.03em',
+  lineHeight: 1.05,
+  color: '#F5F0E8',
+}}>
+  The rental market<br />
+  is about to <em style={{ color: '#C9A84C' }}>change.</em>
+</h1>
+```
+
+**Section intros — Cormorant light italic:**
+The first sentence of each section should be set in Cormorant 300 italic at ~1.2rem. This creates the editorial "lede" effect.
+
+**Pull quotes — oversized Cormorant italic:**
+The testimonial and the "honest pitch" quote should be set in Cormorant at ~1.5rem italic, gold colour, with generous line height. This is how luxury publications treat pull quotes.
+
+---
+
+## STEP 5 — FLUID TYPE SIZES
+
+Ensure all text scales fluidly between mobile and desktop. Replace all fixed Tailwind text classes on headings with the CSS clamp values above. The hero headline should be 44px on mobile and 88px on desktop — no fixed breakpoint jump.
+
+---
+
+## STEP 6 — TYPOGRAPHIC DETAILS
+
+Add these micro-refinements:
+
+1. **Hanging punctuation on quotes:**
+```css
+blockquote, .pull-quote {
+  hanging-punctuation: first;
+}
+```
+
+2. **Optical margin alignment for hero text:**
+```css
+.hero-headline {
+  text-indent: -0.06em; /* compensate for left padding of 'T', 'W' etc */
+}
+```
+
+3. **Ligatures on display text:**
+```css
+.display-text {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'dlig' 1;
+}
+```
+
+4. **Number formatting:**
+Any stat showing currency should use the `Intl.NumberFormat` UK locale and tabular mono font:
+```tsx
+const fmt = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
+```
+
+Run `tsc --noEmit`. Zero errors.
+
+PROMPT 3 — Micro-Interactions & Hover States
+You are implementing the micro-interactions and hover states that separate a £20/hour freelance site from a studio that charges £200,000 for a build. Every interactive element must respond to the user in a way that feels physical and satisfying. Study how Stripe, Vercel, and Resend handle hover states.
+
+---
+
+## STEP 1 — MAGNETIC BUTTONS
+
+The primary CTA buttons (Reserve Deal, View Deal, Download Brochure, WhatsApp Us) should have a magnetic pull effect — the button subtly moves toward the cursor when hovering nearby:
+```tsx
+import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+
+export function MagneticButton({
+  children,
+  className,
+  onClick,
+  strength = 0.3,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  strength?: number;
+}) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { left, top, width, height } = ref.current!.getBoundingClientRect();
+    const x = (e.clientX - (left + width / 2)) * strength;
+    const y = (e.clientY - (top + height / 2)) * strength;
+    setPosition({ x, y });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.button
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: 'spring', stiffness: 200, damping: 20, mass: 0.5 }}
+      onClick={onClick}
+      className={className}
+    >
+      {children}
+    </motion.button>
+  );
+}
+```
+
+Apply to every primary gold button on: homepage, deal of the day page, landlords page CTA, deal analyser submit button.
+
+---
+
+## STEP 2 — DEAL CARD HOVER
+
+Listing cards in the marketplace must respond to hover with depth and warmth:
+```tsx
+<motion.div
+  whileHover={{
+    y: -4,
+    scale: 1.015,
+    boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px #3A3A3A',
+    transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+  }}
+  whileTap={{ scale: 0.99 }}
+  className="cursor-pointer"
+>
+  {/* card content */}
+</motion.div>
+```
+
+Also: on card hover, the gold score badge should glow slightly:
+```tsx
+// On the score badge inside the card:
+<motion.div
+  whileHover={{ boxShadow: '0 0 16px rgba(201, 168, 76, 0.4)' }}
+  className="score-badge"
+>
+```
+
+---
+
+## STEP 3 — LINK UNDERLINE ANIMATION
+
+Every navigation link and text link should use an animated underline — NOT the default browser underline:
+```css
+/* In index.css */
+.animated-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.animated-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #C9A84C;
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animated-link:hover::after {
+  width: 100%;
+}
+```
+
+Apply the `animated-link` class to: all navbar links, all footer links, all "View Deal →" text links, any inline body text links.
+
+---
+
+## STEP 4 — INPUT FOCUS STATES
+
+When any input on the site is focused, a subtle gold glow should radiate outward:
+```css
+input:focus, textarea:focus, select:focus {
+  border-color: #C9A84C !important;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.12), 0 0 16px rgba(201, 168, 76, 0.06);
+  outline: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+```
+
+---
+
+## STEP 5 — GOLD SCORE BADGE PULSE
+
+The score badge (Elite Deal, High Yield, etc.) on deal cards and the deal of the day should pulse with a soft glow to draw the eye:
+```tsx
+<motion.div
+  animate={{
+    boxShadow: [
+      '0 0 0px rgba(201, 168, 76, 0)',
+      '0 0 18px rgba(201, 168, 76, 0.35)',
+      '0 0 0px rgba(201, 168, 76, 0)',
+    ],
+  }}
+  transition={{
+    duration: 3,
+    repeat: Infinity,
+    repeatDelay: 2,
+    ease: 'easeInOut',
+  }}
+  className="score-badge"
+>
+  {badge}
+</motion.div>
+```
+
+---
+
+## STEP 6 — ACCORDION CHEVRON
+
+The FAQ accordion chevrons must rotate smoothly with a spring:
+```tsx
+<motion.span
+  animate={{ rotate: isOpen ? 180 : 0 }}
+  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+>
+  ▾
+</motion.span>
+```
+
+The accordion body opens with a height animation — NOT a display toggle:
+```tsx
+<motion.div
+  initial={false}
+  animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
+  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+  style={{ overflow: 'hidden' }}
+>
+  {content}
+</motion.div>
+```
+
+---
+
+## STEP 7 — NAVIGATION ACTIVE INDICATOR
+
+The active nav item should have a sliding gold underline that animates between items (not just toggle on/off):
+```tsx
+// Use Framer Motion layoutId for the active indicator:
+{navItems.map(item => (
+  <Link key={item.href} href={item.href} className="relative px-3 py-2">
+    {isActive && (
+      <motion.div
+        layoutId="nav-active-indicator"
+        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#C9A84C] rounded-full"
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      />
+    )}
+    {item.label}
+  </Link>
+))}
+```
+
+---
+
+## STEP 8 — TOAST SLIDE-IN
+
+Toast notifications should slide in from the bottom-right with a satisfying spring:
+```tsx
+// Configure in App.tsx:
+<Toaster
+  toastOptions={{
+    className: 'toast-item',
+    style: {
+      background: '#141414',
+      border: '1px solid #2A2A2A',
+      color: '#F5F0E8',
+      borderRadius: '10px',
+      fontSize: '13px',
+      padding: '12px 16px',
+    },
+  }}
+  containerStyle={{
+    bottom: 90, // above mobile nav bar
+    right: 20,
+  }}
+/>
+```
+
+Run `tsc --noEmit`. Zero errors.
+
+PROMPT 4 — The Landlords Page Hero Reimagined
+You are redesigning the landlords page hero section to be the most impressive thing any landlord has ever seen on a property website. Think about how Apple announces a new product — the words drop in one by one, the image is cinematic, the data builds slowly. This hero should make a landlord stop scrolling and lean forward.
+
+---
+
+## THE NEW HERO CONCEPT
+
+Replace the current static landlords hero with a full-screen animated sequence. The hero plays out in stages over 3 seconds after the page loads:
+
+**Stage 0 (0ms):** Dark screen with only the logo visible
+**Stage 1 (200ms):** The apartment image fades in slowly (1.5s)
+**Stage 2 (800ms):** The overline label slides up: "A Message to Landlords & Letting Agents"
+**Stage 3 (1200ms):** First line of headline drops in: "The rental market"
+**Stage 4 (1600ms):** Second line drops in: "is about to change"
+**Stage 5 (2000ms):** Gold italic line drops in: "more than it has in 30 years."
+**Stage 6 (2400ms):** Subheadline paragraph fades in
+**Stage 7 (2800ms):** Four stat pills animate in staggered
+**Stage 8 (3200ms):** CTA buttons slide up from bottom
+```tsx
+import { motion, useInView } from 'framer-motion';
+import { useState, useEffect } from 'react';
+
+const WORD_VARIANTS = {
+  hidden: { y: 60, opacity: 0 },
+  visible: (i: number) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: i * 0.08,
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+function AnimatedHeadline({ text, delay = 0, italic = false, gold = false }) {
+  const words = text.split(' ');
+  return (
+    <div className="overflow-hidden flex flex-wrap gap-x-3">
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          custom={delay + i}
+          initial="hidden"
+          animate="visible"
+          variants={WORD_VARIANTS}
+          style={{
+            display: 'inline-block',
+            fontStyle: italic ? 'italic' : 'normal',
+            color: gold ? '#C9A84C' : '#F5F0E8',
+          }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+export function LandlordsHero({ onCTAClick }) {
+  const [stage, setStage] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setStage(1), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="relative w-full overflow-hidden" style={{ height: '100svh' }}>
+
+      {/* APARTMENT IMAGE — cinematic fade in */}
+      <motion.div
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0"
+      >
+        <img
+          src={apartmentHeroImage}
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ objectPosition: 'center 40%' }}
+          fetchPriority="high"
+        />
+      </motion.div>
+
+      {/* GRADIENT — refined layering */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: [
+            'linear-gradient(180deg,',
+            '  rgba(10,10,10,0.7) 0%,',
+            '  rgba(10,10,10,0.1) 30%,',
+            '  rgba(10,10,10,0.05) 50%,',
+            '  rgba(10,10,10,0.5) 70%,',
+            '  rgba(10,10,10,0.95) 100%)',
+          ].join(''),
+        }}
+      />
+
+      {/* CONTENT */}
+      <div className="absolute inset-0 flex flex-col justify-end pb-16 px-8 md:px-16 max-w-5xl">
+
+        {/* Overline */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="flex items-center gap-3 mb-5"
+        >
+          <div className="w-6 h-px bg-[#C9A84C]" />
+          <span
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: 10,
+              letterSpacing: '0.25em',
+              textTransform: 'uppercase',
+              color: '#C9A84C',
+            }}
+          >
+            A Message to Landlords & Letting Agents
+          </span>
+        </motion.div>
+
+        {/* Hero headline — word-by-word */}
+        <div className="mb-3" style={{ fontFamily: 'var(--font-display)' }}>
+          <div style={{ fontSize: 'clamp(2.4rem, 6vw, 5.5rem)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.05 }}>
+            <AnimatedHeadline text="The rental market" delay={0} />
+            <AnimatedHeadline text="is about to" delay={3} />
+            <AnimatedHeadline text="change." delay={6} italic gold />
+          </div>
+        </div>
+
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          className="text-[#A09880] mb-8 max-w-lg"
+          style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.1rem)', lineHeight: 1.65 }}
+        >
+          More dramatically than it has in 30 years.
+          We've built a commercial structure that removes your exposure
+          to the new legislation entirely.
+        </motion.p>
+
+        {/* Stat pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8, duration: 0.5 }}
+          className="flex flex-wrap gap-2 mb-8"
+        >
+          {[
+            '3-year fixed commercial leases',
+            'Zero void exposure',
+            'Outside the Renters Reform Act',
+            'Fully passive income',
+          ].map((pill, i) => (
+            <motion.span
+              key={pill}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
+              style={{
+                padding: '5px 12px',
+                borderRadius: 99,
+                border: '1px solid rgba(201,168,76,0.3)',
+                background: 'rgba(201,168,76,0.07)',
+                color: '#C9A84C',
+                fontFamily: 'var(--font-mono)',
+                fontSize: 10,
+                letterSpacing: '0.1em',
+              }}
+            >
+              {pill}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.2, duration: 0.5 }}
+          className="flex gap-3 flex-wrap"
+        >
+          <MagneticButton
+            onClick={onCTAClick}
+            className="px-8 py-4 font-bold uppercase tracking-widest text-sm rounded-lg"
+            style={{
+              background: 'linear-gradient(135deg, #C9A84C 0%, #8B6914 100%)',
+              color: '#0A0A0A',
+              boxShadow: '0 8px 32px rgba(201,168,76,0.25)',
+            }}
+          >
+            Read How It Works ↓
+          </MagneticButton>
+          
+            href={`https://wa.me/447700000000`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-4 font-medium text-sm rounded-lg border border-[#2A2A2A] text-[#A09880] hover:border-[#C9A84C] hover:text-[#F5F0E8] transition-all"
+          >
+            📱 WhatsApp Us
+          </a>
+        </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.8 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+          style={{
+            width: 1,
+            height: 40,
+            background: 'linear-gradient(180deg, transparent, #C9A84C)',
+          }}
+        />
+        <span
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: 8,
+            color: '#5A5040',
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Scroll
+        </span>
+      </motion.div>
+    </div>
+  );
+}
+```
+
+Replace the existing landlords hero section entirely with this component. Run `tsc --noEmit`.
+
+PROMPT 5 — Light, Shadow & Depth System
+You are implementing a professional lighting and depth system. Flat dark sites look cheap. Premium dark sites use light as a design element — glows, reflections, ambient light. Study how Vercel's website, Linear, and Raycast use light on dark backgrounds to create depth and draw attention.
+
+---
+
+## STEP 1 — AMBIENT GLOW ON KEY ELEMENTS
+
+Add radial gradient "ambient light" effects to the most important sections. This creates the impression that elements are lit from within:
+```css
+/* In index.css */
+
+/* Gold ambient glow — use behind hero CTAs, score badges, featured elements */
+.glow-gold {
+  position: relative;
+}
+.glow-gold::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Green ambient glow — use behind pass indicators, success states */
+.glow-green::before {
+  background: radial-gradient(ellipse at center, rgba(82, 183, 136, 0.1) 0%, transparent 70%);
+}
+
+/* Subtle page radial — makes page feel lit from the centre not flat */
+.page-ambient {
+  background: radial-gradient(ellipse at 50% 0%, #141414 0%, #0A0A0A 60%);
+}
+```
+
+Apply `page-ambient` to the `<body>` or the root page div. Apply `glow-gold` to:
+- The deal score badge
+- The primary CTA buttons
+- The "NET MONTHLY PROFIT" metric card
+- The WhatsApp button on the landlords page
+
+---
+
+## STEP 2 — CARD DEPTH HIERARCHY
+
+Cards should feel like they exist at different depths. Create three card depth levels:
+```css
+/* Level 1 — sunken (below the page surface) */
+.card-sunken {
+  background: #0A0A0A;
+  border: 1px solid #1E1E1E;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Level 2 — flush (standard card) */
+.card-flush {
+  background: #141414;
+  border: 1px solid #2A2A2A;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Level 3 — raised (elevated, important) */
+.card-raised {
+  background: #1C1C1C;
+  border: 1px solid #333333;
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.4),
+    0 1px 0 rgba(255,255,255,0.03) inset;
+}
+
+/* Level 4 — floating (modals, popovers, highlighted cards) */
+.card-floating {
+  background: #222222;
+  border: 1px solid #3A3A3A;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 4px 12px rgba(0,0,0,0.3),
+    0 1px 0 rgba(255,255,255,0.05) inset;
+}
+```
+
+Audit all cards across the site and assign the correct depth level:
+- Data input sections → `card-sunken`
+- Standard listing cards → `card-flush`
+- Featured/highlighted metric cards → `card-raised`
+- The deal of the day metrics panel → `card-raised`
+- Modals and bottom sheets → `card-floating`
+
+---
+
+## STEP 3 — GOLD LINE SEPARATOR
+
+Replace all `border-b border-[#2A2A2A]` dividers between major sections with a refined gradient rule:
+```tsx
+export function GoldRule({ className }: { className?: string }) {
+  return (
+    <div
+      className={className}
+      style={{
+        height: 1,
+        background: 'linear-gradient(90deg, transparent 0%, #C9A84C 30%, #C9A84C 70%, transparent 100%)',
+        opacity: 0.25,
+      }}
+    />
+  );
+}
+```
+
+Use `<GoldRule />` between every major section on the landlords page, the DOTD page, and the homepage.
+
+---
+
+## STEP 4 — SHIMMER LOADING SKELETON
+
+Replace all loading spinners and "Loading..." text with a shimmer skeleton that looks like the content is about to appear:
+```tsx
+export function Shimmer({ className }: { className?: string }) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded ${className}`}
+      style={{ background: '#141414' }}
+    >
+      <motion.div
+        animate={{ x: ['-100%', '100%'] }}
+        transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.06) 50%, transparent 100%)',
+        }}
+      />
+    </div>
+  );
+}
+
+// Listing card skeleton:
+export function ListingCardSkeleton() {
+  return (
+    <div className="card-flush rounded-lg overflow-hidden">
+      <Shimmer className="h-40 w-full" />
+      <div className="p-4 space-y-3">
+        <Shimmer className="h-4 w-2/3" />
+        <Shimmer className="h-3 w-1/2" />
+        <div className="flex gap-2 pt-2">
+          <Shimmer className="h-6 w-20" />
+          <Shimmer className="h-6 w-20" />
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+Replace all loading states on the marketplace, deal analyser, and dashboard with these skeletons.
+
+---
+
+## STEP 5 — FROSTED GLASS MODALS
+
+All modals and bottom sheets should have a frosted glass background effect:
+```css
+.modal-glass {
+  background: rgba(20, 20, 20, 0.92);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+```
+
+Apply `modal-glass` class to all modals, bottom sheets, and the sticky headers on the DOTD and landlords pages.
+
+---
+
+## STEP 6 — FOCUS RING SYSTEM
+
+The browser default focus ring is ugly. Replace globally with a gold custom ring:
+```css
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #0A0A0A, 0 0 0 4px #C9A84C;
+  border-radius: 4px;
+}
+```
+
+Run `tsc --noEmit`. Zero errors.
+
+PROMPT 6 — The Comparison Table as a Showpiece
+You are turning the AST vs Svnteen comparison table on the landlords page into the most impressive data visualisation any landlord has seen. The table should feel like a Bloomberg terminal — authoritative, precise, and impossible to argue with. Study how Stripe pricing tables and Linear's feature comparison work.
+
+The comparison table currently renders as a basic HTML table. Replace it entirely with this new component.
+
+---
+
+## THE NEW COMPARISON TABLE
+```tsx
+import { motion, useInView } from 'framer-motion';
+import { useRef, useState } from 'react';
+
+const rows = [
+  {
+    category: 'Income Security',
+    ast: { text: "Dependent on individual's financial health", verdict: 'bad' },
+    svnteen: { text: 'Backed by corporate operating budget', verdict: 'great' },
+    delta: 'Corporate vs personal income',
+  },
+  {
+    category: 'Void Periods',
+    ast: { text: '4–8 weeks lost income between tenancies', verdict: 'bad' },
+    svnteen: { text: 'Zero — we absorb 100% of void risk', verdict: 'great' },
+    delta: '£1,200–£2,400 saved annually',
+  },
+  {
+    category: 'Reform Act Exposure',
+    ast: { text: 'Fully governed by Renters Reform Act 2024', verdict: 'bad' },
+    svnteen: { text: 'Commercial lease — completely exempt', verdict: 'great' },
+    delta: 'No legislative risk',
+  },
+  {
+    category: 'Repossession',
+    ast: { text: '12–24 month county court process', verdict: 'bad' },
+    svnteen: { text: 'Commercial break clause — agreed in advance', verdict: 'great' },
+    delta: '18 months vs weeks',
+  },
+  {
+    category: 'Management',
+    ast: { text: 'Self-managed or 8–15% letting agent fee', verdict: 'neutral' },
+    svnteen: { text: 'Fully managed — zero time or cost from you', verdict: 'great' },
+    delta: 'Completely passive income',
+  },
+  {
+    category: 'Property Condition',
+    ast: { text: 'Tenant responsible — enforcement difficult', verdict: 'neutral' },
+    svnteen: { text: 'We maintain to five-star standard (our reputation)', verdict: 'great' },
+    delta: 'Hotel grade maintenance',
+  },
+  {
+    category: 'Monthly Rent',
+    ast: { text: 'Full market rate or above', verdict: 'great' },
+    svnteen: { text: 'Slightly below market — stability premium', verdict: 'neutral' },
+    delta: 'Traded for institutional reliability',
+  },
+];
+
+const verdictConfig = {
+  great:   { icon: '✓', color: '#52B788', bg: 'rgba(82,183,136,0.08)' },
+  neutral: { icon: '~', color: '#f4a01c', bg: 'rgba(244,160,28,0.08)' },
+  bad:     { icon: '✗', color: '#e05555', bg: 'rgba(224,85,85,0.08)' },
+};
+
+export function ComparisonTable() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  const [hoveredRow, setHoveredRow] = useState<number | null>(null);
+
+  return (
+    <div ref={ref} className="overflow-hidden rounded-xl" style={{ border: '1px solid #2A2A2A' }}>
+
+      {/* Header */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr 1.4fr', background: '#141414', borderBottom: '1px solid #2A2A2A' }}>
+        {['Consideration', 'Standard AST Tenancy', 'Svnteen Commercial Lease'].map((h, i) => (
+          <div
+            key={i}
+            style={{
+              padding: '14px 16px',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 9,
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color: i === 2 ? '#C9A84C' : '#5A5040',
+              borderRight: i < 2 ? '1px solid #2A2A2A' : 'none',
+              background: i === 2 ? 'rgba(201,168,76,0.04)' : 'transparent',
+            }}
+          >
+            {i === 2 && (
+              <span style={{ display: 'block', marginBottom: 2 }}>
+                ★
+              </span>
+            )}
+            {h}
+          </div>
+        ))}
+      </div>
+
+      {/* Rows */}
+      {rows.map((row, i) => {
+        const astCfg = verdictConfig[row.ast.verdict];
+        const svnCfg = verdictConfig[row.svnteen.verdict];
+        const isHovered = hoveredRow === i;
+
+        return (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -16 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: i * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            onMouseEnter={() => setHoveredRow(i)}
+            onMouseLeave={() => setHoveredRow(null)}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1.4fr 1.4fr',
+              borderBottom: i < rows.length - 1 ? '1px solid #1C1C1C' : 'none',
+              background: isHovered ? '#141414' : (i % 2 === 0 ? '#0A0A0A' : '#0D0D0D'),
+              transition: 'background 0.15s ease',
+            }}
+          >
+            {/* Category */}
+            <div
+              style={{
+                padding: '14px 16px',
+                borderRight: '1px solid #1C1C1C',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: '#5A5040', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                {row.category}
+              </span>
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isHovered ? 1 : 0 }}
+                style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: '#C9A84C', marginTop: 3 }}
+              >
+                {row.delta}
+              </motion.span>
+            </div>
+
+            {/* AST */}
+            <div
+              style={{
+                padding: '14px 16px',
+                borderRight: '1px solid #1C1C1C',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                background: isHovered ? astCfg.bg : 'transparent',
+                transition: 'background 0.2s',
+              }}
+            >
+              <span style={{ color: astCfg.color, fontSize: 12, flexShrink: 0, fontWeight: 700 }}>
+                {astCfg.icon}
+              </span>
+              <span style={{ fontSize: 12, color: '#A09880', lineHeight: 1.45 }}>
+                {row.ast.text}
+              </span>
+            </div>
+
+            {/* Svnteen */}
+            <div
+              style={{
+                padding: '14px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                background: isHovered ? svnCfg.bg : 'rgba(201,168,76,0.02)',
+                transition: 'background 0.2s',
+              }}
+            >
+              <span style={{ color: svnCfg.color, fontSize: 12, flexShrink: 0, fontWeight: 700 }}>
+                {svnCfg.icon}
+              </span>
+              <span style={{ fontSize: 12, color: svnCfg.verdict === 'great' ? '#F5F0E8' : '#A09880', lineHeight: 1.45 }}>
+                {row.svnteen.text}
+              </span>
+            </div>
+          </motion.div>
+        );
+      })}
+
+      {/* Footer legend */}
+      <div style={{ padding: '10px 16px', background: '#141414', borderTop: '1px solid #2A2A2A', display: 'flex', gap: 20 }}>
+        {Object.entries(verdictConfig).map(([key, cfg]) => (
+          <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ color: cfg.color, fontSize: 10, fontWeight: 700 }}>{cfg.icon}</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: '#5A5040', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              {key === 'great' ? 'Advantage' : key === 'neutral' ? 'Trade-off' : 'Disadvantage'}
+            </span>
+          </div>
+        ))}
+        <span style={{ marginLeft: 'auto', fontFamily: 'var(--font-mono)', fontSize: 8, color: '#3A3020' }}>
+          Hover rows for detail
+        </span>
+      </div>
+    </div>
+  );
+}
+```
+
+Replace the existing comparison table with this component on the landlords page. Run `tsc --noEmit`.
+
+PROMPT 7 — Real-Time Yield Calculator on Landlords Page
+You are adding a live interactive yield calculator to the landlords page that shows landlords exactly what they would earn under the Svnteen model vs their current arrangement. This is the single most powerful conversion tool you can add — when a landlord sees their actual number, they call.
+
+Add this section between the "Three Angles" and the "How It Works" sections on the landlords page.
+
+---
+
+## THE CALCULATOR
+```tsx
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+export function LandlordYieldCalculator() {
+  const [monthlyRent, setMonthlyRent] = useState(1200);
+  const [voidWeeksPerYear, setVoidWeeksPerYear] = useState(6);
+  const [agentFee, setAgentFee] = useState(12);
+  const [selfManaged, setSelfManaged] = useState(false);
+
+  const results = useMemo(() => {
+    const annualRentFull = monthlyRent * 12;
+    const voidLoss = (voidWeeksPerYear / 52) * annualRentFull;
+    const agentCost = selfManaged ? 0 : (agentFee / 100) * (annualRentFull - voidLoss);
+    const astNetAnnual = annualRentFull - voidLoss - agentCost;
+    const astNetMonthly = astNetAnnual / 12;
+
+    // Svnteen pays 80% of market rate, no voids, no management
+    const svnteenMonthly = monthlyRent * 0.82;
+    const svnteenAnnual = svnteenMonthly * 12;
+
+    const advantage = svnteenAnnual - astNetAnnual;
+    const advantageMonthly = svnteenMonthly - astNetMonthly;
+
+    return {
+      astMonthly: Math.round(astNetMonthly),
+      astAnnual: Math.round(astNetAnnual),
+      svnteenMonthly: Math.round(svnteenMonthly),
+      svnteenAnnual: Math.round(svnteenAnnual),
+      voidLoss: Math.round(voidLoss),
+      agentCost: Math.round(agentCost),
+      advantage: Math.round(advantage),
+      advantageMonthly: Math.round(advantageMonthly),
+      svnteenWins: advantage > 0,
+    };
+  }, [monthlyRent, voidWeeksPerYear, agentFee, selfManaged]);
+
+  const SliderField = ({ label, value, min, max, step = 1, onChange, prefix = '', suffix = '', hint }) => (
+    <div className="space-y-2">
+      <div className="flex justify-between">
+        <label style={{ fontFamily: 'var(--font-mono)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#A09880' }}>
+          {label}
+        </label>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: '#F5F0E8', fontWeight: 500 }}>
+          {prefix}{value.toLocaleString('en-GB')}{suffix}
+        </span>
+      </div>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={e => onChange(Number(e.target.value))}
+        style={{
+          width: '100%',
+          accentColor: '#C9A84C',
+          height: 3,
+          cursor: 'pointer',
+        }}
+      />
+      {hint && <p style={{ fontSize: 9, color: '#5A5040' }}>{hint}</p>}
+    </div>
+  );
+
+  return (
+    <div className="py-16 px-4 md:px-0">
+      {/* Section header */}
+      <div className="mb-10">
+        <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: '#C9A84C', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 6 }}>
+          Interactive Calculator
+        </p>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.8rem, 4vw, 3rem)', fontWeight: 300, color: '#F5F0E8', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+          What would you actually earn?
+        </h2>
+        <p style={{ color: '#A09880', fontSize: 14, marginTop: 8, maxWidth: 480, lineHeight: 1.6 }}>
+          Adjust the sliders to match your current situation. See how your net income compares between a standard tenancy and a Svnteen commercial lease.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 24 }}>
+
+        {/* Left — controls */}
+        <div style={{ background: '#141414', border: '1px solid #2A2A2A', borderRadius: 12, padding: 24 }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: '#5A5040', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 20 }}>
+            Your current situation
+          </p>
+
+          <div className="space-y-6">
+            <SliderField
+              label="Monthly Rent"
+              value={monthlyRent}
+              min={600}
+              max={3000}
+              step={50}
+              onChange={setMonthlyRent}
+              prefix="£"
+              hint="The rent you currently charge or expect to charge"
+            />
+            <SliderField
+              label="Void Weeks Per Year"
+              value={voidWeeksPerYear}
+              min={0}
+              max={16}
+              onChange={setVoidWeeksPerYear}
+              suffix=" weeks"
+              hint="Average empty weeks between tenancies (UK average: 5–8 weeks)"
+            />
+            {!selfManaged && (
+              <SliderField
+                label="Letting Agent Fee"
+                value={agentFee}
+                min={6}
+                max={20}
+                onChange={setAgentFee}
+                suffix="%"
+                hint="Your current agent's management percentage"
+              />
+            )}
+
+            {/* Self-managed toggle */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setSelfManaged(s => !s)}
+                style={{
+                  width: 38, height: 22, borderRadius: 11,
+                  background: selfManaged ? '#C9A84C' : '#2A2A2A',
+                  position: 'relative', transition: 'background 0.2s', border: 'none', cursor: 'pointer', flexShrink: 0,
+                }}
+              >
+                <div style={{ position: 'absolute', top: 3, left: selfManaged ? 19 : 3, width: 16, height: 16, borderRadius: '50%', background: '#F5F0E8', transition: 'left 0.2s' }} />
+              </button>
+              <span style={{ fontSize: 12, color: '#A09880' }}>I self-manage (no agent fee)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right — results */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+
+          {/* AST result */}
+          <div style={{ background: '#141414', border: '1px solid #2A2A2A', borderRadius: 12, padding: 20 }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: '#5A5040', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>
+              Standard AST — Net Annual Income
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#5A5040', marginBottom: 3 }}>Monthly (net)</p>
+                <motion.p
+                  key={results.astMonthly}
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: 1 }}
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: '#A09880' }}
+                >
+                  £{results.astMonthly.toLocaleString('en-GB')}
+                </motion.p>
+              </div>
+              <div>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#5A5040', marginBottom: 3 }}>Annual (net)</p>
+                <motion.p
+                  key={results.astAnnual}
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: 1 }}
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: '#A09880' }}
+                >
+                  £{results.astAnnual.toLocaleString('en-GB')}
+                </motion.p>
+              </div>
+            </div>
+            {/* Loss breakdown */}
+            <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #1C1C1C', display: 'flex', gap: 16 }}>
+              <div style={{ fontSize: 10, color: '#e05555' }}>
+                −£{results.voidLoss.toLocaleString()} void loss
+              </div>
+              {!selfManaged && (
+                <div style={{ fontSize: 10, color: '#e05555' }}>
+                  −£{results.agentCost.toLocaleString()} agent fees
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Svnteen result */}
+          <div style={{ background: results.svnteenWins ? 'rgba(201,168,76,0.07)' : '#141414', border: `1px solid ${results.svnteenWins ? 'rgba(201,168,76,0.4)' : '#2A2A2A'}`, borderRadius: 12, padding: 20 }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: '#C9A84C', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>
+              Svnteen Commercial Lease — Net Annual Income
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#5A5040', marginBottom: 3 }}>Monthly</p>
+                <motion.p
+                  key={results.svnteenMonthly}
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: 1 }}
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: '#C9A84C' }}
+                >
+                  £{results.svnteenMonthly.toLocaleString('en-GB')}
+                </motion.p>
+              </div>
+              <div>
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#5A5040', marginBottom: 3 }}>Annual</p>
+                <motion.p
+                  key={results.svnteenAnnual}
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: 1 }}
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: '#C9A84C' }}
+                >
+                  £{results.svnteenAnnual.toLocaleString('en-GB')}
+                </motion.p>
+              </div>
+            </div>
+            <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid rgba(201,168,76,0.15)', fontSize: 10, color: '#52B788' }}>
+              ✓ No void months  ✓ No management fees  ✓ No arrears risk
+            </div>
+          </div>
+
+          {/* Verdict */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={results.svnteenWins ? 'wins' : 'trades'}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              style={{
+                padding: '14px 18px',
+                borderRadius: 10,
+                background: results.svnteenWins ? 'rgba(82,183,136,0.1)' : 'rgba(201,168,76,0.07)',
+                border: `1px solid ${results.svnteenWins ? 'rgba(82,183,136,0.3)' : 'rgba(201,168,76,0.3)'}`,
+              }}
+            >
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: results.svnteenWins ? '#52B788' : '#C9A84C', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 4 }}>
+                {results.svnteenWins ? 'Svnteen Commercial Lease Wins' : 'Trade-off Analysis'}
+              </p>
+              <p style={{ fontSize: 13, color: '#F5F0E8', lineHeight: 1.5 }}>
+                {results.svnteenWins
+                  ? `Based on your inputs, a Svnteen commercial lease would net you £${Math.abs(results.advantage).toLocaleString()} more per year — an extra £${Math.abs(results.advantageMonthly).toLocaleString()}/month.`
+                  : `Your AST income is higher than our commercial offer. This is usually the case for very low void assumptions. Consider the Reform Act risk — void exposure and eviction timelines are not reflected in the standard AST number.`
+                }
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* CTA below calculator */}
+      <div style={{ marginTop: 20, textAlign: 'center' }}>
+        <p style={{ fontSize: 12, color: '#5A5040', marginBottom: 10 }}>
+          These are indicative figures. We provide a precise offer for every specific property.
+        </p>
+        
+          href={`https://wa.me/447700000000?text=Hi, I've used your yield calculator and I'd like to discuss my property.`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '12px 24px', borderRadius: 8, background: '#25D366',
+            color: '#0A0A0A', fontWeight: 700, fontSize: 13, textDecoration: 'none',
+          }}
+        >
+          Get a precise offer on WhatsApp →
+        </a>
+      </div>
+    </div>
+  );
+}
+```
+
+Insert `<LandlordYieldCalculator />` between the Three Angles section and the How It Works section on the landlords page. Run `tsc --noEmit`.
+
+PROMPT 8 — Gold Particle Background
+You are adding a subtle animated particle background to key pages that creates the impression of a living, breathing surface. The effect should be barely perceptible — like light catching dust in an expensive penthouse. Not a rave, not a screensaver. Restraint is everything.
+
+This applies to: the hero sections of the homepage, landlords page, and deal of the day page.
+
+---
+
+## THE PARTICLE SYSTEM
+
+Create `client/src/components/GoldParticles.tsx`:
+```tsx
+import { useEffect, useRef } from 'react';
+
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  opacity: number;
+  size: number;
+  life: number;
+  maxLife: number;
+}
+
+interface GoldParticlesProps {
+  count?: number;
+  className?: string;
+}
+
+export function GoldParticles({ count = 40, className }: GoldParticlesProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>();
+  const particles = useRef<Particle[]>([]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth * devicePixelRatio;
+      canvas.height = canvas.offsetHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+    };
+
+    const createParticle = (): Particle => ({
+      x: Math.random() * canvas.offsetWidth,
+      y: Math.random() * canvas.offsetHeight,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: -Math.random() * 0.2 - 0.05,
+      opacity: 0,
+      size: Math.random() * 1.2 + 0.3,
+      life: 0,
+      maxLife: Math.random() * 300 + 200,
+    });
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Initialise particles at random life stages
+    particles.current = Array.from({ length: count }, () => {
+      const p = createParticle();
+      p.life = Math.random() * p.maxLife;
+      return p;
+    });
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+
+      particles.current.forEach((p, i) => {
+        p.life++;
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Fade in / fade out
+        const progress = p.life / p.maxLife;
+        if (progress < 0.2) {
+          p.opacity = progress / 0.2;
+        } else if (progress > 0.8) {
+          p.opacity = (1 - progress) / 0.2;
+        } else {
+          p.opacity = 1;
+        }
+
+        // Max opacity is very low — subtle is the word
+        const alpha = p.opacity * 0.25;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 168, 76, ${alpha})`;
+        ctx.fill();
+
+        // Reset when life ends
+        if (p.life >= p.maxLife) {
+          particles.current[i] = createParticle();
+        }
+      });
+
+      animRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [count]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+    />
+  );
+}
+```
+
+## USAGE
+
+Add to the hero sections:
+```tsx
+// Inside hero section div (position: relative):
+<GoldParticles count={35} />
+```
+
+Important constraints:
+- Only render on desktop — hide on mobile (performance)
+- Respect `prefers-reduced-motion` — do not animate if user has this set:
+```tsx
+export function GoldParticles({ count = 40, className }: GoldParticlesProps) {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return null;
+  // ... rest of component
+```
+
+- Set `will-change: transform` on the canvas to hint GPU compositing
+- Cap at 40 particles maximum — more than this is tacky, not premium
+
+Run `tsc --noEmit`. Zero errors.
+
+PROMPT 9 — The Admin Dashboard as a Mission Control
+You are turning the admin dashboard into something that looks like a Bloomberg terminal crossed with a fighter jet cockpit. Every number should feel live and important. The aesthetic should say "I know exactly what is happening on my platform at all times."
+
+---
+
+## STEP 1 — LIVE STAT TICKER
+
+At the very top of the admin dashboard, add a thin horizontal ticker bar showing live platform stats that auto-refreshes every 30 seconds:
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
+
+export function AdminTicker() {
+  const { data } = useQuery({
+    queryKey: ['/api/admin/live-stats'],
+    refetchInterval: 30000,
+  });
+
+  const stats = data?.stats || [];
+
+  return (
+    <div
+      style={{
+        height: 32,
+        background: '#0A0A0A',
+        borderBottom: '1px solid #1C1C1C',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
+      {/* Static label */}
+      <div
+        style={{
+          flexShrink: 0,
+          padding: '0 12px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: 8,
+          color: '#C9A84C',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          borderRight: '1px solid #1C1C1C',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        ● LIVE
+      </div>
+
+      {/* Scrolling stats */}
+      <motion.div
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        style={{ display: 'flex', gap: 0, whiteSpace: 'nowrap' }}
+      >
+        {[...stats, ...stats].map((stat, i) => (
+          <div
+            key={i}
+            style={{
+              padding: '0 24px',
+              borderRight: '1px solid #1C1C1C',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 10,
+              height: 32,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            <span style={{ color: '#5A5040' }}>{stat.label}</span>
+            <span style={{ color: stat.change > 0 ? '#52B788' : '#F5F0E8', fontWeight: 600 }}>
+              {stat.value}
+            </span>
+            {stat.change !== undefined && (
+              <span style={{ fontSize: 8, color: stat.change > 0 ? '#52B788' : stat.change < 0 ? '#e05555' : '#5A5040' }}>
+                {stat.change > 0 ? '↑' : stat.change < 0 ? '↓' : '—'}{Math.abs(stat.change)}%
+              </span>
+            )}
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+```
+
+Add the corresponding API endpoint:
+```typescript
+app.get('/api/admin/live-stats', isAuthenticated, isAdmin, async (req, res) => {
+  const [liveListings, totalUsers, todayViews, pendingApprovals] = await Promise.all([
+    db.select({ count: sql<number>`count(*)` }).from(propertyListings).where(eq(propertyListings.approvalStatus, 'LIVE')),
+    db.select({ count: sql<number>`count(*)` }).from(userProfiles),
+    // Add your views tracking query here
+    db.select({ count: sql<number>`count(*)` }).from(propertyListings).where(eq(propertyListings.approvalStatus, 'PENDING')),
+  ]);
+
+  return res.json({
+    stats: [
+      { label: 'Live Deals', value: liveListings[0].count, change: 0 },
+      { label: 'Total Members', value: totalUsers[0].count, change: 0 },
+      { label: 'Pending Review', value: pendingApprovals[0].count, change: 0 },
+      { label: 'Platform Status', value: 'Operational', change: undefined },
+    ]
+  });
+});
+```
+
+---
+
+## STEP 2 — SPARKLINE CHARTS ON KPI CARDS
+
+Each KPI card on the admin overview should have a tiny sparkline chart showing the 7-day trend. Use a pure CSS/SVG sparkline — no chart library needed:
+```tsx
+function Sparkline({ data, color = '#C9A84C', width = 80, height = 32 }: {
+  data: number[];
+  color?: string;
+  width?: number;
+  height?: number;
+}) {
+  if (!data.length) return null;
+
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+
+  const points = data.map((v, i) => {
+    const x = (i / (data.length - 1)) * width;
+    const y = height - ((v - min) / range) * height * 0.8 - height * 0.1;
+    return `${x},${y}`;
+  });
+
+  const pathD = `M ${points.join(' L ')}`;
+  const areaD = `M 0,${height} L ${points.join(' L ')} L ${width},${height} Z`;
+
+  return (
+    <svg width={width} height={height} style={{ overflow: 'visible' }}>
+      <defs>
+        <linearGradient id={`grad-${color}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={areaD} fill={`url(#grad-${color})`} />
+      <path d={pathD} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Last point dot */}
+      <circle
+        cx={(data.length - 1) / (data.length - 1) * width}
+        cy={height - ((data[data.length - 1] - min) / range) * height * 0.8 - height * 0.1}
+        r="2.5"
+        fill={color}
+      />
+    </svg>
+  );
+}
+```
+
+Add to each KPI card:
+```tsx
+<div className="flex items-end justify-between mt-3">
+  <CountUp value={stat.current} prefix={stat.prefix} suffix={stat.suffix} />
+  <Sparkline data={stat.weeklyData} color={stat.trend > 0 ? '#52B788' : '#C9A84C'} />
+</div>
+```
+
+---
+
+## STEP 3 — ACTIVITY FEED DESIGN
+
+The activity feed should look like a real-time log, not a list:
+```tsx
+function ActivityFeed({ events }) {
+  return (
+    <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11 }}>
+      {events.map((event, i) => (
+        <motion.div
+          key={event.id}
+          initial={{ opacity: 0, x: -8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: i * 0.04 }}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '80px 12px 1fr',
+            gap: '0 12px',
+            padding: '6px 0',
+            borderBottom: '1px solid #1C1C1C',
+            alignItems: 'start',
+          }}
+        >
+          <span style={{ color: '#3A3020', fontSize: 9, paddingTop: 2 }}>
+            {formatRelativeTime(event.timestamp)}
+          </span>
+          <div style={{ paddingTop: 4 }}>
+            <div style={{ width: 6, height: 6, borderRadius: '50%', background: eventColor(event.type) }} />
+          </div>
+          <span style={{ color: '#A09880' }}>
+            <span style={{ color: eventColor(event.type) }}>{event.actor}</span>
+            {' '}{event.description}
+          </span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+```
+
+Run `tsc --noEmit`. Zero errors.
+
+PROMPT 10 — The Final Polish Pass
+You are performing the final visual polish pass on Svnteen The Residency. This is the pass that separates a site that looks "done" from a site that looks "considered." You are looking for the 50 small imperfections that nobody consciously notices but everybody unconsciously feels.
+
+Go through every single page and component and apply these refinements:
+
+---
+
+## REFINEMENT LIST — APPLY ALL OF THESE
+
+### 1. CURSOR
+Add a custom cursor that turns gold when hovering over interactive elements:
+```css
+/* Default cursor */
+* { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='4' cy='4' r='3' fill='%235A5040'/%3E%3C/svg%3E") 4 4, auto; }
+
+/* Interactive cursor — gold */
+a, button, [role="button"], input[type="range"], .cursor-pointer {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='5' cy='5' r='4' fill='%23C9A84C'/%3E%3C/svg%3E") 5 5, pointer;
+}
+```
+
+### 2. SELECTION COLOUR
+When a user selects/highlights text, it should be gold not blue:
+```css
+::selection {
+  background: rgba(201, 168, 76, 0.25);
+  color: #F5F0E8;
+}
+::-moz-selection {
+  background: rgba(201, 168, 76, 0.25);
+  color: #F5F0E8;
+}
+```
+
+### 3. PLACEHOLDER TEXT COLOUR
+All input placeholders should be `#3A3020` — very dark warm muted, not grey:
+```css
+::placeholder { color: #3A3020; }
+::-webkit-input-placeholder { color: #3A3020; }
+```
+
+### 4. CONSISTENT BORDER RADIUS
+Audit every element. Use this scale:
+- Small elements (badges, pills, tags): `border-radius: 4px`
+- Medium elements (inputs, buttons): `border-radius: 8px`
+- Cards: `border-radius: 12px`
+- Large panels, modals: `border-radius: 16px`
+- Full pill shapes: `border-radius: 9999px`
+
+Fix any element that uses `rounded` (4px) where it should be `rounded-xl` (12px) or vice versa.
+
+### 5. CONSISTENT ICON SIZE
+Audit every icon across the site. Use only these sizes:
+- Inline with text (14px body): `w-4 h-4` (16px)
+- Navigation icons: `w-5 h-5` (20px)
+- Section icons / feature icons: `w-6 h-6` (24px)
+- Hero/large icons: `w-8 h-8` or `w-10 h-10`
+
+Fix any icon that looks too large or too small for its context.
+
+### 6. LETTER SPACING ON ALL-CAPS
+Every piece of all-caps text across the site MUST have letter-spacing. Caps without spacing looks amateurish:
+```css
+.text-xs.uppercase, [class*="tracking-"] {
+  /* minimum tracking for uppercase text: */
+  letter-spacing: 0.1em;
+}
+```
+
+Search for `uppercase` class in all tsx files. Any uppercase text without tracking-wider or tracking-widest should have it added.
+
+### 7. LINE HEIGHT AUDIT
+- One-line headings: `line-height: 1.05`
+- Multi-line headings: `line-height: 1.2`
+- Body paragraphs: `line-height: 1.65`
+- UI labels (single line): `line-height: 1`
+- List items: `line-height: 1.5`
+
+Fix any paragraph or heading that uses default line height.
+
+### 8. EMPTY STATE ILLUSTRATIONS
+Every empty state across the site (no deals, no notifications, no saved deals) should have a small inline SVG illustration — not just an emoji:
+```tsx
+// Empty marketplace state:
+function EmptyMarketplace() {
+  return (
+    <div className="flex flex-col items-center py-20 gap-4">
+      <svg viewBox="0 0 80 80" className="w-20 h-20 opacity-30">
+        <rect x="10" y="20" width="60" height="45" rx="4" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeDasharray="4 2"/>
+        <rect x="20" y="30" width="15" height="12" rx="2" fill="#C9A84C" opacity="0.3"/>
+        <rect x="20" y="46" width="40" height="1.5" rx="1" fill="#C9A84C" opacity="0.2"/>
+        <rect x="20" y="52" width="30" height="1.5" rx="1" fill="#C9A84C" opacity="0.2"/>
+        <circle cx="60" cy="20" r="10" fill="#1A1200" stroke="#C9A84C" strokeWidth="1.5"/>
+        <line x1="57" y1="20" x2="63" y2="20" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round"/>
+        <line x1="60" y1="17" x2="60" y2="23" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+      <p className="text-[#5A5040] text-sm text-center max-w-xs">
+        No deals match your filters. Try adjusting the criteria.
+      </p>
+    </div>
+  );
+}
+```
+
+### 9. LINK COLOUR
+All hyperlinks in body text should be `#C9A84C` with the animated underline effect, not the browser default blue.
+
+### 10. FOCUS ORDER
+Tab through every page. The focus order must be logical — top to bottom, left to right. No jumping around. Fix any `tabIndex` that causes illogical tab order.
+
+### 11. IMAGE ALT TEXT
+Every `<img>` tag must have descriptive alt text — not empty string `alt=""` (only decorative images get empty alt), not generic `alt="image"`. Fix all.
+
+### 12. ERROR STATE COLOURS
+All error messages must use `#e05555` text on `#1F0A0A` background with `1px solid #e05555` border. Not red-500 or any other red. The exact brand red.
+
+### 13. ZERO WIDOWS
+In every paragraph of three or more sentences, ensure the last word of each paragraph is not a single word on its own line (typographic widow). Use `&nbsp;` between the last two words of key paragraphs:
+```tsx
+// Instead of:
+"We offer a Fixed-Term Commercial Lease."
+// Use:
+"We offer a Fixed-Term Commercial&nbsp;Lease."
+```
+
+Apply to: hero subheadlines, section intro paragraphs, and CTA description text.
+
+### 14. GRADIENT BUTTON REFINEMENT
+The primary gold buttons should have a very subtle inner highlight on the top edge to simulate light hitting the button surface:
+```css
+.btn-primary {
+  background: linear-gradient(135deg, #C9A84C 0%, #8B6914 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.15) inset, /* top highlight */
+    0 -1px 0 rgba(0,0,0,0.2) inset,        /* bottom shadow */
+    0 4px 16px rgba(201, 168, 76, 0.2);    /* ambient glow */
+}
+
+.btn-primary:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.2) inset,
+    0 -1px 0 rgba(0,0,0,0.2) inset,
+    0 8px 32px rgba(201, 168, 76, 0.35);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.btn-primary:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 8px rgba(201, 168, 76, 0.2);
+}
+```
+
+### 15. FINAL CONSOLE CHECK
+```bash
+npm run build
+```
+Zero warnings, zero errors. Then open the browser console on every page — zero console errors in production.
+
+After all refinements, run a final visual sweep:
+Open every page at 1440px. Ask: "Would someone pay £200,000 for this site?" If the answer to any element is no — fix it.
+
+Run `tsc --noEmit`. Zero errors required.
+
+Run them in order — 1 through 10 — waiting for each one to complete before pasting the next. Prompts 1, 2 and 10 will have the biggest visible impact. Prompt 4 (the landlords hero) and Prompt 7 (the yield calculator) will be the biggest conversion drivers. Prompt 5 (light and depth) is what separates a site that looks good from one that feels expensive.

@@ -2,7 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LIGHT MODE */
+:root {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+  --text-hero: clamp(2.8rem, 6vw, 5.5rem);
+  --text-display: clamp(2rem, 4vw, 3.5rem);
+  --text-heading: clamp(1.4rem, 3vw, 2rem);
+  --text-title: clamp(1.1rem, 2vw, 1.3rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-label: 0.75rem;
+  --text-micro: 0.625rem;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.15);
+  color: #F5F0E8;
+}
+
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.15);
+  color: #F5F0E8;
+}
+
+blockquote, .pull-quote {
+  hanging-punctuation: first;
+}
+
+.display-text {
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'dlig' 1;
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #0A0A0A, 0 0 0 4px rgba(255,255,255,0.3);
+  border-radius: 4px;
+}
+
+.animated-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.animated-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.4);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animated-link:hover::after {
+  width: 100%;
+}
+
+/* LIGHT MODE — Theme Tokens */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);

@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useInView, useMotionValue, useSpring } from "framer-motion";
 import {
   AlertTriangle, Shield, Building2, TrendingUp, Calendar,
   ChevronDown, FileText, MessageCircle, Check, X, Minus,
@@ -13,6 +13,172 @@ import apartmentHero from "@assets/svnteen-apartment-hero_1772226325057.png";
 const WHATSAPP_NUMBER = "447700000000";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20have%20a%20few%20questions.`;
 const WHATSAPP_URL_FULL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20would%20like%20to%20find%20out%20more%20about%20your%20arrangement%20for%20my%20property.`;
+
+const REVEAL_VARIANTS = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.09,
+      duration: 0.55,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+function Reveal({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      custom={delay}
+      variants={REVEAL_VARIANTS}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function CountUp({ value, prefix = "", suffix = "", duration = 1.5, className }: {
+  value: number; prefix?: string; suffix?: string; duration?: number; className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+  const motionVal = useMotionValue(0);
+  const spring = useSpring(motionVal, { duration: duration * 1000, bounce: 0 });
+
+  useEffect(() => {
+    if (inView) motionVal.set(value);
+  }, [inView, value, motionVal]);
+
+  useEffect(() => {
+    return spring.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = prefix + Math.round(latest).toLocaleString("en-GB") + suffix;
+      }
+    });
+  }, [spring, prefix, suffix]);
+
+  return <span ref={ref} className={className}>{prefix}0{suffix}</span>;
+}
+
+const WORD_VARIANTS = {
+  hidden: { y: 60, opacity: 0 },
+  visible: (i: number) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: i * 0.08,
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  }),
+};
+
+function AnimatedHeadline({ text, delay = 0, italic = false, accent = false }: { text: string; delay?: number; italic?: boolean; accent?: boolean }) {
+  const words = text.split(" ");
+  return (
+    <div className="overflow-hidden flex flex-wrap gap-x-[0.3em]">
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          custom={delay + i}
+          initial="hidden"
+          animate="visible"
+          variants={WORD_VARIANTS}
+          style={{
+            display: "inline-block",
+            fontStyle: italic ? "italic" : "normal",
+            color: accent ? "rgba(255,255,255,0.7)" : undefined,
+          }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+function GoldParticles({ count = 35, className }: { count?: number; className?: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animRef = useRef<number>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth * devicePixelRatio;
+      canvas.height = canvas.offsetHeight * devicePixelRatio;
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    };
+
+    interface Particle { x: number; y: number; vx: number; vy: number; opacity: number; size: number; life: number; maxLife: number; }
+    const createParticle = (): Particle => ({
+      x: Math.random() * canvas.offsetWidth,
+      y: Math.random() * canvas.offsetHeight,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: -Math.random() * 0.2 - 0.05,
+      opacity: 0,
+      size: Math.random() * 1.2 + 0.3,
+      life: 0,
+      maxLife: Math.random() * 300 + 200,
+    });
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const particles: Particle[] = Array.from({ length: count }, () => {
+      const p = createParticle();
+      p.life = Math.random() * p.maxLife;
+      return p;
+    });
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      particles.forEach((p, i) => {
+        p.life++;
+        p.x += p.vx;
+        p.y += p.vy;
+        const progress = p.life / p.maxLife;
+        if (progress < 0.2) p.opacity = progress / 0.2;
+        else if (progress > 0.8) p.opacity = (1 - progress) / 0.2;
+        else p.opacity = 1;
+        const alpha = p.opacity * 0.2;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.fill();
+        if (p.life >= p.maxLife) particles[i] = createParticle();
+      });
+      animRef.current = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [count]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", willChange: "transform" }}
+    />
+  );
+}
 
 function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -206,7 +372,29 @@ function StickyNav() {
   );
 }
 
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-micro)", letterSpacing: "0.2em", textTransform: "uppercase" as const }} className="text-white/30 mb-4">
+      {children}
+    </p>
+  );
+}
+
+function SectionHeading({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <h2 className={`display-text ${className}`} style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, color: "#F5F0E8" }}>
+      {children}
+    </h2>
+  );
+}
+
 function HeroSection() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   const stats = [
     '3-year fixed commercial leases',
     'Zero void exposure',
@@ -215,98 +403,129 @@ function HeroSection() {
   ];
   return (
     <section
-      className="relative min-h-[75vh] flex items-center pt-[72px] overflow-hidden"
+      ref={heroRef}
+      className="relative overflow-hidden"
+      style={{ height: "100svh" }}
       data-testid="section-hero"
     >
-      <img
-        src={apartmentHero}
-        alt="Premium serviced apartment — Svnteen The Residency"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: 'center center' }}
-      />
+      <motion.div
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute inset-0 origin-center"
+        style={{ y: heroY, scale: heroScale }}
+      >
+        <img
+          src={apartmentHero}
+          alt="Premium serviced apartment interior — Svnteen The Residency"
+          className="w-full h-full object-cover"
+          style={{ objectPosition: "center 40%" }}
+          loading="eager"
+        />
+      </motion.div>
+
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.2) 35%, rgba(10,10,10,0.3) 60%, rgba(10,10,10,0.92) 100%)'
+          background: "linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.1) 30%, rgba(10,10,10,0.05) 50%, rgba(10,10,10,0.5) 70%, rgba(10,10,10,0.95) 100%)"
         }}
       />
-      <div className="absolute inset-0 hidden lg:block pointer-events-none opacity-20">
-        <div className="h-full flex items-center justify-end max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-          <BuildingIllustration />
+
+      <GoldParticles count={35} />
+
+      <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0 z-10 flex flex-col justify-end pb-16 md:pb-20 px-5 sm:px-8 lg:px-16 max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="flex items-center gap-3 mb-5"
+        >
+          <div className="w-6 h-px bg-white/30" />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+            A Message to Landlords &amp; Letting Agents
+          </span>
+        </motion.div>
+
+        <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#F5F0E8" }} data-testid="text-hero-headline">
+          <AnimatedHeadline text="The rental market" delay={0} />
+          <AnimatedHeadline text="is about to" delay={3} />
+          <AnimatedHeadline text="change." delay={6} italic accent />
         </div>
-      </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full py-24 md:py-32">
-        <div className="max-w-2xl space-y-7">
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-white/40 text-[11px] uppercase tracking-[0.35em] font-light"
-          >
-            A Message to Landlords & Letting Agents
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-[2rem] sm:text-4xl md:text-[2.75rem] lg:text-5xl font-bold text-white leading-[1.15] tracking-[-0.02em]"
-            data-testid="text-hero-headline"
-          >
-            The rental market is about to change more dramatically than it has in 30 years.
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-white/55 text-base sm:text-lg leading-[1.75] max-w-xl"
-          >
-            The question isn't whether you should act. It's whether you act before the bill lands or after the damage is done. We've built a commercial structure that removes your exposure to the new legislation entirely.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="flex flex-wrap gap-3 pt-2"
-          >
-            <a
-              href="#how-it-works"
-              className="flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-white text-[#0A0A0A] font-semibold text-sm transition-all duration-300 ease-in-out hover:bg-white/90 hover:scale-[1.03] hover:shadow-xl hover:shadow-white/10"
-              data-testid="link-how-it-works"
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.4, duration: 0.8 }}
+          className="mb-8 max-w-lg"
+          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "rgba(255,255,255,0.45)" }}
+        >
+          More dramatically than it has in 30&nbsp;years.
+          We've built a commercial structure that removes your exposure
+          to the new legislation&nbsp;entirely.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8, duration: 0.5 }}
+          className="flex flex-wrap gap-2 mb-8"
+        >
+          {stats.map((pill, i) => (
+            <motion.span
+              key={pill}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
+              style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}
+              className="px-3 py-1.5 rounded-full border border-white/[0.12] bg-white/[0.04] text-white/50"
+              data-testid={`stat-pill-${i}`}
             >
-              Read How It Works
-              <ChevronDown className="w-4 h-4" />
-            </a>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 px-7 py-3.5 rounded-lg border border-[#25D366]/50 text-[#25D366] font-medium text-sm transition-all duration-300 ease-in-out backdrop-blur-md bg-black/30 hover:border-[#25D366] hover:bg-[#25D366]/10 hover:scale-[1.03]"
-              data-testid="link-whatsapp-hero"
-              aria-label="Speak to us on WhatsApp"
-            >
-              <WhatsAppIcon />
-              Speak to Us on WhatsApp
-            </a>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-wrap gap-2.5 pt-4"
+              {pill}
+            </motion.span>
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.2, duration: 0.5 }}
+          className="flex gap-3 flex-wrap"
+        >
+          <a
+            href="#how-it-works"
+            className="px-8 py-4 font-semibold uppercase tracking-widest text-sm rounded-lg bg-white text-[#0A0A0A] transition-all duration-300 hover:shadow-xl hover:shadow-white/15 hover:scale-[1.02]"
+            data-testid="link-how-it-works"
           >
-            {stats.map((stat, idx) => (
-              <span
-                key={stat}
-                className="flex items-center gap-2 text-[11px] text-white/60 bg-white/[0.06] backdrop-blur-md border border-white/[0.08] px-3.5 py-2 rounded-full"
-                data-testid={`stat-pill-${idx}`}
-              >
-                <span className="w-1 h-1 rounded-full bg-white/40" />
-                {stat}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </div>
+            Read How It Works ↓
+          </a>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-4 font-medium text-sm rounded-lg border border-white/[0.12] text-white/50 transition-all duration-300 hover:border-white/30 hover:text-white/80 backdrop-blur-md"
+            data-testid="link-whatsapp-hero"
+            aria-label="Speak to us on WhatsApp"
+          >
+            <span className="flex items-center gap-2"><WhatsAppIcon /> WhatsApp Us</span>
+          </a>
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.8 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+      >
+        <motion.div
+          animate={{ y: [0, 7, 0] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          style={{ width: 1, height: 40, background: "linear-gradient(180deg, transparent, rgba(255,255,255,0.3))" }}
+        />
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+          Scroll
+        </span>
+      </motion.div>
     </section>
   );
 }
@@ -354,15 +573,19 @@ function ReformBillSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="the-challenge" data-testid="section-reform-bill">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-4">
-          <AlertTriangle className="w-5 h-5 text-[#f4a01c]" />
-          <h2 className="text-[#f4a01c] text-lg font-bold uppercase tracking-wider">
-            The Renters Reform Bill Is Now Law
-          </h2>
-        </div>
-        <p className="text-white/40 text-sm mb-12 max-w-lg">
-          What it means for landlords with standard AST tenancies
-        </p>
+        <Reveal>
+          <SectionLabel>The Challenge</SectionLabel>
+        </Reveal>
+        <Reveal delay={1}>
+          <SectionHeading className="mb-3">
+            The Renters Reform Bill<br />Is Now&nbsp;Law
+          </SectionHeading>
+        </Reveal>
+        <Reveal delay={2}>
+          <p style={{ fontFamily: "var(--font-body)" }} className="text-white/40 text-sm mb-12 max-w-lg">
+            What it means for landlords with standard AST tenancies
+          </p>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {reformCards.map((card, i) => {
@@ -463,8 +686,8 @@ function ValueAnglesSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="how-it-works" data-testid="section-value-angles">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Why Landlords Choose a Corporate Lease</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">Three reasons this outperforms a standard tenancy</h2>
+        <Reveal><SectionLabel>Why Landlords Choose a Corporate Lease</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-16">Three reasons this outperforms<br />a standard tenancy</SectionHeading></Reveal>
 
         <div className="space-y-8">
           {valueAngles.map((angle, i) => (
@@ -548,14 +771,106 @@ const processSteps = [
   },
 ];
 
+function LandlordYieldCalculator() {
+  const [rent, setRent] = useState(1200);
+
+  const annualAST = rent * 12;
+  const voidWeeks = 6;
+  const voidLoss = (rent / 4.33) * voidWeeks;
+  const maintenanceCost = rent * 12 * 0.08;
+  const astNetYield = annualAST - voidLoss - maintenanceCost;
+
+  const svnteenRate = 0.8;
+  const svnteenMonthly = Math.round(rent * svnteenRate);
+  const svnteenAnnual = svnteenMonthly * 12;
+  const difference = svnteenAnnual - astNetYield;
+
+  return (
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-yield-calculator">
+      <div className="max-w-4xl mx-auto">
+        <Reveal><SectionLabel>Yield Calculator</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-4">
+          Compare your real yield
+        </SectionHeading></Reveal>
+        <Reveal delay={2}>
+          <p style={{ fontFamily: "var(--font-body)" }} className="text-white/40 text-sm mb-12 max-w-md">
+            Drag the slider to set your current monthly rent and see how the numbers compare.
+          </p>
+        </Reveal>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8">
+          <Reveal delay={3} className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+            <label style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" }} className="text-white/30 block mb-4">
+              Current Monthly Rent (£)
+            </label>
+            <div className="mb-6">
+              <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F5F0E8" }}>
+                £<CountUp value={rent} />
+              </span>
+            </div>
+            <input
+              type="range"
+              min={500}
+              max={3000}
+              step={50}
+              value={rent}
+              onChange={(e) => setRent(Number(e.target.value))}
+              className="w-full accent-white cursor-pointer"
+              data-testid="input-rent-slider"
+              style={{ accentColor: "white" }}
+            />
+            <div className="flex justify-between mt-2" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "rgba(255,255,255,0.2)" }}>
+              <span>£500</span>
+              <span>£3,000</span>
+            </div>
+          </Reveal>
+
+          <Reveal delay={4} className="grid grid-cols-2 gap-4">
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase" }} className="text-white/25 block mb-3">
+                Standard AST (Net)
+              </span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 300, color: "rgba(255,255,255,0.5)" }}>
+                £<CountUp value={Math.round(astNetYield)} />
+              </span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9 }} className="text-white/20 block mt-1">
+                / year after voids & maintenance
+              </span>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.1]">
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase" }} className="text-white/25 block mb-3">
+                Svnteen Corporate Lease
+              </span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 300, color: "#F5F0E8" }}>
+                £<CountUp value={svnteenAnnual} />
+              </span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9 }} className="text-white/20 block mt-1">
+                / year — zero voids, zero costs
+              </span>
+            </div>
+            <div className="col-span-2 p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" }} className="text-white/30">
+                Net difference
+              </span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 300, color: difference > 0 ? "#52B788" : "#F5F0E8" }}>
+                {difference > 0 ? "+" : ""}£<CountUp value={Math.abs(Math.round(difference))} /><span style={{ fontFamily: "var(--font-mono)", fontSize: 10 }} className="text-white/20 ml-1">/ year</span>
+              </span>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProcessSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-process">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">The Process</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">
-          From enquiry to lease signed in 7-14 working days
-        </h2>
+        <Reveal><SectionLabel>The Process</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-16">
+          From enquiry to lease signed<br />in 7–14 working days
+        </SectionHeading></Reveal>
 
         <div className="relative">
           <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/[0.06] -translate-x-1/2" />
@@ -620,10 +935,10 @@ function ComparisonSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="the-comparison" data-testid="section-comparison">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">The Comparison</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">
-          Standard AST vs Svnteen Commercial Lease
-        </h2>
+        <Reveal><SectionLabel>The Comparison</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-16">
+          Standard AST vs Svnteen<br />Commercial Lease
+        </SectionHeading></Reveal>
 
         <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
           <table className="w-full min-w-[640px]" data-testid="table-comparison">
@@ -683,10 +998,10 @@ function R2SASection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-r2sa">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">How R2SA Works</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">
-          The three-party structure explained
-        </h2>
+        <Reveal><SectionLabel>How R2SA Works</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-16">
+          The three-party structure<br />explained
+        </SectionHeading></Reveal>
 
         <div className="py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
@@ -859,10 +1174,10 @@ function WhoWeAreSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-who-we-are">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">About Svnteen The Residency</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-14">
+        <Reveal><SectionLabel>About Svnteen The Residency</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-14">
           Who we are
-        </h2>
+        </SectionHeading></Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-6">
@@ -1016,10 +1331,10 @@ function FAQSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="faqs" data-testid="section-faqs">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Frequently Asked Questions</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-10">
+        <Reveal><SectionLabel>Frequently Asked Questions</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-10">
           What landlords ask us most
-        </h2>
+        </SectionHeading></Reveal>
 
         <div className="flex flex-wrap gap-2 mb-10">
           {categories.map(cat => (
@@ -1120,10 +1435,10 @@ function TestimonialsSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-testimonials">
       <div className="max-w-7xl mx-auto">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Landlord Perspectives</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-14">
-          What landlords say about the arrangement
-        </h2>
+        <Reveal><SectionLabel>Landlord Perspectives</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-14">
+          What landlords say about<br />the arrangement
+        </SectionHeading></Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
@@ -1169,10 +1484,10 @@ function ContactSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="contact" data-testid="section-contact">
       <div className="max-w-3xl mx-auto text-center">
-        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Ready to Find Out More?</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-6">
+        <Reveal><SectionLabel>Ready to Find Out More?</SectionLabel></Reveal>
+        <Reveal delay={1}><SectionHeading className="mb-6">
           Speak to us directly
-        </h2>
+        </SectionHeading></Reveal>
         <p className="text-white/40 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
           No forms, no waiting lists, no sales pressure. Message our team on WhatsApp and get straight answers about how a commercial lease could work for your property.
         </p>
@@ -1308,11 +1623,12 @@ export function LandlordsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]" style={{ fontFamily: "'Inter', 'DM Sans', system-ui, sans-serif" }}>
+    <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]" style={{ fontFamily: "var(--font-body)" }}>
       <StickyNav />
       <HeroSection />
       <ReformBillSection />
       <ValueAnglesSection />
+      <LandlordYieldCalculator />
       <ProcessSection />
       <ComparisonSection />
       <R2SASection />
