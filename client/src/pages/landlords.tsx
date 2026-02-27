@@ -399,7 +399,7 @@ function HeroSection() {
     '3-year fixed commercial leases',
     'Zero void exposure',
     'No new tenancy legislation risk',
-    'Monthly corporate yield',
+    'Fixed monthly yield',
   ];
   return (
     <section
@@ -637,10 +637,10 @@ function ReformBillSection() {
 const valueAngles = [
   {
     number: '01',
-    angle: 'FIXED CORPORATE YIELD',
+    angle: 'FIXED MONTHLY YIELD',
     sub: 'The Financial Angle',
     illustration: 'yield' as const,
-    content: "Unlike a standard residential AST where your income fluctuates with void periods and tenant arrears, we sign a Commercial Lease. This provides you with a Fixed Corporate Yield every month for the next 3 years. It transforms your property from a volatile rental asset into a stable, fixed-income asset.",
+    content: "Unlike a standard residential AST where your income fluctuates with void periods and tenant arrears, we sign a Commercial Lease. This provides you with a Fixed Monthly Yield every month for the next 3 years. It transforms your property from a volatile rental asset into a stable, fixed-income asset.",
     bullets: [
       'Fixed monthly payment — same amount every month',
       'Commercial contract — not governed by residential law',
@@ -764,7 +764,7 @@ const processSteps = [
   {
     number: '05',
     title: 'Commercial Let Begins',
-    body: 'Your Fixed Corporate Yield lands on day 1 of each calendar month. Whether the property has 2 guests or 30, your commercial lease payment is identical and unconditional.',
+    body: 'Your Fixed Monthly Yield lands on day 1 of each calendar month. Whether the property has 2 guests or 30, your commercial lease payment is identical and unconditional.',
     timeline: 'Ongoing',
     icon: DollarSign,
     highlight: true,
