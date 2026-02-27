@@ -51,25 +51,25 @@ function BuildingIllustration() {
       animate={{ y: [0, -8, 0] }}
       transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
     >
-      <rect x="80" y="100" width="240" height="360" rx="4" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeDasharray="4 2" />
+      <rect x="80" y="100" width="240" height="360" rx="4" fill="none" stroke="#FFFFFF" strokeWidth="1.5" strokeDasharray="4 2" />
       {windows.map((w) => (
         <rect key={w.key} x={w.x} y={w.y} width="35" height="28" rx="2"
-          fill={w.filled ? '#C9A84C' : 'none'}
-          stroke="#C9A84C" strokeWidth="0.5"
+          fill={w.filled ? '#FFFFFF' : 'none'}
+          stroke="#FFFFFF" strokeWidth="0.5"
           opacity={w.opacity}
         />
       ))}
-      <line x1="80" y1="200" x2="0" y2="200" stroke="#C9A84C" strokeWidth="1" opacity="0.3" />
-      <line x1="320" y1="300" x2="400" y2="300" stroke="#C9A84C" strokeWidth="1" opacity="0.3" />
+      <line x1="80" y1="200" x2="0" y2="200" stroke="#FFFFFF" strokeWidth="1" opacity="0.3" />
+      <line x1="320" y1="300" x2="400" y2="300" stroke="#FFFFFF" strokeWidth="1" opacity="0.3" />
       {[[80,100],[320,100],[80,460],[320,460]].map(([x,y], i) => (
         <g key={i}>
-          <circle cx={x} cy={y} r="4" fill="#C9A84C" opacity="0.6" />
-          <circle cx={x} cy={y} r="8" fill="none" stroke="#C9A84C" strokeWidth="0.5" opacity="0.3" />
+          <circle cx={x} cy={y} r="4" fill="#FFFFFF" opacity="0.6" />
+          <circle cx={x} cy={y} r="8" fill="none" stroke="#FFFFFF" strokeWidth="0.5" opacity="0.3" />
         </g>
       ))}
-      <text x="30" y="180" fill="#C9A84C" fontSize="10" opacity="0.5" fontFamily="monospace">YIELD: FIXED</text>
-      <text x="340" y="280" fill="#C9A84C" fontSize="10" opacity="0.5" fontFamily="monospace">VOID: 0%</text>
-      <text x="340" y="310" fill="#C9A84C" fontSize="8" opacity="0.3" fontFamily="monospace">LEASE: COMMERCIAL</text>
+      <text x="30" y="180" fill="#FFFFFF" fontSize="10" opacity="0.5" fontFamily="monospace">YIELD: FIXED</text>
+      <text x="340" y="280" fill="#FFFFFF" fontSize="10" opacity="0.5" fontFamily="monospace">VOID: 0%</text>
+      <text x="340" y="310" fill="#FFFFFF" fontSize="8" opacity="0.3" fontFamily="monospace">LEASE: COMMERCIAL</text>
     </motion.svg>
   );
 }
@@ -96,13 +96,13 @@ function YieldIllustration() {
           strokeWidth="0.5" rx="1"
         />
       ))}
-      <line x1="45" y1="75" x2="275" y2="75" stroke="#C9A84C" strokeWidth="2.5" />
+      <line x1="45" y1="75" x2="275" y2="75" stroke="#FFFFFF" strokeWidth="2.5" />
       {[55, 80, 105, 130, 155, 180, 205, 230, 255].map((x, i) => (
-        <circle key={i} cx={x + 9} cy="75" r="3" fill="#C9A84C" />
+        <circle key={i} cx={x + 9} cy="75" r="3" fill="#FFFFFF" />
       ))}
-      <text x="45" y="170" fill="#5A5040" fontSize="9" fontFamily="monospace">Month 1</text>
-      <text x="240" y="170" fill="#5A5040" fontSize="9" fontFamily="monospace">Month 12</text>
-      <text x="250" y="78" fill="#C9A84C" fontSize="9" fontFamily="monospace">Svnteen</text>
+      <text x="45" y="170" fill="#8A8078" fontSize="9" fontFamily="monospace">Month 1</text>
+      <text x="240" y="170" fill="#8A8078" fontSize="9" fontFamily="monospace">Month 12</text>
+      <text x="250" y="78" fill="#FFFFFF" fontSize="9" fontFamily="monospace">Svnteen</text>
       <text x="145" y="115" fill="#5A4040" fontSize="9" fontFamily="monospace">Standard AST</text>
       <text x="72" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
       <text x="148" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
@@ -115,28 +115,28 @@ function ReliabilityIllustration() {
   const corpLabels = ['Corporate Budget', 'Multiple Revenue', 'Business Insurance', 'Institutional Backing'];
   return (
     <svg viewBox="0 0 320 200" className="w-full max-w-xs opacity-80">
-      <text x="40" y="25" fill="#5A5040" fontSize="10" fontFamily="monospace" textAnchor="middle">INDIVIDUAL TENANT</text>
+      <text x="40" y="25" fill="#8A8078" fontSize="10" fontFamily="monospace" textAnchor="middle">INDIVIDUAL TENANT</text>
       {chainLabels.map((label, i) => (
         <g key={i}>
           <rect x="10" y={40 + i * 32} width="60" height="22" rx="11"
             fill="#1C1C1C" stroke={i === 1 ? '#e05555' : '#3A3A3A'} strokeWidth={i === 1 ? 1.5 : 0.5}
           />
-          <text x="40" y={55 + i * 32} fill={i === 1 ? '#e05555' : '#5A5040'} fontSize="8" textAnchor="middle" fontFamily="monospace">
+          <text x="40" y={55 + i * 32} fill={i === 1 ? '#e05555' : '#8A8078'} fontSize="8" textAnchor="middle" fontFamily="monospace">
             {label}
           </text>
           {i < 3 && <line x1="40" y1={62 + i * 32} x2="40" y2={72 + i * 32} stroke={i === 1 ? '#e05555' : '#3A3A3A'} strokeWidth={i === 1 ? 1.5 : 0.5} strokeDasharray={i === 1 ? '3 2' : '0'} />}
         </g>
       ))}
       <text x="80" y="82" fill="#e05555" fontSize="8" fontFamily="monospace">BREAK</text>
-      <text x="230" y="25" fill="#C9A84C" fontSize="10" fontFamily="monospace" textAnchor="middle">SVNTEEN RESIDENCY</text>
-      <rect x="175" y="40" width="110" height="140" rx="4" fill="#141414" stroke="#C9A84C" strokeWidth="1.5" />
+      <text x="230" y="25" fill="#FFFFFF" fontSize="10" fontFamily="monospace" textAnchor="middle">SVNTEEN RESIDENCY</text>
+      <rect x="175" y="40" width="110" height="140" rx="4" fill="#141414" stroke="#FFFFFF" strokeWidth="1.5" />
       {corpLabels.map((label, i) => (
         <g key={i}>
           <rect x="185" y={52 + i * 30} width="90" height="20" rx="3" fill="#1C1C1C" stroke="#2A2A2A" strokeWidth="0.5" />
-          <text x="230" y={66 + i * 30} fill="#A09880" fontSize="7.5" textAnchor="middle" fontFamily="monospace">{label}</text>
+          <text x="230" y={66 + i * 30} fill="#B8B0A8" fontSize="7.5" textAnchor="middle" fontFamily="monospace">{label}</text>
         </g>
       ))}
-      <text x="230" y="195" fill="#C9A84C" fontSize="9" textAnchor="middle" fontFamily="monospace">PROTECTED</text>
+      <text x="230" y="195" fill="#FFFFFF" fontSize="9" textAnchor="middle" fontFamily="monospace">PROTECTED</text>
       <line x1="155" y1="30" x2="155" y2="175" stroke="#2A2A2A" strokeWidth="0.5" strokeDasharray="4 2" />
     </svg>
   );
@@ -147,7 +147,7 @@ function VoidIllustration() {
   const voidMonths = [0, 6, 7];
   return (
     <svg viewBox="0 0 320 180" className="w-full max-w-xs opacity-80">
-      <text x="60" y="20" fill="#5A5040" fontSize="9" textAnchor="middle" fontFamily="monospace">STANDARD AST</text>
+      <text x="60" y="20" fill="#8A8078" fontSize="9" textAnchor="middle" fontFamily="monospace">STANDARD AST</text>
       {months.map((m, i) => {
         const col = i % 4;
         const row = Math.floor(i / 4);
@@ -167,22 +167,22 @@ function VoidIllustration() {
       })}
       <text x="60" y="140" fill="#e05555" fontSize="8" textAnchor="middle" fontFamily="monospace">3 VOID MONTHS = LOST</text>
       <line x1="130" y1="15" x2="130" y2="150" stroke="#2A2A2A" strokeWidth="0.5" strokeDasharray="4 2" />
-      <text x="220" y="20" fill="#C9A84C" fontSize="9" textAnchor="middle" fontFamily="monospace">SVNTEEN LEASE</text>
+      <text x="220" y="20" fill="#FFFFFF" fontSize="9" textAnchor="middle" fontFamily="monospace">SVNTEEN LEASE</text>
       {months.map((m, i) => {
         const col = i % 4;
         const row = Math.floor(i / 4);
         return (
           <g key={`sv-${i}`}>
             <rect x={150 + col * 28} y={30 + row * 32} width="24" height="24" rx="3"
-              fill="#1A1200" stroke="#C9A84C" strokeWidth="0.8"
+              fill="#1A1200" stroke="#FFFFFF" strokeWidth="0.8"
             />
-            <text x={162 + col * 28} y={46 + row * 32} fill="#C9A84C"
+            <text x={162 + col * 28} y={46 + row * 32} fill="#FFFFFF"
               fontSize="8" textAnchor="middle" fontFamily="monospace"
             >{m}</text>
           </g>
         );
       })}
-      <text x="220" y="140" fill="#C9A84C" fontSize="8" textAnchor="middle" fontFamily="monospace">12/12 MONTHS PAID</text>
+      <text x="220" y="140" fill="#FFFFFF" fontSize="8" textAnchor="middle" fontFamily="monospace">12/12 MONTHS PAID</text>
     </svg>
   );
 }
@@ -196,7 +196,7 @@ function StickyNav() {
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4 flex-wrap">
         <SvnteenLogo />
-        <span className="hidden md:block text-xs uppercase tracking-[0.2em] text-[#5A5040]">
+        <span className="hidden md:block text-xs uppercase tracking-[0.2em] text-[#8A8078]">
           Corporate Lease Information — Landlords & Agents
         </span>
         <div className="flex items-center gap-3">
@@ -212,7 +212,7 @@ function StickyNav() {
           </a>
           <a
             href="#download"
-            className="flex items-center gap-2 px-4 py-2 rounded-md bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] text-sm font-bold"
+            className="flex items-center gap-2 px-4 py-2 rounded-md bg-white text-[#0A0A0A] text-sm font-bold"
             data-testid="link-brochure-nav"
           >
             <FileText className="w-4 h-4" />
@@ -259,11 +259,11 @@ function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] font-medium"
+            className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] font-medium"
           >
             A Message to Landlords & Letting Agents
           </motion.p>
-          <div className="w-16 h-px bg-[#C9A84C] opacity-40" />
+          <div className="w-16 h-px bg-[#C8C0B8] opacity-30" />
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -290,7 +290,7 @@ function HeroSection() {
           >
             <a
               href="#how-it-works"
-              className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] font-bold text-sm"
+              className="flex items-center gap-2 px-6 py-3 rounded-md bg-white text-[#0A0A0A] font-bold text-sm"
               data-testid="link-how-it-works"
             >
               Read How It Works
@@ -319,7 +319,7 @@ function HeroSection() {
                 className="flex items-center gap-2 text-xs text-white/80 bg-black/40 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full"
                 data-testid={`stat-pill-${idx}`}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C9A84C]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C8C0B8]" />
                 {stat}
               </span>
             ))}
@@ -379,7 +379,7 @@ function ReformBillSection() {
             The Renters Reform Bill Is Now Law
           </h2>
         </div>
-        <p className="text-[#A09880] text-sm mb-10">
+        <p className="text-[#B8B0A8] text-sm mb-10">
           What it means for landlords with standard AST tenancies
         </p>
         <div className="w-full h-px bg-[#2A2A2A] mb-10" />
@@ -404,16 +404,16 @@ function ReformBillSection() {
                   </span>
                 </div>
                 <h3 className="text-[#F5F0E8] font-semibold text-sm mb-2">{card.title}</h3>
-                <p className="text-xs text-[#A09880] leading-relaxed">{card.body}</p>
+                <p className="text-xs text-[#B8B0A8] leading-relaxed">{card.body}</p>
               </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-10 p-6 rounded-md border border-[#C9A84C33] bg-[#C9A84C0A]">
+        <div className="mt-10 p-6 rounded-md border border-[#FFFFFF33] bg-[#FFFFFF0A]">
           <p className="text-center text-[#F5F0E8] text-lg font-semibold leading-relaxed">
             Commercial leases fall outside the scope of the Renters Reform Act.<br />
-            <span className="text-[#C9A84C]">When your tenant is a company, not a person, the rules change entirely.</span>
+            <span className="text-[#FFFFFF]">When your tenant is a company, not a person, the rules change entirely.</span>
           </p>
         </div>
 
@@ -477,9 +477,9 @@ function ValueAnglesSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="how-it-works" data-testid="section-value-angles">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">Why Landlords Choose a Corporate Lease</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Why Landlords Choose a Corporate Lease</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">Three reasons this outperforms a standard tenancy</h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-12" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="space-y-16">
           {valueAngles.map((angle, i) => (
@@ -494,17 +494,17 @@ function ValueAnglesSection() {
             >
               <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-[#C9A84C] text-2xl font-mono font-light">{angle.number}</span>
+                  <span className="text-[#FFFFFF] text-2xl font-mono font-light">{angle.number}</span>
                   <div className="w-px h-6 bg-[#2A2A2A]" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#5A5040]">{angle.sub}</span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#8A8078]">{angle.sub}</span>
                 </div>
                 <h3 className="text-xl font-bold text-[#F5F0E8] mb-4">{angle.angle}</h3>
-                <p className="text-sm text-[#A09880] leading-relaxed mb-6">{angle.content}</p>
+                <p className="text-sm text-[#B8B0A8] leading-relaxed mb-6">{angle.content}</p>
                 <div className="space-y-2">
                   {angle.bullets.map((bullet, j) => (
                     <div key={j} className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-[#52B788] mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-[#A09880]">{bullet}</span>
+                      <span className="text-sm text-[#B8B0A8]">{bullet}</span>
                     </div>
                   ))}
                 </div>
@@ -567,11 +567,11 @@ function ProcessSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-process">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">The Process</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">The Process</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           From enquiry to lease signed in 7-14 working days
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-12" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="relative">
           <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#2A2A2A] -translate-x-1/2" />
@@ -589,25 +589,25 @@ function ProcessSection() {
                 >
                   <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2
-                      ${step.highlight ? 'border-[#C9A84C] bg-[#1A1200]' : 'border-[#2A2A2A] bg-[#141414]'}
+                      ${step.highlight ? 'border-[#FFFFFF] bg-[#1A1200]' : 'border-[#2A2A2A] bg-[#141414]'}
                     `}>
-                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-[#C9A84C]' : 'text-[#5A5040]'}`} />
+                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-[#FFFFFF]' : 'text-[#8A8078]'}`} />
                     </div>
                   </div>
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-5 rounded-md border bg-[#141414]
-                    ${step.highlight ? 'border-[#C9A84C33]' : 'border-[#2A2A2A]'}
+                    ${step.highlight ? 'border-[#FFFFFF33]' : 'border-[#2A2A2A]'}
                     ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
                   `}>
                     <div className="flex items-center justify-between mb-2 gap-2">
-                      <span className="text-[#C9A84C] text-xs font-mono opacity-60">{step.number}</span>
-                      <span className="text-xs text-[#5A5040] bg-[#1C1C1C] px-2 py-0.5 rounded-full">
+                      <span className="text-[#FFFFFF] text-xs font-mono opacity-60">{step.number}</span>
+                      <span className="text-xs text-[#8A8078] bg-[#1C1C1C] px-2 py-0.5 rounded-full">
                         {step.timeline}
                       </span>
                     </div>
-                    <h4 className={`font-semibold mb-2 ${step.highlight ? 'text-[#C9A84C]' : 'text-[#F5F0E8]'}`}>
+                    <h4 className={`font-semibold mb-2 ${step.highlight ? 'text-[#FFFFFF]' : 'text-[#F5F0E8]'}`}>
                       {step.title}
                     </h4>
-                    <p className="text-sm text-[#A09880] leading-relaxed">{step.body}</p>
+                    <p className="text-sm text-[#B8B0A8] leading-relaxed">{step.body}</p>
                   </div>
                 </motion.div>
               );
@@ -636,21 +636,21 @@ function ComparisonSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="the-comparison" data-testid="section-comparison">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">The Comparison</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">The Comparison</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           Standard AST vs Svnteen Commercial Lease
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-12" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="overflow-x-auto rounded-md border border-[#2A2A2A]">
           <table className="w-full min-w-[640px]" data-testid="table-comparison">
             <thead>
               <tr className="border-b border-[#2A2A2A]">
-                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#5A5040] w-1/4">Consideration</th>
-                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#5A5040] w-[37.5%]">
+                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#8A8078] w-1/4">Consideration</th>
+                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#8A8078] w-[37.5%]">
                   Standard AST Tenancy
                 </th>
-                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#C9A84C] w-[37.5%] bg-[#C9A84C0A]">
+                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#C8C0B8] w-[37.5%] bg-[#FFFFFF0A]">
                   Svnteen Commercial Lease
                 </th>
               </tr>
@@ -658,23 +658,23 @@ function ComparisonSection() {
             <tbody>
               {comparisonRows.map((row, i) => (
                 <tr key={i} className={`border-b border-[#1C1C1C] ${i % 2 === 0 ? 'bg-[#0A0A0A]' : 'bg-[#0D0D0D]'}`} data-testid={`row-comparison-${i}`}>
-                  <td className="py-4 px-5 text-xs text-[#5A5040] font-medium uppercase tracking-wide">
+                  <td className="py-4 px-5 text-xs text-[#8A8078] font-medium uppercase tracking-wide">
                     {row.category}
                   </td>
-                  <td className="py-4 px-5 text-sm text-[#A09880]">
+                  <td className="py-4 px-5 text-sm text-[#B8B0A8]">
                     <div className="flex items-start gap-2">
                       <X className="w-3.5 h-3.5 text-[#e05555] mt-0.5 flex-shrink-0" />
                       <span>{row.ast}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-5 text-sm bg-[#C9A84C06]">
+                  <td className="py-4 px-5 text-sm bg-[#FFFFFF06]">
                     <div className="flex items-start gap-2">
                       {row.svnteenWins ? (
                         <Check className="w-3.5 h-3.5 text-[#52B788] mt-0.5 flex-shrink-0" />
                       ) : (
                         <Minus className="w-3.5 h-3.5 text-[#f4a01c] mt-0.5 flex-shrink-0" />
                       )}
-                      <span className={row.svnteenWins ? 'text-[#F5F0E8]' : 'text-[#A09880]'}>
+                      <span className={row.svnteenWins ? 'text-[#F5F0E8]' : 'text-[#B8B0A8]'}>
                         {row.svnteen}
                       </span>
                     </div>
@@ -684,7 +684,7 @@ function ComparisonSection() {
             </tbody>
             <tfoot>
               <tr className="bg-[#141414]">
-                <td colSpan={3} className="py-3 px-5 text-xs text-[#5A5040] text-center">
+                <td colSpan={3} className="py-3 px-5 text-xs text-[#8A8078] text-center">
                   ~ Indicates a trade-off. Svnteen offers slightly below-market rent in exchange for institutional-grade reliability.
                 </td>
               </tr>
@@ -700,11 +700,11 @@ function R2SASection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-r2sa">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">How R2SA Works</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">How R2SA Works</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           The three-party structure explained
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-12" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
@@ -715,11 +715,11 @@ function R2SASection() {
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
               <div className="w-20 h-20 rounded-2xl bg-[#141414] border border-[#2A2A2A] flex items-center justify-center">
-                <Home className="w-8 h-8 text-[#A09880]" />
+                <Home className="w-8 h-8 text-[#B8B0A8]" />
               </div>
               <div className="text-center">
                 <p className="text-[#F5F0E8] font-semibold text-sm">The Landlord</p>
-                <p className="text-[#5A5040] text-xs mt-1">Owns the property</p>
+                <p className="text-[#8A8078] text-xs mt-1">Owns the property</p>
               </div>
               <div className="w-full bg-[#141414] border border-[#2A2A2A] rounded-md p-3 space-y-1.5">
                 {[
@@ -731,20 +731,20 @@ function R2SASection() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-1.5">
                     <Check className="w-3 h-3 text-[#52B788] mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-[#A09880]">{item}</p>
+                    <p className="text-xs text-[#B8B0A8]">{item}</p>
                   </div>
                 ))}
               </div>
             </motion.div>
 
             <div className="flex flex-col items-center gap-1 rotate-90 md:rotate-0">
-              <div className="h-16 w-px md:w-24 md:h-px bg-[#C9A84C] relative">
+              <div className="h-16 w-px md:w-24 md:h-px bg-[#FFFFFF] relative">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0A0A0A] px-2 py-1 whitespace-nowrap">
-                  <p className="text-[#C9A84C] text-[10px] font-mono uppercase tracking-wider">Commercial Lease</p>
-                  <p className="text-[#5A5040] text-[9px] text-center">Fixed monthly yield</p>
+                  <p className="text-[#FFFFFF] text-[10px] font-mono uppercase tracking-wider">Commercial Lease</p>
+                  <p className="text-[#8A8078] text-[9px] text-center">Fixed monthly yield</p>
                 </div>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#C9A84C] rotate-90 md:rotate-0" />
+              <ArrowRight className="w-4 h-4 text-[#FFFFFF] rotate-90 md:rotate-0" />
             </div>
 
             <motion.div
@@ -754,14 +754,14 @@ function R2SASection() {
               transition={{ delay: 0.2 }}
               className="flex flex-col items-center gap-3 w-full md:w-64"
             >
-              <div className="w-24 h-24 rounded-2xl bg-[#1A1200] border-2 border-[#C9A84C] flex items-center justify-center">
+              <div className="w-24 h-24 rounded-2xl bg-[#1A1200] border-2 border-[#FFFFFF] flex items-center justify-center">
                 <SvnteenLogo className="h-10 w-auto" />
               </div>
               <div className="text-center">
-                <p className="text-[#C9A84C] font-bold text-sm">Svnteen The Residency</p>
-                <p className="text-[#5A5040] text-xs mt-1">The commercial tenant</p>
+                <p className="text-[#FFFFFF] font-bold text-sm">Svnteen The Residency</p>
+                <p className="text-[#8A8078] text-xs mt-1">The commercial tenant</p>
               </div>
-              <div className="w-full bg-[#1A1200] border border-[#C9A84C33] rounded-md p-3 space-y-1.5">
+              <div className="w-full bg-[#1A1200] border border-[#FFFFFF33] rounded-md p-3 space-y-1.5">
                 {[
                   'Manages the property entirely',
                   'Furnishes to hotel standard',
@@ -770,8 +770,8 @@ function R2SASection() {
                   'Pays landlord from operating budget',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-1.5">
-                    <ArrowRight className="w-3 h-3 text-[#C9A84C] mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-[#A09880]">{item}</p>
+                    <ArrowRight className="w-3 h-3 text-[#FFFFFF] mt-0.5 flex-shrink-0" />
+                    <p className="text-xs text-[#B8B0A8]">{item}</p>
                   </div>
                 ))}
               </div>
@@ -781,7 +781,7 @@ function R2SASection() {
               <div className="h-16 w-px md:w-24 md:h-px bg-[#52B788] relative">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0A0A0A] px-2 py-1 whitespace-nowrap">
                   <p className="text-[#52B788] text-[10px] font-mono uppercase tracking-wider">SA Revenue</p>
-                  <p className="text-[#5A5040] text-[9px] text-center">Per-night bookings</p>
+                  <p className="text-[#8A8078] text-[9px] text-center">Per-night bookings</p>
                 </div>
               </div>
               <ArrowRight className="w-4 h-4 text-[#52B788] rotate-90 md:rotate-0" />
@@ -795,11 +795,11 @@ function R2SASection() {
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
               <div className="w-20 h-20 rounded-2xl bg-[#141414] border border-[#2A2A2A] flex items-center justify-center">
-                <Luggage className="w-8 h-8 text-[#A09880]" />
+                <Luggage className="w-8 h-8 text-[#B8B0A8]" />
               </div>
               <div className="text-center">
                 <p className="text-[#F5F0E8] font-semibold text-sm">Short-Stay Guests</p>
-                <p className="text-[#5A5040] text-xs mt-1">Corporate & leisure travellers</p>
+                <p className="text-[#8A8078] text-xs mt-1">Corporate & leisure travellers</p>
               </div>
               <div className="w-full bg-[#141414] border border-[#2A2A2A] rounded-md p-3 space-y-1.5">
                 {[
@@ -810,8 +810,8 @@ function R2SASection() {
                   'Pay nightly rate to Svnteen',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-1.5">
-                    <ArrowRight className="w-3 h-3 text-[#5A5040] mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-[#A09880]">{item}</p>
+                    <ArrowRight className="w-3 h-3 text-[#8A8078] mt-0.5 flex-shrink-0" />
+                    <p className="text-xs text-[#B8B0A8]">{item}</p>
                   </div>
                 ))}
               </div>
@@ -819,9 +819,9 @@ function R2SASection() {
           </div>
 
           <div className="mt-8 p-4 rounded-md bg-[#141414] border border-[#2A2A2A] text-center">
-            <p className="text-sm text-[#A09880]">
+            <p className="text-sm text-[#B8B0A8]">
               <span className="text-[#F5F0E8] font-semibold">The critical point: </span>
-              You have <span className="text-[#C9A84C] font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
+              You have <span className="text-[#FFFFFF] font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
               The revolving door of guests never involves you. They have no residential rights in your property.
               Your agreement is entirely with us.
             </p>
@@ -847,9 +847,9 @@ function R2SASection() {
             },
           ].map((item, i) => (
             <div key={i} className="p-4 rounded-md bg-[#141414] border border-[#2A2A2A]" data-testid={`card-concern-${i}`}>
-              <item.icon className="w-6 h-6 text-[#C9A84C] mb-3" />
-              <p className="text-sm text-[#C9A84C] font-semibold mb-1.5">{item.concern}</p>
-              <p className="text-xs text-[#A09880] leading-relaxed">{item.answer}</p>
+              <item.icon className="w-6 h-6 text-[#FFFFFF] mb-3" />
+              <p className="text-sm text-[#FFFFFF] font-semibold mb-1.5">{item.concern}</p>
+              <p className="text-xs text-[#B8B0A8] leading-relaxed">{item.answer}</p>
             </div>
           ))}
         </div>
@@ -869,18 +869,18 @@ function WhoWeAreSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-who-we-are">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">About Svnteen The Residency</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">About Svnteen The Residency</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           Who we are
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-10" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-10" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="space-y-6">
-            <p className="text-[#A09880] leading-relaxed">
+            <p className="text-[#B8B0A8] leading-relaxed">
               We are a UK-based short-let management company operating under commercial leases across multiple UK cities. We manage properties to five-star serviced apartment standard and have an active presence on Airbnb, Booking.com, and VRBO.
             </p>
-            <p className="text-[#A09880] leading-relaxed">
+            <p className="text-[#B8B0A8] leading-relaxed">
               Our promise to landlords is simple: we treat your property as if it were our own — because our business reputation depends on it.
             </p>
             <div className="grid grid-cols-2 gap-3 mt-6">
@@ -888,8 +888,8 @@ function WhoWeAreSection() {
                 const Icon = cred.icon;
                 return (
                   <div key={i} className="flex items-center gap-3 p-3 rounded-md bg-[#141414] border border-[#2A2A2A]">
-                    <Icon className="w-4 h-4 text-[#C9A84C] flex-shrink-0" />
-                    <span className="text-xs text-[#A09880]">{cred.label}</span>
+                    <Icon className="w-4 h-4 text-[#FFFFFF] flex-shrink-0" />
+                    <span className="text-xs text-[#B8B0A8]">{cred.label}</span>
                   </div>
                 );
               })}
@@ -911,7 +911,7 @@ function WhoWeAreSection() {
               </div>
             </div>
             <div className="p-6 rounded-md bg-[#141414] border border-[#2A2A2A]">
-              <p className="text-xs uppercase tracking-widest text-[#5A5040] mb-4">Our Standards</p>
+              <p className="text-xs uppercase tracking-widest text-[#8A8078] mb-4">Our Standards</p>
               {[
                 { icon: Star, label: 'Five-star serviced apartment standard' },
                 { icon: Users, label: 'Professional guest management team' },
@@ -921,8 +921,8 @@ function WhoWeAreSection() {
                 const Icon = item.icon;
                 return (
                   <div key={i} className="flex items-center gap-3 py-2.5 border-b border-[#1C1C1C] last:border-0">
-                    <Icon className="w-4 h-4 text-[#C9A84C]" />
-                    <span className="text-sm text-[#A09880]">{item.label}</span>
+                    <Icon className="w-4 h-4 text-[#FFFFFF]" />
+                    <span className="text-sm text-[#B8B0A8]">{item.label}</span>
                   </div>
                 );
               })}
@@ -1027,11 +1027,11 @@ function FAQSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="faqs" data-testid="section-faqs">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">Frequently Asked Questions</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Frequently Asked Questions</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           What landlords ask us most
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-8" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-8" />
 
         <div className="flex flex-wrap gap-2 mb-8">
           {categories.map(cat => (
@@ -1040,8 +1040,8 @@ function FAQSection() {
               onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
               className={`px-4 py-2 rounded-full text-xs font-medium transition-all border
                 ${activeCategory === cat
-                  ? 'bg-[#C9A84C] text-[#0A0A0A] border-[#C9A84C]'
-                  : 'bg-[#141414] text-[#5A5040] border-[#2A2A2A]'
+                  ? 'bg-[#FFFFFF] text-[#0A0A0A] border-[#FFFFFF]'
+                  : 'bg-[#141414] text-[#8A8078] border-[#2A2A2A]'
                 }
               `}
               data-testid={`button-faq-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1070,12 +1070,12 @@ function FAQSection() {
                   data-testid={`button-faq-${globalIndex}`}
                 >
                   <div className="flex items-center gap-3 flex-1">
-                    <span className="text-[10px] text-[#5A5040] bg-[#1C1C1C] px-2 py-0.5 rounded-full flex-shrink-0">
+                    <span className="text-[10px] text-[#8A8078] bg-[#1C1C1C] px-2 py-0.5 rounded-full flex-shrink-0">
                       {faq.category}
                     </span>
                     <span className="text-sm text-[#F5F0E8] font-medium">{faq.q}</span>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-[#5A5040] flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-[#8A8078] flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {isOpen && (
@@ -1088,7 +1088,7 @@ function FAQSection() {
                     >
                       <div className="px-4 pb-4 pt-0">
                         <div className="pl-0 md:pl-[calc(0.625rem+0.75rem+0.5rem)] border-t border-[#1C1C1C] pt-3">
-                          <p className="text-sm text-[#A09880] leading-relaxed">{faq.a}</p>
+                          <p className="text-sm text-[#B8B0A8] leading-relaxed">{faq.a}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -1131,11 +1131,11 @@ function TestimonialsSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-testimonials">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">Landlord Perspectives</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Landlord Perspectives</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           What landlords say about the arrangement
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-12" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
@@ -1150,17 +1150,17 @@ function TestimonialsSection() {
             >
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 text-[#C9A84C] fill-[#C9A84C]" />
+                  <Star key={j} className="w-3.5 h-3.5 text-[#FFFFFF] fill-[#FFFFFF]" />
                 ))}
               </div>
-              <p className="text-sm text-[#A09880] leading-relaxed italic flex-1">
+              <p className="text-sm text-[#B8B0A8] leading-relaxed italic flex-1">
                 "{t.quote}"
               </p>
               <div className="mt-6 pt-4 border-t border-[#1C1C1C]">
                 <p className="text-sm text-[#F5F0E8] font-semibold">{t.name}</p>
-                <p className="text-xs text-[#5A5040] mt-1">{t.location}</p>
+                <p className="text-xs text-[#8A8078] mt-1">{t.location}</p>
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs text-[#5A5040]">{t.duration}</span>
+                  <span className="text-xs text-[#8A8078]">{t.duration}</span>
                   {t.verified && (
                     <span className="flex items-center gap-1 text-[10px] text-[#52B788]">
                       <Check className="w-3 h-3" />
@@ -1181,30 +1181,30 @@ function DownloadSection() {
   return (
     <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="download" data-testid="section-download">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] mb-3">Ready to Find Out More?</p>
+        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Ready to Find Out More?</p>
         <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
           Download the brochure or speak to us directly
         </h2>
-        <div className="w-16 h-px bg-[#C9A84C] opacity-40 mb-12" />
+        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <a
             href="/api/landlords/brochure"
             download="Svnteen-Landlord-Brochure.pdf"
-            className="flex flex-col items-center gap-4 p-8 rounded-md border-2 border-[#C9A84C] bg-[#C9A84C08] transition-all group"
+            className="flex flex-col items-center gap-4 p-8 rounded-md border-2 border-[#FFFFFF] bg-[#FFFFFF08] transition-all group"
             data-testid="link-download-brochure"
           >
-            <div className="w-16 h-16 rounded-2xl bg-[#1A1200] border border-[#C9A84C] flex items-center justify-center">
-              <FileText className="w-8 h-8 text-[#C9A84C]" />
+            <div className="w-16 h-16 rounded-2xl bg-[#1A1200] border border-[#FFFFFF] flex items-center justify-center">
+              <FileText className="w-8 h-8 text-[#FFFFFF]" />
             </div>
             <div className="text-center">
               <p className="text-[#F5F0E8] font-bold text-lg">Download the Brochure</p>
-              <p className="text-[#A09880] text-sm mt-1">5-page PDF — commercial lease overview, FAQs, and process guide</p>
+              <p className="text-[#B8B0A8] text-sm mt-1">5-page PDF — commercial lease overview, FAQs, and process guide</p>
             </div>
-            <div className="text-[#5A5040] text-xs text-center">
+            <div className="text-[#8A8078] text-xs text-center">
               PDF · 5 pages · No email required
             </div>
-            <div className="px-8 py-3 rounded-md bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] font-bold uppercase tracking-wider text-sm w-full text-center">
+            <div className="px-8 py-3 rounded-md bg-white text-[#0A0A0A] font-bold uppercase tracking-wider text-sm w-full text-center">
               Download Free PDF
             </div>
           </a>
@@ -1221,7 +1221,7 @@ function DownloadSection() {
             </div>
             <div className="text-center">
               <p className="text-[#F5F0E8] font-bold text-lg">Speak to Us Directly</p>
-              <p className="text-[#A09880] text-sm mt-1">WhatsApp our team — no forms, no waiting</p>
+              <p className="text-[#B8B0A8] text-sm mt-1">WhatsApp our team — no forms, no waiting</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
@@ -1244,13 +1244,13 @@ function FooterSection() {
         <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
           <div className="max-w-sm">
             <SvnteenLogo className="h-7 w-auto mb-4" />
-            <p className="text-[#5A5040] text-sm leading-relaxed">
+            <p className="text-[#8A8078] text-sm leading-relaxed">
               Corporate Lease Division — Commercial property arrangements for landlords seeking fixed-yield, management-free income.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
             <div>
-              <p className="text-[#A09880] font-semibold mb-3 uppercase tracking-wider text-xs">This Page</p>
+              <p className="text-[#B8B0A8] font-semibold mb-3 uppercase tracking-wider text-xs">This Page</p>
               {[
                 { label: 'The Challenge', href: '#the-challenge' },
                 { label: 'How It Works', href: '#how-it-works' },
@@ -1258,13 +1258,13 @@ function FooterSection() {
                 { label: 'FAQs', href: '#faqs' },
                 { label: 'Download Brochure', href: '#download' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-[#5A5040] py-1 transition-colors" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-[#8A8078] py-1 transition-colors" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-[#A09880] font-semibold mb-3 uppercase tracking-wider text-xs">Platform</p>
+              <p className="text-[#B8B0A8] font-semibold mb-3 uppercase tracking-wider text-xs">Platform</p>
               {[
                 { label: 'The Marketplace', href: '/marketplace' },
                 { label: 'Deal Analyser', href: '/deal-analyser' },
@@ -1272,13 +1272,13 @@ function FooterSection() {
                 { label: 'For Investors', href: '/signup' },
                 { label: 'For Sourcers', href: '/signup' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-[#5A5040] py-1 transition-colors" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-[#8A8078] py-1 transition-colors" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-[#A09880] font-semibold mb-3 uppercase tracking-wider text-xs">Contact</p>
+              <p className="text-[#B8B0A8] font-semibold mb-3 uppercase tracking-wider text-xs">Contact</p>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"

@@ -39,10 +39,10 @@ A standalone, premium marketing page at `/landlords` designed to convert landlor
 
 ## Design System
 - Background: #0A0A0A (obsidian)
-- Gold accent: #C9A84C
+- Accent: #FFFFFF / #C8C0B8 (clean white / warm silver for labels)
 - Text primary: #F5F0E8
-- Text secondary: #A09880
-- Text muted: #5A5040
+- Text secondary: #B8B0A8
+- Text muted: #8A8078
 - Card bg: #141414
 - Border: #2A2A2A
 - Red (negative): #e05555
