@@ -22,7 +22,7 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-function SvnteenLogo({ className = "h-7 w-auto" }: { className?: string }) {
+function SvnteenLogo({ className = "h-12 w-auto" }: { className?: string }) {
   return (
     <img
       src={logoImage}
@@ -206,21 +206,12 @@ function StickyNav() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[#25D366]/40 text-[#25D366] text-sm font-medium transition-all duration-300 ease-in-out hover:border-[#25D366] hover:bg-[#25D366]/10 hover:scale-[1.02]"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366] text-white text-sm font-semibold transition-all duration-300 ease-in-out hover:bg-[#25D366]/90 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#25D366]/20"
             data-testid="link-whatsapp-nav"
             aria-label="Contact us on WhatsApp"
           >
             <WhatsAppIcon />
             <span className="hidden sm:inline">WhatsApp Us</span>
-          </a>
-          <a
-            href="#download"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white text-[#0A0A0A] text-sm font-semibold transition-all duration-300 ease-in-out hover:bg-white/90 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/10"
-            data-testid="link-brochure-nav"
-            aria-label="Download brochure"
-          >
-            <FileText className="w-4 h-4" />
-            <span>Brochure</span>
           </a>
         </div>
       </div>
@@ -1187,62 +1178,41 @@ function TestimonialsSection() {
   );
 }
 
-function DownloadSection() {
+function ContactSection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="download" data-testid="section-download">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="contact" data-testid="section-contact">
+      <div className="max-w-3xl mx-auto text-center">
         <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Ready to Find Out More?</p>
-        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-14">
-          Download the brochure or speak to us directly
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-6">
+          Speak to us directly
         </h2>
+        <p className="text-white/40 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
+          No forms, no waiting lists, no sales pressure. Message our team on WhatsApp and get straight answers about how a commercial lease could work for your property.
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <a
-            href="/api/landlords/brochure"
-            download="Svnteen-Landlord-Brochure.pdf"
-            className="flex flex-col items-center gap-5 p-10 rounded-2xl border border-white/20 bg-white/[0.03] transition-all duration-300 group hover:bg-white/[0.06] hover:border-white/30 hover:scale-[1.01]"
-            data-testid="link-download-brochure"
-            aria-label="Download landlord brochure PDF"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-white/[0.05] border border-white/[0.15] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              <FileText className="w-8 h-8 text-white/60" />
-            </div>
-            <div className="text-center">
-              <p className="text-white font-bold text-lg">Download the Brochure</p>
-              <p className="text-white/40 text-sm mt-2">5-page PDF — commercial lease overview, FAQs, and process guide</p>
-            </div>
-            <div className="text-white/20 text-[11px] text-center">
-              PDF · 5 pages · No email required
-            </div>
-            <div className="px-8 py-3.5 rounded-lg bg-white text-[#0A0A0A] font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-white/10">
-              Download Free PDF
-            </div>
-          </a>
-
-          <a
-            href={WHATSAPP_URL_FULL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center gap-5 p-10 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01]"
-            data-testid="link-whatsapp-cta"
-            aria-label="Contact us on WhatsApp"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              <WhatsAppIcon className="w-10 h-10 text-white" />
-            </div>
-            <div className="text-center">
-              <p className="text-white font-bold text-lg">Speak to Us Directly</p>
-              <p className="text-white/40 text-sm mt-2">WhatsApp our team — no forms, no waiting</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-              <span className="text-[#25D366]/80 text-sm font-medium">Usually responds within 2 hours</span>
-            </div>
-            <div className="px-8 py-3.5 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
-              Open WhatsApp
-            </div>
-          </a>
-        </div>
+        <a
+          href={WHATSAPP_URL_FULL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex flex-col items-center gap-6 p-12 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01] w-full max-w-md mx-auto"
+          data-testid="link-whatsapp-cta"
+          aria-label="Contact us on WhatsApp"
+        >
+          <div className="w-20 h-20 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+            <WhatsAppIcon className="w-12 h-12 text-white" />
+          </div>
+          <div className="text-center">
+            <p className="text-white font-bold text-xl">WhatsApp Our Team</p>
+            <p className="text-white/40 text-sm mt-2">No forms, no waiting — just message us</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+            <span className="text-[#25D366]/80 text-sm font-medium">Usually responds within 2 hours</span>
+          </div>
+          <div className="px-8 py-4 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
+            Open WhatsApp
+          </div>
+        </a>
       </div>
     </section>
   );
@@ -1267,7 +1237,7 @@ function FooterSection() {
                 { label: 'How It Works', href: '#how-it-works' },
                 { label: 'The Comparison', href: '#the-comparison' },
                 { label: 'FAQs', href: '#faqs' },
-                { label: 'Download Brochure', href: '#download' },
+                { label: 'Contact Us', href: '#contact' },
               ].map(item => (
                 <a key={item.label} href={item.href} className="block text-white/20 py-1.5 transition-colors duration-200 hover:text-white/50 text-[13px]" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
@@ -1362,7 +1332,7 @@ export function LandlordsPage() {
       <WhoWeAreSection />
       <FAQSection />
       <TestimonialsSection />
-      <DownloadSection />
+      <ContactSection />
       <FooterSection />
     </div>
   );
