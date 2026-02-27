@@ -1,16 +1,25 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { generateLandlordBrochure } from "./landlordBrochure";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
+  app.get('/api/landlords/brochure', async (req, res) => {
+    try {
+      await generateLandlordBrochure(res);
+    } catch (error) {
+      console.error('Brochure generation error:', error);
+      res.status(500).json({ error: 'Brochure generation failed' });
+    }
+  });
 
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
+  app.post('/api/analytics/landlord-page-visit', async (req, res) => {
+    console.log('Landlord page visit:', req.body);
+    return res.json({ ok: true });
+  });
 
   return httpServer;
 }
