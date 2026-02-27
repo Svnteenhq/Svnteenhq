@@ -811,7 +811,7 @@ function ProcessSection() {
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>The Process</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
-          From enquiry to lease signed<br />in 7–14 working days
+          From enquiry to lease signed
         </SectionHeading></Reveal>
 
         <div className="relative">
