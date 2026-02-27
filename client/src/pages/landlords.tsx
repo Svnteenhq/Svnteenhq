@@ -83,7 +83,7 @@ const WORD_VARIANTS = {
 function AnimatedHeadline({ text, delay = 0, italic = false, accent = false }: { text: string; delay?: number; italic?: boolean; accent?: boolean }) {
   const words = text.split(" ");
   return (
-    <div className="overflow-hidden flex flex-wrap gap-x-[0.3em]">
+    <div className="overflow-hidden flex flex-wrap gap-x-[0.3em] pb-[0.15em]">
       {words.map((word, i) => (
         <motion.span
           key={i}
