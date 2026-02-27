@@ -1,0 +1,131 @@
+The Typography Masterclass Prompt
+Use this when your text looks generic or hard to read. Good typography is 80% of premium web design.
+
+Prompt:
+"Act as an expert Editorial Web Designer. Review this code and completely overhaul the typography to feel like a high-end publication or premium SaaS. Do not change the layout or functionality. > * Tighten the tracking (letter-spacing) slightly on main headings (H1, H2) for a sleek look.
+
+Increase the line-height (leading) on paragraph text to 1.6 or 1.75 for maximum readability.
+
+Ensure a strict size hierarchy: H1 should be massive, H2 distinct, and body text legible. Use a muted color (e.g., text-slate-500) for secondary text to create visual depth."
+
+2. The "Bento Box" Grid Restructure Prompt
+Use this if your features, services, or portfolio cards look messy. This applies the trendy, Apple-style grid layout.
+
+Prompt:
+"Act as a UI Engineer. Take the existing card/grid layout in this code and refactor it into a modern 'Bento Box' style grid.
+
+Make the grid asymmetrical (some items span 2 columns, others 1).
+
+Standardize the border-radius to be completely uniform across all cards (e.g., rounded-2xl).
+
+Add a subtle 1px inner border (ring) and a very soft, diffused drop shadow to each card.
+
+Ensure the grid collapses elegantly into a single column on mobile devices."
+
+3. The Hero Section "Glow-Up" Prompt
+Use this on your landing page's top section to maximize first impressions.
+
+Prompt:
+"Review this Hero section code. I want to elevate it to look like a top-tier Y Combinator startup.
+
+Center the alignment perfectly.
+
+Add a subtle, animated gradient text effect to the primary keyword in the H1.
+
+Upgrade the primary Call to Action (CTA) button: give it a slight glow effect (box-shadow matching the brand color), rounded corners, and a smooth transform scale effect on hover.
+
+Make sure the spacing between the headline, subheadline, and buttons is visually balanced."
+
+4. The Glassmorphism & Depth Prompt
+Use this on navbars, sidebars, or floating modals to give them that modern, frosted-glass look.
+
+Prompt:
+"Refactor this specific component to utilize a premium 'Glassmorphism' effect.
+
+Change the background to be slightly transparent (e.g., bg-white/70 or bg-black/60).
+
+Add a backdrop blur filter so the content behind it is frosted.
+
+Add a hairline, semi-transparent border to define the edges cleanly.
+
+Ensure text contrast remains perfectly legible against the blurred background."
+
+5. The Bespoke Form & Input Prompt
+Default HTML forms look cheap. Use this to make your contact or signup forms look expensive.
+
+Prompt:
+"Act as a UX UI Specialist. Upgrade these form inputs and buttons to feel highly polished and frictionless.
+
+Remove the default browser outlines and replace them with a custom, smooth focus ring (e.g., focus:ring-2 focus:ring-indigo-500).
+
+Add subtle background colors to the input fields that shift slightly on hover or focus.
+
+Ensure the padding inside the text inputs is generous (e.g., py-3 px-4) so they don't feel cramped.
+
+Style the submit button to show a seamless loading state transition."
+
+6. The "Dark Mode Luxury" Prompt
+Use this if you want to implement or refine a dark theme that looks sleek, not harsh.
+
+Prompt:
+"Refactor this code to optimize it for a premium dark mode aesthetic.
+
+Replace any pure blacks (#000000) with rich, deep slates or charcoal (e.g., #0f172a or #121212).
+
+Replace pure white text with off-whites or light grays to reduce eye strain (e.g., text-gray-200).
+
+Adjust any borders or dividers to be barely visible, low-opacity lines (e.g., border-white/10).
+
+Make sure any shadows are adjusted to be darker and more spread out to work on dark backgrounds."
+
+7. The Image & Media Polish Prompt
+Use this to make your images sit perfectly within your design without breaking the layout.
+
+Prompt:
+"Review the image implementations in this code.
+
+Wrap the images in containers with strict aspect ratios (e.g., aspect-video or aspect-square) so the layout doesn't jump as they load.
+
+Ensure all images use object-cover so they never stretch or distort.
+
+Add a subtle, smooth zoom effect (hover:scale-105 with overflow-hidden on the parent) when the user hovers over the image containers.
+
+Add a light, neutral background color to the image containers to act as a placeholder before the image fully loads."
+
+8. The Smart Navigation Prompt
+Use this to make your header feel intuitive and unobtrusive.
+
+Prompt:
+"Upgrade this navigation bar code to behave like a modern, premium site.
+
+Make it a 'smart sticky' header: it should hide smoothly when the user scrolls down, and reappear instantly when they scroll up.
+
+Ensure the layout uses flexbox perfectly to space the logo, links, and CTA button.
+
+Add an elegant, custom animated underline effect to the navigation links when hovered, rather than a basic color change."
+
+9. The Mobile-First Touch Refinement Prompt
+Use this to fix clunky mobile experiences.
+
+Prompt:
+"Act as a Mobile UX Expert. Review this code specifically for mobile devices (screens under 768px).
+
+Increase the size of all clickable areas (buttons, links, icons) to have a minimum touch target size of 44x44px.
+
+Ensure there is no horizontal scrolling (overflow-x-hidden on the body).
+
+Convert any complex desktop hover menus into smooth, tappable accordions or bottom-sheet modals for the mobile view."
+
+10. The "Ruthless Spacing Audit" Prompt
+If a site looks "off" but you can't tell why, it's usually the spacing. Run this on your entire page.
+
+Prompt:
+"Act as a strict UI Designer auditing this code. The layout is functional, but the spacing feels amateur.
+
+Standardize the macro-spacing: ensure consistent, large gaps between major sections (e.g., py-24).
+
+Standardize the micro-spacing: ensure consistent padding inside cards and gaps between headings and paragraphs.
+
+Use a strict 4pt or 8pt grid system for all margins and padding.
+
+Do not alter the content or logic, just fix the spacing classes so the page breathes beautifully."

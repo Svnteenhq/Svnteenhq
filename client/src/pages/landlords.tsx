@@ -190,13 +190,15 @@ function VoidIllustration() {
 function StickyNav() {
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-[999] border-b border-[#2A2A2A]"
-      style={{ background: 'rgba(10,10,10,0.97)', backdropFilter: 'blur(16px)' }}
+      className="fixed top-0 left-0 right-0 z-[999] border-b border-white/[0.06]"
+      style={{ background: 'rgba(10,10,10,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
       data-testid="nav-sticky"
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between gap-4 flex-wrap">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 h-[72px] flex items-center justify-between gap-6">
         <SvnteenLogo />
-        <span className="hidden md:block text-xs uppercase tracking-[0.2em] text-[#8A8078]">
+        <span className="hidden lg:block text-[11px] uppercase tracking-[0.25em] text-white/30 font-light">
           Corporate Lease Information — Landlords & Agents
         </span>
         <div className="flex items-center gap-3">
@@ -204,16 +206,18 @@ function StickyNav() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-md border border-[#25D366] text-[#25D366] text-sm font-medium transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg border border-[#25D366]/40 text-[#25D366] text-sm font-medium transition-all duration-300 ease-in-out hover:border-[#25D366] hover:bg-[#25D366]/10 hover:scale-[1.02]"
             data-testid="link-whatsapp-nav"
+            aria-label="Contact us on WhatsApp"
           >
             <WhatsAppIcon />
             <span className="hidden sm:inline">WhatsApp Us</span>
           </a>
           <a
             href="#download"
-            className="flex items-center gap-2 px-4 py-2 rounded-md bg-white text-[#0A0A0A] text-sm font-bold"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white text-[#0A0A0A] text-sm font-semibold transition-all duration-300 ease-in-out hover:bg-white/90 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/10"
             data-testid="link-brochure-nav"
+            aria-label="Download brochure"
           >
             <FileText className="w-4 h-4" />
             <span>Brochure</span>
@@ -233,7 +237,7 @@ function HeroSection() {
   ];
   return (
     <section
-      className="relative min-h-[70vh] flex items-center pt-16 overflow-hidden"
+      className="relative min-h-[75vh] flex items-center pt-[72px] overflow-hidden"
       data-testid="section-hero"
     >
       <img
@@ -245,52 +249,50 @@ function HeroSection() {
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.88) 100%)'
+          background: 'linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.2) 35%, rgba(10,10,10,0.3) 60%, rgba(10,10,10,0.92) 100%)'
         }}
       />
-      <div className="absolute inset-0 hidden lg:block pointer-events-none">
-        <div className="h-full flex items-center justify-end max-w-7xl mx-auto px-4 md:px-8">
+      <div className="absolute inset-0 hidden lg:block pointer-events-none opacity-20">
+        <div className="h-full flex items-center justify-end max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
           <BuildingIllustration />
         </div>
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full py-20">
-        <div className="max-w-2xl space-y-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full py-24 md:py-32">
+        <div className="max-w-2xl space-y-7">
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] font-medium"
+            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-white/40 text-[11px] uppercase tracking-[0.35em] font-light"
           >
             A Message to Landlords & Letting Agents
           </motion.p>
-          <div className="w-16 h-px bg-[#C8C0B8] opacity-30" />
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-[2rem] sm:text-4xl md:text-[2.75rem] lg:text-5xl font-bold text-white leading-[1.15] tracking-[-0.02em]"
             data-testid="text-hero-headline"
           >
             The rental market is about to change more dramatically than it has in 30 years.
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/70 text-lg leading-relaxed max-w-lg"
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-white/55 text-base sm:text-lg leading-[1.75] max-w-xl"
           >
             The question isn't whether you should act. It's whether you act before the bill lands or after the damage is done. We've built a commercial structure that removes your exposure to the new legislation entirely.
           </motion.p>
-          <div className="w-full h-px bg-white/10" />
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap gap-3"
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex flex-wrap gap-3 pt-2"
           >
             <a
               href="#how-it-works"
-              className="flex items-center gap-2 px-6 py-3 rounded-md bg-white text-[#0A0A0A] font-bold text-sm"
+              className="flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-white text-[#0A0A0A] font-semibold text-sm transition-all duration-300 ease-in-out hover:bg-white/90 hover:scale-[1.03] hover:shadow-xl hover:shadow-white/10"
               data-testid="link-how-it-works"
             >
               Read How It Works
@@ -300,8 +302,9 @@ function HeroSection() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-md border border-[#25D366] text-[#25D366] font-medium text-sm transition-all backdrop-blur-sm bg-black/20"
+              className="flex items-center gap-2.5 px-7 py-3.5 rounded-lg border border-[#25D366]/50 text-[#25D366] font-medium text-sm transition-all duration-300 ease-in-out backdrop-blur-md bg-black/30 hover:border-[#25D366] hover:bg-[#25D366]/10 hover:scale-[1.03]"
               data-testid="link-whatsapp-hero"
+              aria-label="Speak to us on WhatsApp"
             >
               <WhatsAppIcon />
               Speak to Us on WhatsApp
@@ -310,16 +313,16 @@ function HeroSection() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-wrap gap-3"
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-wrap gap-2.5 pt-4"
           >
             {stats.map((stat, idx) => (
               <span
                 key={stat}
-                className="flex items-center gap-2 text-xs text-white/80 bg-black/40 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full"
+                className="flex items-center gap-2 text-[11px] text-white/60 bg-white/[0.06] backdrop-blur-md border border-white/[0.08] px-3.5 py-2 rounded-full"
                 data-testid={`stat-pill-${idx}`}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#C8C0B8]" />
+                <span className="w-1 h-1 rounded-full bg-white/40" />
                 {stat}
               </span>
             ))}
@@ -371,18 +374,17 @@ const reformCards = [
 
 function ReformBillSection() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="the-challenge" data-testid="section-reform-bill">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="the-challenge" data-testid="section-reform-bill">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center gap-3 mb-4">
           <AlertTriangle className="w-5 h-5 text-[#f4a01c]" />
           <h2 className="text-[#f4a01c] text-lg font-bold uppercase tracking-wider">
             The Renters Reform Bill Is Now Law
           </h2>
         </div>
-        <p className="text-[#B8B0A8] text-sm mb-10">
+        <p className="text-white/40 text-sm mb-12 max-w-lg">
           What it means for landlords with standard AST tenancies
         </p>
-        <div className="w-full h-px bg-[#2A2A2A] mb-10" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {reformCards.map((card, i) => {
@@ -390,34 +392,40 @@ function ReformBillSection() {
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="p-5 rounded-md bg-[#141414] border border-[#2A2A2A]"
+                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.1]"
                 data-testid={`card-reform-${i}`}
               >
-                <div className="flex items-center justify-between mb-3">
-                  <Icon className="w-5 h-5 text-[#e05555]" />
-                  <span className="text-[10px] uppercase tracking-widest text-[#e05555] font-mono bg-[#1F0A0A] px-2 py-0.5 rounded-full">
+                <div className="flex items-center justify-between mb-4">
+                  <Icon className="w-5 h-5 text-[#e05555]/80" />
+                  <span className="text-[10px] uppercase tracking-widest text-[#e05555] font-mono bg-[#e05555]/10 px-2.5 py-1 rounded-full">
                     {card.status}
                   </span>
                 </div>
-                <h3 className="text-[#F5F0E8] font-semibold text-sm mb-2">{card.title}</h3>
-                <p className="text-xs text-[#B8B0A8] leading-relaxed">{card.body}</p>
+                <h3 className="text-white font-semibold text-sm mb-2.5">{card.title}</h3>
+                <p className="text-[13px] text-white/45 leading-relaxed">{card.body}</p>
               </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-10 p-6 rounded-md border border-[#FFFFFF33] bg-[#FFFFFF0A]">
-          <p className="text-center text-[#F5F0E8] text-lg font-semibold leading-relaxed">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-12 p-8 rounded-xl border border-white/[0.08] bg-white/[0.03]"
+        >
+          <p className="text-center text-white/90 text-lg font-medium leading-relaxed">
             Commercial leases fall outside the scope of the Renters Reform Act.<br />
-            <span className="text-[#FFFFFF]">When your tenant is a company, not a person, the rules change entirely.</span>
+            <span className="text-white font-semibold">When your tenant is a company, not a person, the rules change entirely.</span>
           </p>
-        </div>
+        </motion.div>
 
-        <p className="text-[10px] text-[#3A3020] text-center mt-4">
+        <p className="text-[10px] text-white/15 text-center mt-6">
           Source: Renters (Reform) Bill 2024, UK Parliament
         </p>
       </div>
@@ -475,36 +483,35 @@ function ValueAnglesSection() {
   };
 
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="how-it-works" data-testid="section-value-angles">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="how-it-works" data-testid="section-value-angles">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Why Landlords Choose a Corporate Lease</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">Three reasons this outperforms a standard tenancy</h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Why Landlords Choose a Corporate Lease</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">Three reasons this outperforms a standard tenancy</h2>
 
-        <div className="space-y-16">
+        <div className="space-y-8">
           {valueAngles.map((angle, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-6 md:p-8 rounded-md bg-[#141414] border border-[#2A2A2A]`}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-8 md:p-10 rounded-2xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]`}
               data-testid={`card-value-${i}`}
             >
               <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-[#FFFFFF] text-2xl font-mono font-light">{angle.number}</span>
-                  <div className="w-px h-6 bg-[#2A2A2A]" />
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#8A8078]">{angle.sub}</span>
+                <div className="flex items-center gap-4 mb-5">
+                  <span className="text-white/20 text-3xl font-mono font-extralight">{angle.number}</span>
+                  <div className="w-px h-5 bg-white/10" />
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-light">{angle.sub}</span>
                 </div>
-                <h3 className="text-xl font-bold text-[#F5F0E8] mb-4">{angle.angle}</h3>
-                <p className="text-sm text-[#B8B0A8] leading-relaxed mb-6">{angle.content}</p>
-                <div className="space-y-2">
+                <h3 className="text-xl font-bold text-white mb-5 tracking-[-0.01em]">{angle.angle}</h3>
+                <p className="text-[14px] text-white/45 leading-[1.8] mb-7">{angle.content}</p>
+                <div className="space-y-3">
                   {angle.bullets.map((bullet, j) => (
-                    <div key={j} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-[#52B788] mt-0.5 flex-shrink-0" />
-                      <span className="text-sm text-[#B8B0A8]">{bullet}</span>
+                    <div key={j} className="flex items-start gap-3">
+                      <Check className="w-4 h-4 text-[#52B788]/80 mt-0.5 flex-shrink-0" />
+                      <span className="text-[14px] text-white/50">{bullet}</span>
                     </div>
                   ))}
                 </div>
@@ -565,16 +572,15 @@ const processSteps = [
 
 function ProcessSection() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-process">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-process">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">The Process</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">The Process</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">
           From enquiry to lease signed in 7-14 working days
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="relative">
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#2A2A2A] -translate-x-1/2" />
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/[0.06] -translate-x-1/2" />
           <div className="space-y-8">
             {processSteps.map((step, i) => {
               const Icon = step.icon;
@@ -588,26 +594,26 @@ function ProcessSection() {
                   className={`relative flex gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
                 >
                   <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2
-                      ${step.highlight ? 'border-[#FFFFFF] bg-[#1A1200]' : 'border-[#2A2A2A] bg-[#141414]'}
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center border transition-colors duration-300
+                      ${step.highlight ? 'border-white/30 bg-white/[0.08]' : 'border-white/[0.08] bg-white/[0.03]'}
                     `}>
-                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-[#FFFFFF]' : 'text-[#8A8078]'}`} />
+                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-white' : 'text-white/35'}`} />
                     </div>
                   </div>
-                  <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-5 rounded-md border bg-[#141414]
-                    ${step.highlight ? 'border-[#FFFFFF33]' : 'border-[#2A2A2A]'}
+                  <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-6 rounded-xl border bg-white/[0.02] transition-all duration-300 hover:bg-white/[0.04]
+                    ${step.highlight ? 'border-white/[0.12]' : 'border-white/[0.06]'}
                     ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
                   `}>
-                    <div className="flex items-center justify-between mb-2 gap-2">
-                      <span className="text-[#FFFFFF] text-xs font-mono opacity-60">{step.number}</span>
-                      <span className="text-xs text-[#8A8078] bg-[#1C1C1C] px-2 py-0.5 rounded-full">
+                    <div className="flex items-center justify-between mb-3 gap-2">
+                      <span className="text-white/20 text-xs font-mono">{step.number}</span>
+                      <span className="text-[11px] text-white/30 bg-white/[0.05] px-2.5 py-1 rounded-full">
                         {step.timeline}
                       </span>
                     </div>
-                    <h4 className={`font-semibold mb-2 ${step.highlight ? 'text-[#FFFFFF]' : 'text-[#F5F0E8]'}`}>
+                    <h4 className={`font-semibold mb-2.5 ${step.highlight ? 'text-white' : 'text-white/90'}`}>
                       {step.title}
                     </h4>
-                    <p className="text-sm text-[#B8B0A8] leading-relaxed">{step.body}</p>
+                    <p className="text-[13px] text-white/40 leading-relaxed">{step.body}</p>
                   </div>
                 </motion.div>
               );
@@ -634,47 +640,46 @@ const comparisonRows = [
 
 function ComparisonSection() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="the-comparison" data-testid="section-comparison">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="the-comparison" data-testid="section-comparison">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">The Comparison</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">The Comparison</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">
           Standard AST vs Svnteen Commercial Lease
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
-        <div className="overflow-x-auto rounded-md border border-[#2A2A2A]">
+        <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
           <table className="w-full min-w-[640px]" data-testid="table-comparison">
             <thead>
-              <tr className="border-b border-[#2A2A2A]">
-                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#8A8078] w-1/4">Consideration</th>
-                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#8A8078] w-[37.5%]">
+              <tr className="border-b border-white/[0.06]">
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/25 font-light w-1/4">Consideration</th>
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/25 font-light w-[37.5%]">
                   Standard AST Tenancy
                 </th>
-                <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#C8C0B8] w-[37.5%] bg-[#FFFFFF0A]">
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/50 font-medium w-[37.5%] bg-white/[0.02]">
                   Svnteen Commercial Lease
                 </th>
               </tr>
             </thead>
             <tbody>
               {comparisonRows.map((row, i) => (
-                <tr key={i} className={`border-b border-[#1C1C1C] ${i % 2 === 0 ? 'bg-[#0A0A0A]' : 'bg-[#0D0D0D]'}`} data-testid={`row-comparison-${i}`}>
-                  <td className="py-4 px-5 text-xs text-[#8A8078] font-medium uppercase tracking-wide">
+                <tr key={i} className={`border-b border-white/[0.04] transition-colors duration-200 hover:bg-white/[0.02]`} data-testid={`row-comparison-${i}`}>
+                  <td className="py-4 px-6 text-[11px] text-white/30 font-medium uppercase tracking-wide">
                     {row.category}
                   </td>
-                  <td className="py-4 px-5 text-sm text-[#B8B0A8]">
-                    <div className="flex items-start gap-2">
-                      <X className="w-3.5 h-3.5 text-[#e05555] mt-0.5 flex-shrink-0" />
+                  <td className="py-4 px-6 text-[13px] text-white/40">
+                    <div className="flex items-start gap-2.5">
+                      <X className="w-3.5 h-3.5 text-[#e05555]/70 mt-0.5 flex-shrink-0" />
                       <span>{row.ast}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-5 text-sm bg-[#FFFFFF06]">
-                    <div className="flex items-start gap-2">
+                  <td className="py-4 px-6 text-[13px] bg-white/[0.02]">
+                    <div className="flex items-start gap-2.5">
                       {row.svnteenWins ? (
-                        <Check className="w-3.5 h-3.5 text-[#52B788] mt-0.5 flex-shrink-0" />
+                        <Check className="w-3.5 h-3.5 text-[#52B788]/80 mt-0.5 flex-shrink-0" />
                       ) : (
-                        <Minus className="w-3.5 h-3.5 text-[#f4a01c] mt-0.5 flex-shrink-0" />
+                        <Minus className="w-3.5 h-3.5 text-[#f4a01c]/70 mt-0.5 flex-shrink-0" />
                       )}
-                      <span className={row.svnteenWins ? 'text-[#F5F0E8]' : 'text-[#B8B0A8]'}>
+                      <span className={row.svnteenWins ? 'text-white/70' : 'text-white/40'}>
                         {row.svnteen}
                       </span>
                     </div>
@@ -683,8 +688,8 @@ function ComparisonSection() {
               ))}
             </tbody>
             <tfoot>
-              <tr className="bg-[#141414]">
-                <td colSpan={3} className="py-3 px-5 text-xs text-[#8A8078] text-center">
+              <tr className="bg-white/[0.02]">
+                <td colSpan={3} className="py-4 px-6 text-[11px] text-white/20 text-center">
                   ~ Indicates a trade-off. Svnteen offers slightly below-market rent in exchange for institutional-grade reliability.
                 </td>
               </tr>
@@ -698,13 +703,12 @@ function ComparisonSection() {
 
 function R2SASection() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-r2sa">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-r2sa">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">How R2SA Works</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">How R2SA Works</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-16">
           The three-party structure explained
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
@@ -714,14 +718,14 @@ function R2SASection() {
               viewport={{ once: true }}
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
-              <div className="w-20 h-20 rounded-2xl bg-[#141414] border border-[#2A2A2A] flex items-center justify-center">
-                <Home className="w-8 h-8 text-[#B8B0A8]" />
+              <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center">
+                <Home className="w-8 h-8 text-white/40" />
               </div>
               <div className="text-center">
-                <p className="text-[#F5F0E8] font-semibold text-sm">The Landlord</p>
-                <p className="text-[#8A8078] text-xs mt-1">Owns the property</p>
+                <p className="text-white font-semibold text-sm">The Landlord</p>
+                <p className="text-white/30 text-xs mt-1">Owns the property</p>
               </div>
-              <div className="w-full bg-[#141414] border border-[#2A2A2A] rounded-md p-3 space-y-1.5">
+              <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-2">
                 {[
                   'Signs commercial lease',
                   'Receives fixed yield monthly',
@@ -729,19 +733,19 @@ function R2SASection() {
                   'No void exposure',
                   'Property maintained to standard',
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-1.5">
-                    <Check className="w-3 h-3 text-[#52B788] mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-[#B8B0A8]">{item}</p>
+                  <div key={i} className="flex items-start gap-2">
+                    <Check className="w-3 h-3 text-[#52B788]/70 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-white/45">{item}</p>
                   </div>
                 ))}
               </div>
             </motion.div>
 
             <div className="flex flex-col items-center gap-1 rotate-90 md:rotate-0">
-              <div className="h-16 w-px md:w-24 md:h-px bg-[#FFFFFF] relative">
+              <div className="h-16 w-px md:w-24 md:h-px bg-white/20 relative">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0A0A0A] px-2 py-1 whitespace-nowrap">
-                  <p className="text-[#FFFFFF] text-[10px] font-mono uppercase tracking-wider">Commercial Lease</p>
-                  <p className="text-[#8A8078] text-[9px] text-center">Fixed monthly yield</p>
+                  <p className="text-white/60 text-[10px] font-mono uppercase tracking-wider">Commercial Lease</p>
+                  <p className="text-white/25 text-[9px] text-center">Fixed monthly yield</p>
                 </div>
               </div>
               <ArrowRight className="w-4 h-4 text-[#FFFFFF] rotate-90 md:rotate-0" />
@@ -754,14 +758,14 @@ function R2SASection() {
               transition={{ delay: 0.2 }}
               className="flex flex-col items-center gap-3 w-full md:w-64"
             >
-              <div className="w-24 h-24 rounded-2xl bg-[#1A1200] border-2 border-[#FFFFFF] flex items-center justify-center">
+              <div className="w-24 h-24 rounded-2xl bg-white/[0.05] border-2 border-white/20 flex items-center justify-center">
                 <SvnteenLogo className="h-10 w-auto" />
               </div>
               <div className="text-center">
-                <p className="text-[#FFFFFF] font-bold text-sm">Svnteen The Residency</p>
-                <p className="text-[#8A8078] text-xs mt-1">The commercial tenant</p>
+                <p className="text-white font-bold text-sm">Svnteen The Residency</p>
+                <p className="text-white/30 text-xs mt-1">The commercial tenant</p>
               </div>
-              <div className="w-full bg-[#1A1200] border border-[#FFFFFF33] rounded-md p-3 space-y-1.5">
+              <div className="w-full bg-white/[0.03] border border-white/[0.1] rounded-xl p-4 space-y-2">
                 {[
                   'Manages the property entirely',
                   'Furnishes to hotel standard',
@@ -769,9 +773,9 @@ function R2SASection() {
                   'Handles all guests and cleaning',
                   'Pays landlord from operating budget',
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-1.5">
-                    <ArrowRight className="w-3 h-3 text-[#FFFFFF] mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-[#B8B0A8]">{item}</p>
+                  <div key={i} className="flex items-start gap-2">
+                    <ArrowRight className="w-3 h-3 text-white/40 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-white/45">{item}</p>
                   </div>
                 ))}
               </div>
@@ -794,14 +798,14 @@ function R2SASection() {
               transition={{ delay: 0.4 }}
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
-              <div className="w-20 h-20 rounded-2xl bg-[#141414] border border-[#2A2A2A] flex items-center justify-center">
-                <Luggage className="w-8 h-8 text-[#B8B0A8]" />
+              <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center">
+                <Luggage className="w-8 h-8 text-white/40" />
               </div>
               <div className="text-center">
-                <p className="text-[#F5F0E8] font-semibold text-sm">Short-Stay Guests</p>
-                <p className="text-[#8A8078] text-xs mt-1">Corporate & leisure travellers</p>
+                <p className="text-white font-semibold text-sm">Short-Stay Guests</p>
+                <p className="text-white/30 text-xs mt-1">Corporate & leisure travellers</p>
               </div>
-              <div className="w-full bg-[#141414] border border-[#2A2A2A] rounded-md p-3 space-y-1.5">
+              <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-2">
                 {[
                   'Book via Airbnb / Booking.com',
                   'Stay 1-30 nights',
@@ -809,26 +813,26 @@ function R2SASection() {
                   'Leave reviews, build reputation',
                   'Pay nightly rate to Svnteen',
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-1.5">
-                    <ArrowRight className="w-3 h-3 text-[#8A8078] mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-[#B8B0A8]">{item}</p>
+                  <div key={i} className="flex items-start gap-2">
+                    <ArrowRight className="w-3 h-3 text-white/25 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-white/45">{item}</p>
                   </div>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          <div className="mt-8 p-4 rounded-md bg-[#141414] border border-[#2A2A2A] text-center">
-            <p className="text-sm text-[#B8B0A8]">
-              <span className="text-[#F5F0E8] font-semibold">The critical point: </span>
-              You have <span className="text-[#FFFFFF] font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
+          <div className="mt-10 p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
+            <p className="text-[14px] text-white/50 leading-relaxed">
+              <span className="text-white font-semibold">The critical point: </span>
+              You have <span className="text-white font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
               The revolving door of guests never involves you. They have no residential rights in your property.
               Your agreement is entirely with us.
             </p>
           </div>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             {
               concern: '"What about HMO licensing?"',
@@ -846,11 +850,19 @@ function R2SASection() {
               icon: Scale,
             },
           ].map((item, i) => (
-            <div key={i} className="p-4 rounded-md bg-[#141414] border border-[#2A2A2A]" data-testid={`card-concern-${i}`}>
-              <item.icon className="w-6 h-6 text-[#FFFFFF] mb-3" />
-              <p className="text-sm text-[#FFFFFF] font-semibold mb-1.5">{item.concern}</p>
-              <p className="text-xs text-[#B8B0A8] leading-relaxed">{item.answer}</p>
-            </div>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]"
+              data-testid={`card-concern-${i}`}
+            >
+              <item.icon className="w-5 h-5 text-white/40 mb-4" />
+              <p className="text-sm text-white font-semibold mb-2">{item.concern}</p>
+              <p className="text-[13px] text-white/40 leading-relaxed">{item.answer}</p>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -867,36 +879,35 @@ function WhoWeAreSection() {
   ];
 
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-who-we-are">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-who-we-are">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">About Svnteen The Residency</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">About Svnteen The Residency</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-14">
           Who we are
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-10" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <p className="text-[#B8B0A8] leading-relaxed">
+            <p className="text-[14px] text-white/45 leading-[1.8]">
               We are a UK-based short-let management company operating under commercial leases across multiple UK cities. We manage properties to five-star serviced apartment standard and have an active presence on Airbnb, Booking.com, and VRBO.
             </p>
-            <p className="text-[#B8B0A8] leading-relaxed">
+            <p className="text-[14px] text-white/45 leading-[1.8]">
               Our promise to landlords is simple: we treat your property as if it were our own — because our business reputation depends on it.
             </p>
-            <div className="grid grid-cols-2 gap-3 mt-6">
+            <div className="grid grid-cols-2 gap-3 mt-8">
               {credentials.map((cred, i) => {
                 const Icon = cred.icon;
                 return (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-md bg-[#141414] border border-[#2A2A2A]">
-                    <Icon className="w-4 h-4 text-[#FFFFFF] flex-shrink-0" />
-                    <span className="text-xs text-[#B8B0A8]">{cred.label}</span>
+                  <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04]">
+                    <Icon className="w-4 h-4 text-white/40 flex-shrink-0" />
+                    <span className="text-[12px] text-white/45">{cred.label}</span>
                   </div>
                 );
               })}
             </div>
           </div>
           <div className="space-y-4">
-            <div className="relative rounded-md overflow-hidden h-48 mb-4">
+            <div className="relative rounded-2xl overflow-hidden h-52">
               <img
                 src={apartmentHero}
                 alt="Svnteen serviced apartment interior"
@@ -904,14 +915,14 @@ function WhoWeAreSection() {
                 style={{ objectPosition: 'center center' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-              <div className="absolute bottom-3 left-3">
-                <span className="text-[10px] uppercase tracking-widest text-white/70 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
+              <div className="absolute bottom-4 left-4">
+                <span className="text-[10px] uppercase tracking-widest text-white/60 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full">
                   What our properties look like
                 </span>
               </div>
             </div>
-            <div className="p-6 rounded-md bg-[#141414] border border-[#2A2A2A]">
-              <p className="text-xs uppercase tracking-widest text-[#8A8078] mb-4">Our Standards</p>
+            <div className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+              <p className="text-[11px] uppercase tracking-widest text-white/25 mb-5">Our Standards</p>
               {[
                 { icon: Star, label: 'Five-star serviced apartment standard' },
                 { icon: Users, label: 'Professional guest management team' },
@@ -920,9 +931,9 @@ function WhoWeAreSection() {
               ].map((item, i) => {
                 const Icon = item.icon;
                 return (
-                  <div key={i} className="flex items-center gap-3 py-2.5 border-b border-[#1C1C1C] last:border-0">
-                    <Icon className="w-4 h-4 text-[#FFFFFF]" />
-                    <span className="text-sm text-[#B8B0A8]">{item.label}</span>
+                  <div key={i} className="flex items-center gap-3 py-3 border-b border-white/[0.04] last:border-0">
+                    <Icon className="w-4 h-4 text-white/35" />
+                    <span className="text-[13px] text-white/50">{item.label}</span>
                   </div>
                 );
               })}
@@ -1025,23 +1036,22 @@ function FAQSection() {
   const filtered = activeCategory === 'All' ? faqs : faqs.filter(f => f.category === activeCategory);
 
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="faqs" data-testid="section-faqs">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="faqs" data-testid="section-faqs">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Frequently Asked Questions</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Frequently Asked Questions</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-10">
           What landlords ask us most
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-8" />
 
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-10">
           {categories.map(cat => (
             <button
               key={cat}
               onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
-              className={`px-4 py-2 rounded-full text-xs font-medium transition-all border
+              className={`px-4 py-2.5 rounded-full text-[12px] font-medium transition-all duration-300 border
                 ${activeCategory === cat
-                  ? 'bg-[#FFFFFF] text-[#0A0A0A] border-[#FFFFFF]'
-                  : 'bg-[#141414] text-[#8A8078] border-[#2A2A2A]'
+                  ? 'bg-white text-[#0A0A0A] border-white'
+                  : 'bg-white/[0.03] text-white/35 border-white/[0.06] hover:bg-white/[0.06] hover:text-white/50'
                 }
               `}
               data-testid={`button-faq-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1058,24 +1068,25 @@ function FAQSection() {
             return (
               <motion.div
                 key={globalIndex}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.03 }}
-                className="border border-[#2A2A2A] rounded-md"
+                transition={{ duration: 0.4, delay: i * 0.03, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="border border-white/[0.06] rounded-xl transition-colors duration-200 hover:border-white/[0.1]"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
-                  className="w-full flex items-center justify-between gap-4 p-4 text-left"
+                  className="w-full flex items-center justify-between gap-4 p-5 text-left"
                   data-testid={`button-faq-${globalIndex}`}
+                  aria-expanded={isOpen}
                 >
                   <div className="flex items-center gap-3 flex-1">
-                    <span className="text-[10px] text-[#8A8078] bg-[#1C1C1C] px-2 py-0.5 rounded-full flex-shrink-0">
+                    <span className="text-[10px] text-white/30 bg-white/[0.05] px-2.5 py-1 rounded-full flex-shrink-0">
                       {faq.category}
                     </span>
-                    <span className="text-sm text-[#F5F0E8] font-medium">{faq.q}</span>
+                    <span className="text-[14px] text-white/80 font-medium">{faq.q}</span>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-[#8A8078] flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-white/25 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {isOpen && (
@@ -1083,12 +1094,12 @@ function FAQSection() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
+                      transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-4 pb-4 pt-0">
-                        <div className="pl-0 md:pl-[calc(0.625rem+0.75rem+0.5rem)] border-t border-[#1C1C1C] pt-3">
-                          <p className="text-sm text-[#B8B0A8] leading-relaxed">{faq.a}</p>
+                      <div className="px-5 pb-5 pt-0">
+                        <div className="pl-0 md:pl-[calc(0.625rem+0.75rem+0.5rem)] border-t border-white/[0.04] pt-4">
+                          <p className="text-[14px] text-white/40 leading-[1.8]">{faq.a}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -1129,40 +1140,39 @@ const testimonials = [
 
 function TestimonialsSection() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" data-testid="section-testimonials">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-testimonials">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Landlord Perspectives</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Landlord Perspectives</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-14">
           What landlords say about the arrangement
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="p-6 rounded-md bg-[#141414] border border-[#2A2A2A] flex flex-col"
+              transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="p-7 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]"
               data-testid={`card-testimonial-${i}`}
             >
-              <div className="flex gap-1 mb-4">
+              <div className="flex gap-1 mb-5">
                 {[...Array(5)].map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 text-[#FFFFFF] fill-[#FFFFFF]" />
+                  <Star key={j} className="w-3.5 h-3.5 text-white/50 fill-white/50" />
                 ))}
               </div>
-              <p className="text-sm text-[#B8B0A8] leading-relaxed italic flex-1">
+              <p className="text-[14px] text-white/50 leading-[1.8] italic flex-1">
                 "{t.quote}"
               </p>
-              <div className="mt-6 pt-4 border-t border-[#1C1C1C]">
-                <p className="text-sm text-[#F5F0E8] font-semibold">{t.name}</p>
-                <p className="text-xs text-[#8A8078] mt-1">{t.location}</p>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs text-[#8A8078]">{t.duration}</span>
+              <div className="mt-7 pt-5 border-t border-white/[0.04]">
+                <p className="text-sm text-white font-semibold">{t.name}</p>
+                <p className="text-[12px] text-white/25 mt-1">{t.location}</p>
+                <div className="flex items-center justify-between mt-2.5">
+                  <span className="text-[12px] text-white/25">{t.duration}</span>
                   {t.verified && (
-                    <span className="flex items-center gap-1 text-[10px] text-[#52B788]">
+                    <span className="flex items-center gap-1 text-[10px] text-[#52B788]/70">
                       <Check className="w-3 h-3" />
                       Verified
                     </span>
@@ -1179,32 +1189,32 @@ function TestimonialsSection() {
 
 function DownloadSection() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-[#0A0A0A]" id="download" data-testid="section-download">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="download" data-testid="section-download">
       <div className="max-w-7xl mx-auto">
-        <p className="text-[#C8C0B8] text-xs uppercase tracking-[0.3em] mb-3">Ready to Find Out More?</p>
-        <h2 className="text-2xl md:text-3xl font-bold text-[#F5F0E8] mb-4">
+        <p className="text-white/35 text-[11px] uppercase tracking-[0.35em] font-light mb-4">Ready to Find Out More?</p>
+        <h2 className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold text-white leading-tight tracking-[-0.01em] mb-14">
           Download the brochure or speak to us directly
         </h2>
-        <div className="w-16 h-px bg-[#C8C0B8] opacity-30 mb-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <a
             href="/api/landlords/brochure"
             download="Svnteen-Landlord-Brochure.pdf"
-            className="flex flex-col items-center gap-4 p-8 rounded-md border-2 border-[#FFFFFF] bg-[#FFFFFF08] transition-all group"
+            className="flex flex-col items-center gap-5 p-10 rounded-2xl border border-white/20 bg-white/[0.03] transition-all duration-300 group hover:bg-white/[0.06] hover:border-white/30 hover:scale-[1.01]"
             data-testid="link-download-brochure"
+            aria-label="Download landlord brochure PDF"
           >
-            <div className="w-16 h-16 rounded-2xl bg-[#1A1200] border border-[#FFFFFF] flex items-center justify-center">
-              <FileText className="w-8 h-8 text-[#FFFFFF]" />
+            <div className="w-16 h-16 rounded-2xl bg-white/[0.05] border border-white/[0.15] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <FileText className="w-8 h-8 text-white/60" />
             </div>
             <div className="text-center">
-              <p className="text-[#F5F0E8] font-bold text-lg">Download the Brochure</p>
-              <p className="text-[#B8B0A8] text-sm mt-1">5-page PDF — commercial lease overview, FAQs, and process guide</p>
+              <p className="text-white font-bold text-lg">Download the Brochure</p>
+              <p className="text-white/40 text-sm mt-2">5-page PDF — commercial lease overview, FAQs, and process guide</p>
             </div>
-            <div className="text-[#8A8078] text-xs text-center">
+            <div className="text-white/20 text-[11px] text-center">
               PDF · 5 pages · No email required
             </div>
-            <div className="px-8 py-3 rounded-md bg-white text-[#0A0A0A] font-bold uppercase tracking-wider text-sm w-full text-center">
+            <div className="px-8 py-3.5 rounded-lg bg-white text-[#0A0A0A] font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-white/10">
               Download Free PDF
             </div>
           </a>
@@ -1213,21 +1223,22 @@ function DownloadSection() {
             href={WHATSAPP_URL_FULL}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-4 p-8 rounded-md border-2 border-[#25D366] bg-[#25D36608] transition-all group"
+            className="flex flex-col items-center gap-5 p-10 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01]"
             data-testid="link-whatsapp-cta"
+            aria-label="Contact us on WhatsApp"
           >
-            <div className="w-16 h-16 rounded-2xl bg-[#25D366] flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
               <WhatsAppIcon className="w-10 h-10 text-white" />
             </div>
             <div className="text-center">
-              <p className="text-[#F5F0E8] font-bold text-lg">Speak to Us Directly</p>
-              <p className="text-[#B8B0A8] text-sm mt-1">WhatsApp our team — no forms, no waiting</p>
+              <p className="text-white font-bold text-lg">Speak to Us Directly</p>
+              <p className="text-white/40 text-sm mt-2">WhatsApp our team — no forms, no waiting</p>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-              <span className="text-[#25D366] text-sm font-medium">Usually responds within 2 hours</span>
+              <span className="text-[#25D366]/80 text-sm font-medium">Usually responds within 2 hours</span>
             </div>
-            <div className="px-8 py-3 rounded-md bg-[#25D366] text-white font-bold uppercase tracking-wider text-sm w-full text-center">
+            <div className="px-8 py-3.5 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
               Open WhatsApp
             </div>
           </a>
@@ -1239,18 +1250,18 @@ function DownloadSection() {
 
 function FooterSection() {
   return (
-    <footer className="bg-[#0A0A0A] border-t border-[#2A2A2A] py-12 px-6" data-testid="section-footer">
+    <footer className="bg-[#0A0A0A] border-t border-white/[0.04] py-16 px-5 sm:px-8 lg:px-10" data-testid="section-footer" role="contentinfo">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
+        <div className="flex flex-col md:flex-row justify-between gap-12 mb-12">
           <div className="max-w-sm">
-            <SvnteenLogo className="h-7 w-auto mb-4" />
-            <p className="text-[#8A8078] text-sm leading-relaxed">
+            <SvnteenLogo className="h-7 w-auto mb-5" />
+            <p className="text-white/25 text-[13px] leading-relaxed">
               Corporate Lease Division — Commercial property arrangements for landlords seeking fixed-yield, management-free income.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-10 text-sm">
             <div>
-              <p className="text-[#B8B0A8] font-semibold mb-3 uppercase tracking-wider text-xs">This Page</p>
+              <p className="text-white/50 font-medium mb-4 uppercase tracking-wider text-[11px]">This Page</p>
               {[
                 { label: 'The Challenge', href: '#the-challenge' },
                 { label: 'How It Works', href: '#how-it-works' },
@@ -1258,13 +1269,13 @@ function FooterSection() {
                 { label: 'FAQs', href: '#faqs' },
                 { label: 'Download Brochure', href: '#download' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-[#8A8078] py-1 transition-colors" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-white/20 py-1.5 transition-colors duration-200 hover:text-white/50 text-[13px]" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-[#B8B0A8] font-semibold mb-3 uppercase tracking-wider text-xs">Platform</p>
+              <p className="text-white/50 font-medium mb-4 uppercase tracking-wider text-[11px]">Platform</p>
               {[
                 { label: 'The Marketplace', href: '/marketplace' },
                 { label: 'Deal Analyser', href: '/deal-analyser' },
@@ -1272,19 +1283,20 @@ function FooterSection() {
                 { label: 'For Investors', href: '/signup' },
                 { label: 'For Sourcers', href: '/signup' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-[#8A8078] py-1 transition-colors" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-white/20 py-1.5 transition-colors duration-200 hover:text-white/50 text-[13px]" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-[#B8B0A8] font-semibold mb-3 uppercase tracking-wider text-xs">Contact</p>
+              <p className="text-white/50 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[#25D366] py-1 transition-opacity"
+                className="flex items-center gap-2 text-[#25D366]/70 py-1.5 transition-colors duration-200 hover:text-[#25D366] text-[13px]"
                 data-testid="link-footer-whatsapp"
+                aria-label="Contact us on WhatsApp"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 WhatsApp Us
@@ -1293,8 +1305,8 @@ function FooterSection() {
           </div>
         </div>
 
-        <div className="pt-6 border-t border-[#1C1C1C]">
-          <p className="text-[#3A3020] text-xs leading-relaxed">
+        <div className="pt-8 border-t border-white/[0.04]">
+          <p className="text-white/10 text-[11px] leading-relaxed">
             2026 Svnteen The Residency. All rights reserved. This page is for information purposes only and does not constitute financial, legal, or tax advice. All commercial lease arrangements are subject to individual negotiation and we strongly recommend all landlords obtain independent legal and financial advice before entering any agreement. Svnteen The Residency is not authorised by the Financial Conduct Authority. Mortgage consent requirements apply — please verify with your lender before proceeding.
           </p>
         </div>
