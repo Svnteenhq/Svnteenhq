@@ -233,7 +233,7 @@ function HeroSection() {
   ];
   return (
     <section
-      className="relative min-h-screen flex items-center pt-16 overflow-hidden"
+      className="relative min-h-[70vh] flex items-center pt-16 overflow-hidden"
       data-testid="section-hero"
     >
       <img
