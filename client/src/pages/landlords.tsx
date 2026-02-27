@@ -201,19 +201,6 @@ function StickyNav() {
         <span className="hidden lg:block text-[11px] uppercase tracking-[0.25em] text-white/30 font-light">
           Corporate Lease Information — Landlords & Agents
         </span>
-        <div className="flex items-center gap-3">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#25D366] text-white text-sm font-semibold transition-all duration-300 ease-in-out hover:bg-[#25D366]/90 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#25D366]/20"
-            data-testid="link-whatsapp-nav"
-            aria-label="Contact us on WhatsApp"
-          >
-            <WhatsAppIcon />
-            <span className="hidden sm:inline">WhatsApp Us</span>
-          </a>
-        </div>
       </div>
     </nav>
   );
