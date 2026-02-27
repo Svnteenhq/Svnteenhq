@@ -1,0 +1,1510 @@
+Build a standalone, premium landlord information page at the route `/landlords` on Svnteen The Residency. This page is designed to be visited by landlords and letting agents who have received an outreach email or cold call from Svnteen. It must be the most professional, trust-building page on the entire site — more polished than anything they will have seen from a competitor. It converts sceptical landlords into commercial lease partners.
+
+This page lives at `/landlords` and is completely public — no authentication required. It is a standalone marketing and education page. It must match the obsidian aesthetic of the rest of the platform exactly.
+
+---
+
+## SECTION 1: FILE SETUP & ROUTING
+
+Create `client/src/pages/landlords.tsx`
+
+Register in `client/src/App.tsx`:
+```tsx
+import { LandlordsPage } from '@/pages/landlords';
+<Route path="/landlords" component={LandlordsPage} />
+```
+
+Also create a PDF brochure generator at:
+GET /api/landlords/brochure
+This returns a downloadable PDF (see Section 11).
+
+Add the WhatsApp number as an environment variable:
+WHATSAPP_NUMBER=447700000000  // replace with actual number
+
+---
+
+## SECTION 2: PAGE ARCHITECTURE
+
+The page has twelve sections stacked vertically. Full-width, max-content-width 1200px, centred. No sidebar.
+SECTION  1 — Sticky navigation bar (logo + CTA)
+SECTION  2 — Hero: The challenge landlords face right now
+SECTION  3 — The Renters Reform Bill warning
+SECTION  4 — What Svnteen actually offers (3 value angles)
+SECTION  5 — How the Commercial Lease works (step by step)
+SECTION  6 — Side-by-side comparison: AST vs Svnteen Commercial Lease
+SECTION  7 — Illustrated explainer: How R2SA works
+SECTION  8 — Who we are (trust and credibility)
+SECTION  9 — FAQs (full accordion)
+SECTION 10 — Social proof / testimonials
+SECTION 11 — Download brochure + WhatsApp CTA
+SECTION 12 — Footer with legal disclaimer
+
+---
+
+## SECTION 3: SECTION 1 — STICKY NAVIGATION
+
+A minimal sticky bar fixed at the top. Dark, frosted glass effect.
+┌─────────────────────────────────────────────────────────────────┐
+│  [SVNTEEN LOGO]    For Landlords & Agents          [WHATSAPP ▶] │
+│                                                    [DOWNLOAD ↓ ] │
+└─────────────────────────────────────────────────────────────────┘
+```tsx
+<nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#2A2A2A]"
+  style={{ background: 'rgba(10,10,10,0.97)', backdropFilter: 'blur(16px)' }}
+>
+  <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+    <Logo className="h-7 w-auto" />
+    
+    <span className="hidden md:block text-xs uppercase tracking-[0.2em] text-[#5A5040]">
+      Corporate Lease Information — Landlords & Agents
+    </span>
+    
+    <div className="flex items-center gap-3">
+      
+        href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '447700000000'}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20have%20a%20few%20questions.`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#25D366] text-[#25D366] text-sm font-medium hover:bg-[#25D366] hover:text-[#0A0A0A] transition-all"
+      >
+        {/* WhatsApp SVG icon */}
+        <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span className="hidden sm:inline">WhatsApp Us</span>
+      </a>
+      
+      <a href="#download" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] text-sm font-bold">
+        <span>↓</span>
+        <span>Brochure</span>
+      </a>
+    </div>
+  </div>
+</nav>
+```
+
+---
+
+## SECTION 4: SECTION 2 — THE HERO
+
+Full-width hero. No property photography here — this is a business document, not a lifestyle ad. Use an abstract dark geometric illustration or a clean typographic hero.
+┌─────────────────────────────────────────────────────────────────────┐
+│                                                                       │
+│   A MESSAGE TO LANDLORDS & LETTING AGENTS                            │
+│   ─────────────────────────────────────────────────────────────────  │
+│                                                                       │
+│   The rental market is about to change                               │
+│   more dramatically than it has in 30 years.                         │
+│                                                                       │
+│   The question isn't whether you should act.                         │
+│   It's whether you act before the bill lands                         │
+│   or after the damage is done.                                       │
+│                                                                       │
+│   We've built a commercial structure that removes                    │
+│   your exposure to the new legislation entirely.                     │
+│                                                                       │
+│   ─────────────────────────────────────────────────────────────────  │
+│   [ READ HOW IT WORKS ↓ ]      [ SPEAK TO US ON WHATSAPP ]          │
+│                                                                       │
+│   ● 3-year fixed commercial leases    ● Zero void exposure           │
+│   ● No new tenancy legislation risk   ● Monthly corporate yield      │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+Hero design:
+- Background: `#0A0A0A` with a very subtle radial gradient from `#141414` at centre to `#0A0A0A` at edges
+- Large abstract SVG illustration on the right side — a geometric building outline with gold accent lines. Animated very subtly (slow floating motion, 8s loop)
+- "A MESSAGE TO LANDLORDS & LETTING AGENTS" in small gold uppercase tracking-widest
+- Main headline: 3xl-4xl font, white, bold, line height tight
+- Subheadline: text-[#A09880]
+- Four stat pills at the bottom of the hero
+
+Hero SVG illustration — create inline as an animated SVG:
+```tsx
+// Geometric building illustration for hero
+function BuildingIllustration() {
+  return (
+    <motion.svg
+      viewBox="0 0 400 500"
+      className="w-full max-w-md opacity-30"
+      animate={{ y: [0, -8, 0] }}
+      transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      {/* Building outline */}
+      <rect x="80" y="100" width="240" height="360" rx="4" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeDasharray="4 2" />
+      
+      {/* Windows grid */}
+      {[130, 180, 230, 280, 330, 380].map((y, row) =>
+        [100, 150, 200, 250, 300].map((x, col) => (
+          <rect key={`${row}-${col}`} x={x} y={y} width="35" height="28" rx="2"
+            fill={Math.random() > 0.4 ? '#C9A84C' : 'none'}
+            stroke="#C9A84C" strokeWidth="0.5"
+            opacity={Math.random() > 0.4 ? 0.2 : 0.1}
+          />
+        ))
+      )}
+      
+      {/* Gold accent lines */}
+      <line x1="80" y1="200" x2="0" y2="200" stroke="#C9A84C" strokeWidth="1" opacity="0.3" />
+      <line x1="320" y1="300" x2="400" y2="300" stroke="#C9A84C" strokeWidth="1" opacity="0.3" />
+      
+      {/* Corner markers */}
+      {[[80,100],[320,100],[80,460],[320,460]].map(([x,y], i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r="4" fill="#C9A84C" opacity="0.6" />
+          <circle cx={x} cy={y} r="8" fill="none" stroke="#C9A84C" strokeWidth="0.5" opacity="0.3" />
+        </g>
+      ))}
+      
+      {/* Floating data points */}
+      <text x="30" y="180" fill="#C9A84C" fontSize="10" opacity="0.5" fontFamily="monospace">YIELD: FIXED</text>
+      <text x="340" y="280" fill="#C9A84C" fontSize="10" opacity="0.5" fontFamily="monospace">VOID: 0%</text>
+      <text x="340" y="310" fill="#C9A84C" fontSize="8" opacity="0.3" fontFamily="monospace">LEASE: COMMERCIAL</text>
+    </motion.svg>
+  );
+}
+```
+
+---
+
+## SECTION 5: SECTION 3 — THE RENTERS REFORM BILL WARNING
+
+This section is designed to create urgency without being alarmist. Cold facts, clinical presentation.
+┌─────────────────────────────────────────────────────────────────────┐
+│  ⚠  THE RENTERS REFORM BILL IS NOW LAW                              │
+│  What it means for landlords with standard AST tenancies            │
+│  ─────────────────────────────────────────────────────────────────  │
+│                                                                       │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  │
+│  │ SECTION 21       │  │ PERIODIC         │  │ GROUNDS FOR      │  │
+│  │ "NO FAULT"       │  │ TENANCIES        │  │ POSSESSION       │  │
+│  │ EVICTIONS        │  │                  │  │                  │  │
+│  │                  │  │ All fixed-term   │  │ Now narrower     │  │
+│  │ ABOLISHED        │  │ ASTs become      │  │ and harder to    │  │
+│  │                  │  │ periodic by      │  │ prove in court   │  │
+│  │ You can no longer│  │ default. Tenants │  │                  │  │
+│  │ reclaim your     │  │ can leave with   │  │ Expect 12-24     │  │
+│  │ property without │  │ 2 months notice  │  │ month timelines  │  │
+│  │ proven grounds   │  │ at any time      │  │ for possession   │  │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘  │
+│                                                                       │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  │
+│  │ RENT INCREASES   │  │ OMBUDSMAN        │  │ PETS & PROPERTY  │  │
+│  │                  │  │ MEMBERSHIP       │  │ CONDITION        │  │
+│  │ Restricted to    │  │                  │  │                  │  │
+│  │ once per year,   │  │ Mandatory for    │  │ Tenants have     │  │
+│  │ challengeable    │  │ all private      │  │ stronger rights  │  │
+│  │ at tribunal      │  │ landlords        │  │ to keep pets     │  │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘  │
+│                                                                       │
+│  ─────────────────────────────────────────────────────────────────  │
+│  Commercial leases are NOT governed by the Renters Reform Bill.     │
+│  When you lease to Svnteen Residency as a company, this             │
+│  legislation does not apply to your agreement.                      │
+│  ─────────────────────────────────────────────────────────────────  │
+└─────────────────────────────────────────────────────────────────────┘
+
+Design:
+- Section background: `#0A0A0A`
+- Warning header: amber `#f4a01c` with warning icon
+- Three-by-two grid of "impact cards"
+- Each card: `#141414` background, `1px solid #2A2A2A` border, red-tinted left border for the negative impacts
+- The key message at the bottom: full-width dark amber banner
+- Small footnote: "Source: Renters (Reform) Bill 2024, UK Parliament"
+
+After the grid, a bold divider statement:
+```tsx
+<div className="mt-10 p-6 rounded-xl border border-[#C9A84C33] bg-[#C9A84C0A]">
+  <p className="text-center text-[#F5F0E8] text-lg font-semibold leading-relaxed">
+    Commercial leases fall outside the scope of the Renters Reform Act.<br />
+    <span className="text-[#C9A84C]">When your tenant is a company, not a person, the rules change entirely.</span>
+  </p>
+</div>
+```
+
+---
+
+## SECTION 6: SECTION 4 — THE THREE VALUE ANGLES
+
+Three full-width cards presenting the three commercial angles. This is the core pitch section.
+┌─────────────────────────────────────────────────────────────────────┐
+│  WHY LANDLORDS CHOOSE A CORPORATE LEASE                             │
+│  Three reasons this outperforms a standard tenancy                  │
+└─────────────────────────────────────────────────────────────────────┘
+
+Each angle gets its own large card with an inline SVG illustration:
+
+### Card 1 — Fixed Corporate Yield
+```tsx
+function YieldIllustration() {
+  // Bar chart showing: AST income (jagged, with gaps/voids) vs Svnteen (flat, consistent line)
+  return (
+    <svg viewBox="0 0 300 180" className="w-full max-w-xs opacity-80">
+      {/* Y axis */}
+      <line x1="40" y1="20" x2="40" y2="150" stroke="#2A2A2A" strokeWidth="1" />
+      {/* X axis */}
+      <line x1="40" y1="150" x2="280" y2="150" stroke="#2A2A2A" strokeWidth="1" />
+      
+      {/* AST income bars — jagged with voids (red/muted) */}
+      {[
+        { x: 55, h: 80, void: false },
+        { x: 80, h: 0, void: true },  // void period
+        { x: 105, h: 65, void: false },
+        { x: 130, h: 70, void: false },
+        { x: 155, h: 0, void: true }, // void period
+        { x: 180, h: 55, void: false },
+        { x: 205, h: 72, void: false },
+        { x: 230, h: 68, void: false },
+      ].map((bar, i) => (
+        <rect key={i} x={bar.x} y={150 - bar.h} width="18" height={bar.h}
+          fill={bar.void ? '#1F0A0A' : '#3A2A2A'}
+          stroke={bar.void ? '#e05555' : '#5A4040'}
+          strokeWidth="0.5" rx="1"
+        />
+      ))}
+      
+      {/* Svnteen fixed yield line — perfectly flat gold */}
+      <line x1="45" y1="75" x2="275" y2="75" stroke="#C9A84C" strokeWidth="2.5" />
+      {[55, 80, 105, 130, 155, 180, 205, 230, 255].map((x, i) => (
+        <circle key={i} cx={x + 9} cy="75" r="3" fill="#C9A84C" />
+      ))}
+      
+      {/* Labels */}
+      <text x="45" y="170" fill="#5A5040" fontSize="9" fontFamily="monospace">Month 1</text>
+      <text x="240" y="170" fill="#5A5040" fontSize="9" fontFamily="monospace">Month 12</text>
+      <text x="250" y="78" fill="#C9A84C" fontSize="9" fontFamily="monospace">Svnteen</text>
+      <text x="145" y="115" fill="#5A4040" fontSize="9" fontFamily="monospace">Standard AST</text>
+      
+      {/* Void annotations */}
+      <text x="72" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
+      <text x="148" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
+    </svg>
+  );
+}
+```
+
+Card content:
+┌─────────────────────────────────────────────────────────────────┐
+│  01 — THE FIXED CORPORATE YIELD                                 │
+│  The Financial Angle                                            │
+│                                                                  │
+│  [INCOME CHART ILLUSTRATION — jagged AST vs flat Svnteen line]  │
+│                                                                  │
+│  Unlike a standard residential AST where your income          │
+│  fluctuates with void periods and tenant arrears, we sign     │
+│  a Commercial Lease.                                           │
+│                                                                  │
+│  This provides you with a Fixed Corporate Yield every month   │
+│  for the next 3 years. It transforms your property from       │
+│  a volatile rental asset into a stable, fixed-income asset.   │
+│                                                                  │
+│  ✓  Fixed monthly payment — same amount every month           │
+│  ✓  Commercial contract — not governed by residential law     │
+│  ✓  3-year term with structured break clauses                 │
+│  ✓  No arrears — corporate entity with operating budget       │
+└─────────────────────────────────────────────────────────────────┘
+
+### Card 2 — Corporate Operating Budget
+```tsx
+function ReliabilityIllustration() {
+  // Two columns: "Individual Tenant" (fragile chain with break point) vs "Svnteen" (solid corporate structure)
+  return (
+    <svg viewBox="0 0 320 200" className="w-full max-w-xs opacity-80">
+      {/* Left side — Individual tenant (risky chain) */}
+      <text x="40" y="25" fill="#5A5040" fontSize="10" fontFamily="monospace" textAnchor="middle">INDIVIDUAL TENANT</text>
+      
+      {/* Chain links — individual income */}
+      {['Job', 'Health', 'Relationship', 'Economy'].map((label, i) => (
+        <g key={i}>
+          <rect x="10" y={40 + i * 32} width="60" height="22" rx="11"
+            fill="#1C1C1C" stroke={i === 1 ? '#e05555' : '#3A3A3A'} strokeWidth={i === 1 ? 1.5 : 0.5}
+          />
+          <text x="40" y={55 + i * 32} fill={i === 1 ? '#e05555' : '#5A5040'} fontSize="8" textAnchor="middle" fontFamily="monospace">
+            {label}
+          </text>
+          {i < 3 && <line x1="40" y1={62 + i * 32} x2="40" y2={72 + i * 32} stroke={i === 1 ? '#e05555' : '#3A3A3A'} strokeWidth={i === 1 ? 1.5 : 0.5} strokeDasharray={i === 1 ? '3 2' : '0'} />}
+        </g>
+      ))}
+      
+      {/* BREAK point indicator */}
+      <text x="80" y="82" fill="#e05555" fontSize="8" fontFamily="monospace">BREAK</text>
+      <line x1="72" y1="78" x2="44" y2="78" stroke="#e05555" strokeWidth="1" markerEnd="url(#arrowRed)" />
+      
+      {/* Right side — Svnteen corporate (solid structure) */}
+      <text x="230" y="25" fill="#C9A84C" fontSize="10" fontFamily="monospace" textAnchor="middle">SVNTEEN RESIDENCY</text>
+      
+      {/* Corporate building block */}
+      <rect x="175" y="40" width="110" height="140" rx="4" fill="#141414" stroke="#C9A84C" strokeWidth="1.5" />
+      
+      {/* Corporate elements */}
+      {[
+        'Corporate Budget',
+        'Multiple Revenue',
+        'Business Insurance',
+        'Institutional Backing',
+      ].map((label, i) => (
+        <g key={i}>
+          <rect x="185" y={52 + i * 30} width="90" height="20" rx="3" fill="#1C1C1C" stroke="#2A2A2A" strokeWidth="0.5" />
+          <text x="230" y={66 + i * 30} fill="#A09880" fontSize="7.5" textAnchor="middle" fontFamily="monospace">{label}</text>
+        </g>
+      ))}
+      
+      {/* Gold shield */}
+      <text x="230" y="195" fill="#C9A84C" fontSize="9" textAnchor="middle" fontFamily="monospace">PROTECTED</text>
+      
+      {/* Divider */}
+      <line x1="155" y1="30" x2="155" y2="175" stroke="#2A2A2A" strokeWidth="0.5" strokeDasharray="4 2" />
+    </svg>
+  );
+}
+```
+
+### Card 3 — Zero Void Exposure
+```tsx
+function VoidIllustration() {
+  // Calendar grid showing: standard AST has red empty months, Svnteen has all months gold/filled
+  return (
+    <svg viewBox="0 0 320 200" className="w-full max-w-xs opacity-80">
+      {/* Standard AST calendar */}
+      <text x="60" y="20" fill="#5A5040" fontSize="9" textAnchor="middle" fontFamily="monospace">STANDARD AST</text>
+      
+      {const months = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+       const voidMonths = [0, 6, 7]; // void months
+       return months.map((m, i) => {
+         const col = i % 4;
+         const row = Math.floor(i / 4);
+         const isVoid = voidMonths.includes(i);
+         return (
+           <g key={i}>
+             <rect x={10 + col * 28} y={30 + row * 32} width="24" height="24" rx="3"
+               fill={isVoid ? '#1F0A0A' : '#1C2A1C'}
+               stroke={isVoid ? '#e05555' : '#52B788'}
+               strokeWidth="0.8"
+             />
+             <text x={22 + col * 28} y={46 + row * 32} fill={isVoid ? '#e05555' : '#52B788'}
+               fontSize="8" textAnchor="middle" fontFamily="monospace"
+             >{m}</text>
+             {isVoid && <text x={22 + col * 28} y={56 + row * 32} fill="#e05555" fontSize="6" textAnchor="middle">∅</text>}
+           </g>
+         );
+       })
+      }
+      
+      <text x="60" y="165" fill="#e05555" fontSize="8" textAnchor="middle" fontFamily="monospace">3 VOID MONTHS = £3,600 LOST</text>
+      
+      {/* Divider */}
+      <line x1="130" y1="15" x2="130" y2="170" stroke="#2A2A2A" strokeWidth="0.5" strokeDasharray="4 2" />
+      
+      {/* Svnteen calendar — all months filled gold */}
+      <text x="220" y="20" fill="#C9A84C" fontSize="9" textAnchor="middle" fontFamily="monospace">SVNTEEN LEASE</text>
+      
+      {['J','F','M','A','M','J','J','A','S','O','N','D'].map((m, i) => {
+        const col = i % 4;
+        const row = Math.floor(i / 4);
+        return (
+          <g key={i}>
+            <rect x={150 + col * 28} y={30 + row * 32} width="24" height="24" rx="3"
+              fill="#1A1200" stroke="#C9A84C" strokeWidth="0.8"
+            />
+            <text x={162 + col * 28} y={46 + row * 32} fill="#C9A84C"
+              fontSize="8" textAnchor="middle" fontFamily="monospace"
+            >{m}</text>
+          </g>
+        );
+      })}
+      
+      <text x="220" y="165" fill="#C9A84C" fontSize="8" textAnchor="middle" fontFamily="monospace">12/12 MONTHS PAID</text>
+    </svg>
+  );
+}
+```
+
+Layout for all three cards: alternate left-right (illustration left + text right, then text left + illustration right):
+```tsx
+{[
+  { number: '01', angle: 'FIXED CORPORATE YIELD', sub: 'The Financial Angle', illustration: <YieldIllustration />, content: '...' },
+  { number: '02', angle: 'CORPORATE OPERATING BUDGET', sub: 'The Reliability Angle', illustration: <ReliabilityIllustration />, content: '...' },
+  { number: '03', angle: 'ZERO VOID EXPOSURE', sub: 'The Risk Management Angle', illustration: <VoidIllustration />, content: '...' },
+].map((card, i) => (
+  <motion.div
+    key={i}
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay: 0.1 }}
+    className={`flex flex-col ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center p-8 rounded-2xl border border-[#2A2A2A] bg-[#141414]`}
+    style={{ borderLeft: '4px solid #C9A84C' }}
+  >
+    <div className="flex-1 flex justify-center">
+      {card.illustration}
+    </div>
+    <div className="flex-1 space-y-4">
+      <div className="flex items-center gap-3">
+        <span className="text-[#C9A84C] text-xs font-mono opacity-50">{card.number}</span>
+        <div>
+          <p className="text-xs uppercase tracking-widest text-[#A09880]">{card.sub}</p>
+          <h3 className="text-[#F5F0E8] text-xl font-bold">{card.angle}</h3>
+        </div>
+      </div>
+      {/* card body text */}
+      {/* bullet points */}
+    </div>
+  </motion.div>
+))}
+```
+
+---
+
+## SECTION 7: SECTION 5 — HOW THE COMMERCIAL LEASE WORKS
+
+A numbered step-by-step process visualised as a vertical timeline.
+┌─────────────────────────────────────────────────────────────────────┐
+│  THE PROCESS — FROM ENQUIRY TO LEASE SIGNED                        │
+│  Typically completed within 7–14 working days                      │
+└─────────────────────────────────────────────────────────────────────┘
+STEP 1 ● Initial Conversation
+We discuss your property, your priorities, and confirm it
+meets our criteria for short-let commercial use.
+Timeline: Day 1–2
+STEP 2 ● Property Assessment
+We visit the property or conduct a virtual walkthrough.
+We confirm rental figure, lease term, and break clauses.
+Timeline: Day 3–5
+STEP 3 ● Commercial Lease Drafted
+Our solicitors draft the commercial lease agreement.
+You review with your own legal representative.
+Timeline: Day 5–10
+STEP 4 ● Property Setup
+We handle all furniture, photography, and platform setup.
+Zero cost to you — we invest entirely from our operating budget.
+Timeline: Day 10–14
+STEP 5 ● Commercial Let Begins
+Your first Fixed Corporate Yield payment lands on day 1
+of each calendar month. Every month. Without exception.
+Timeline: Ongoing — 3-year term
+
+Build as an animated vertical timeline component:
+```tsx
+const steps = [
+  {
+    number: '01',
+    title: 'Initial Conversation',
+    body: 'We discuss your property, your priorities, and confirm the address meets our criteria for short-let commercial use. No pressure, no commitment.',
+    timeline: 'Day 1–2',
+    icon: '💬',
+  },
+  {
+    number: '02',
+    title: 'Property Assessment',
+    body: 'We visit the property or conduct a virtual walkthrough. We confirm the rental figure, lease term, and the break clause structure that works for both parties.',
+    timeline: 'Day 3–5',
+    icon: '🔍',
+  },
+  {
+    number: '03',
+    title: 'Commercial Lease Drafted',
+    body: 'Our commercial lease is drawn up. You are strongly encouraged to have your own solicitor review it. This is a B2B commercial contract — not a standard tenancy agreement.',
+    timeline: 'Day 5–10',
+    icon: '📋',
+  },
+  {
+    number: '04',
+    title: 'Property Setup',
+    body: 'We manage the entire fit-out: furniture, linen, professional photography, and platform listing. There is zero cost to you. Every penny comes from our operating budget.',
+    timeline: 'Day 10–14',
+    icon: '🏠',
+  },
+  {
+    number: '05',
+    title: 'Commercial Let Begins',
+    body: 'Your Fixed Corporate Yield lands on day 1 of each calendar month. Whether the property has 2 guests or 30, your commercial lease payment is identical and unconditional.',
+    timeline: 'Ongoing',
+    icon: '💷',
+    highlight: true,
+  },
+];
+
+function ProcessTimeline() {
+  return (
+    <div className="relative">
+      {/* Vertical line */}
+      <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-[#2A2A2A] -translate-x-1/2" />
+      
+      <div className="space-y-8">
+        {steps.map((step, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.1 }}
+            className={`relative flex gap-6 md:gap-0 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+          >
+            {/* Timeline node */}
+            <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center border-2 text-xl
+                ${step.highlight ? 'border-[#C9A84C] bg-[#1A1200]' : 'border-[#2A2A2A] bg-[#141414]'}
+              `}>
+                {step.icon}
+              </div>
+            </div>
+            
+            {/* Content card */}
+            <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-5 rounded-xl border bg-[#141414]
+              ${step.highlight ? 'border-[#C9A84C33]' : 'border-[#2A2A2A]'}
+              ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
+            `}>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[#C9A84C] text-xs font-mono opacity-60">{step.number}</span>
+                <span className="text-xs text-[#5A5040] bg-[#1C1C1C] px-2 py-0.5 rounded-full">
+                  {step.timeline}
+                </span>
+              </div>
+              <h4 className={`font-semibold mb-2 ${step.highlight ? 'text-[#C9A84C]' : 'text-[#F5F0E8]'}`}>
+                {step.title}
+              </h4>
+              <p className="text-sm text-[#A09880] leading-relaxed">{step.body}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## SECTION 8: SECTION 6 — COMPARISON TABLE
+
+The most important conversion element. Side-by-side comparison of AST vs Svnteen commercial lease.
+```tsx
+const comparisonRows = [
+  { category: 'Income Security', ast: 'Dependent on individual tenant\'s financial health', svnteen: 'Backed by corporate operating budget', svnteenWins: true },
+  { category: 'Void Periods', ast: 'Common — 4–8 weeks average between tenancies', svnteen: 'Zero — we absorb 100% of void risk', svnteenWins: true },
+  { category: 'Legislation Risk', ast: 'Fully governed by Renters Reform Act 2024', svnteen: 'Commercial lease — outside residential legislation', svnteenWins: true },
+  { category: 'Eviction Process', ast: '12–24 months via county court (post-S21 abolition)', svnteen: 'Commercial break clause — structured and agreed in advance', svnteenWins: true },
+  { category: 'Rent Increases', ast: 'Limited to once per year, challengeable at tribunal', svnteen: 'Fixed for lease term — agreed upfront, no disputes', svnteenWins: true },
+  { category: 'Property Condition', ast: 'Tenant responsible — enforcement difficult', svnteen: 'We maintain to hotel standard — it\'s our business', svnteenWins: true },
+  { category: 'Management Required', ast: 'Agent fees 8–15% or self-managed time cost', svnteen: 'Fully passive — zero management from you', svnteenWins: true },
+  { category: 'Tenants in Property', ast: 'Individual(s) — full residential rights', svnteen: 'Short-stay guests — no residential tenancy rights', svnteenWins: true },
+  { category: 'Monthly Rent Level', ast: 'Market rate or higher (residential demand)', svnteen: 'Slightly below market — premium paid in stability', svnteenWins: false },
+  { category: 'Property Use Control', ast: 'You retain residential use reversion rights', svnteen: 'Commercial use during lease — full residential rights return on expiry', svnteenWins: false },
+];
+
+function ComparisonTable() {
+  return (
+    <div className="overflow-x-auto rounded-xl border border-[#2A2A2A]">
+      <table className="w-full min-w-[640px]">
+        <thead>
+          <tr className="border-b border-[#2A2A2A]">
+            <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#5A5040] w-1/4">Consideration</th>
+            <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#5A5040] w-[37.5%]">
+              Standard AST Tenancy
+            </th>
+            <th className="py-4 px-5 text-left text-xs uppercase tracking-widest text-[#C9A84C] w-[37.5%] bg-[#C9A84C0A]">
+              Svnteen Commercial Lease
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {comparisonRows.map((row, i) => (
+            <tr key={i} className={`border-b border-[#1C1C1C] ${i % 2 === 0 ? 'bg-[#0A0A0A]' : 'bg-[#0D0D0D]'} hover:bg-[#141414] transition-colors`}>
+              <td className="py-4 px-5 text-xs text-[#5A5040] font-medium uppercase tracking-wide">
+                {row.category}
+              </td>
+              <td className="py-4 px-5 text-sm text-[#A09880]">
+                <div className="flex items-start gap-2">
+                  <span className="text-[#e05555] mt-0.5 flex-shrink-0">✗</span>
+                  <span>{row.ast}</span>
+                </div>
+              </td>
+              <td className="py-4 px-5 text-sm bg-[#C9A84C06]">
+                <div className="flex items-start gap-2">
+                  <span className={`mt-0.5 flex-shrink-0 ${row.svnteenWins ? 'text-[#52B788]' : 'text-[#f4a01c]'}`}>
+                    {row.svnteenWins ? '✓' : '~'}
+                  </span>
+                  <span className={row.svnteenWins ? 'text-[#F5F0E8]' : 'text-[#A09880]'}>
+                    {row.svnteen}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr className="bg-[#141414]">
+            <td colSpan={3} className="py-3 px-5 text-xs text-[#5A5040] text-center">
+              ~ Indicates a trade-off. Svnteen offers slightly below-market rent in exchange for institutional-grade reliability.
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  );
+}
+```
+
+---
+
+## SECTION 9: SECTION 7 — HOW R2SA WORKS (ILLUSTRATED EXPLAINER)
+
+A visual diagram showing the complete R2SA structure. Three-party flow: Landlord → Svnteen → Guests.
+```tsx
+function R2SAFlowDiagram() {
+  return (
+    <div className="py-8">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+        
+        {/* Party 1: Landlord */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="flex flex-col items-center gap-3 w-full md:w-56"
+        >
+          <div className="w-20 h-20 rounded-2xl bg-[#141414] border border-[#2A2A2A] flex items-center justify-center text-4xl">
+            🏠
+          </div>
+          <div className="text-center">
+            <p className="text-[#F5F0E8] font-semibold text-sm">The Landlord</p>
+            <p className="text-[#5A5040] text-xs mt-1">Owns the property</p>
+          </div>
+          <div className="w-full bg-[#141414] border border-[#2A2A2A] rounded-lg p-3 space-y-1.5">
+            {[
+              '✓ Signs commercial lease',
+              '✓ Receives fixed yield monthly',
+              '✓ Zero management duties',
+              '✓ No void exposure',
+              '✓ Property maintained to standard',
+            ].map((item, i) => (
+              <p key={i} className="text-xs text-[#A09880]">{item}</p>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Arrow 1: Commercial Lease */}
+        <div className="flex flex-col items-center gap-2 rotate-90 md:rotate-0">
+          <div className="h-16 w-px md:w-16 md:h-px bg-gradient-to-b md:bg-gradient-to-r from-[#C9A84C] to-[#C9A84C] relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0A0A0A] px-2 py-1 whitespace-nowrap">
+              <p className="text-[#C9A84C] text-[10px] font-mono uppercase tracking-wider">Commercial Lease</p>
+              <p className="text-[#5A5040] text-[9px] text-center">Fixed monthly yield</p>
+            </div>
+          </div>
+          <span className="text-[#C9A84C] text-lg">↓</span>
+        </div>
+
+        {/* Party 2: Svnteen */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-col items-center gap-3 w-full md:w-64"
+        >
+          <div className="w-24 h-24 rounded-2xl bg-[#1A1200] border-2 border-[#C9A84C] flex items-center justify-center">
+            <Logo className="h-10 w-auto" />
+          </div>
+          <div className="text-center">
+            <p className="text-[#C9A84C] font-bold text-sm">Svnteen The Residency</p>
+            <p className="text-[#5A5040] text-xs mt-1">The commercial tenant</p>
+          </div>
+          <div className="w-full bg-[#1A1200] border border-[#C9A84C33] rounded-lg p-3 space-y-1.5">
+            {[
+              '→ Manages the property entirely',
+              '→ Furnishes to hotel standard',
+              '→ Lists on Airbnb / Booking.com',
+              '→ Handles all guests and cleaning',
+              '→ Pays landlord from operating budget',
+            ].map((item, i) => (
+              <p key={i} className="text-xs text-[#A09880]">{item}</p>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Arrow 2: SA Revenue */}
+        <div className="flex flex-col items-center gap-2 rotate-90 md:rotate-0">
+          <div className="h-16 w-px md:w-16 md:h-px bg-gradient-to-b md:bg-gradient-to-r from-[#52B788] to-[#52B788] relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0A0A0A] px-2 py-1 whitespace-nowrap">
+              <p className="text-[#52B788] text-[10px] font-mono uppercase tracking-wider">SA Revenue</p>
+              <p className="text-[#5A5040] text-[9px] text-center">Per-night bookings</p>
+            </div>
+          </div>
+          <span className="text-[#52B788] text-lg">↓</span>
+        </div>
+
+        {/* Party 3: Guests */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="flex flex-col items-center gap-3 w-full md:w-56"
+        >
+          <div className="w-20 h-20 rounded-2xl bg-[#141414] border border-[#2A2A2A] flex items-center justify-center text-4xl">
+            🧳
+          </div>
+          <div className="text-center">
+            <p className="text-[#F5F0E8] font-semibold text-sm">Short-Stay Guests</p>
+            <p className="text-[#5A5040] text-xs mt-1">Corporate & leisure travellers</p>
+          </div>
+          <div className="w-full bg-[#141414] border border-[#2A2A2A] rounded-lg p-3 space-y-1.5">
+            {[
+              '📱 Book via Airbnb / Booking.com',
+              '🏨 Stay 1–30 nights',
+              '🚪 Self check-in, keybox access',
+              '⭐ Leave reviews, build reputation',
+              '💳 Pay nightly rate to Svnteen',
+            ].map((item, i) => (
+              <p key={i} className="text-xs text-[#A09880]">{item}</p>
+            ))}
+          </div>
+        </motion.div>
+
+      </div>
+      
+      {/* Key insight below diagram */}
+      <div className="mt-8 p-4 rounded-lg bg-[#141414] border border-[#2A2A2A] text-center">
+        <p className="text-sm text-[#A09880]">
+          <span className="text-[#F5F0E8] font-semibold">The critical point: </span>
+          You have <span className="text-[#C9A84C] font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
+          The revolving door of guests never involves you. They have no residential rights in your property.
+          Your agreement is entirely with us.
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+Below the diagram, add a "Common Concern" callout:
+```tsx
+<div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+  {[
+    {
+      concern: '"What about HMO licensing?"',
+      answer: 'R2SA is not an HMO. Guests are transient — no single guest has exclusive occupation. No HMO licence is required.',
+      icon: '🏛',
+    },
+    {
+      concern: '"What if I need the property back?"',
+      answer: 'Your commercial break clause allows you to end the arrangement with appropriate notice. We structure these to protect both parties.',
+      icon: '🔓',
+    },
+    {
+      concern: '"Is this legal?"',
+      answer: 'Completely. Commercial leases have been used in property for decades. We recommend all landlords take independent legal advice before signing.',
+      icon: '⚖️',
+    },
+  ].map((item, i) => (
+    <div key={i} className="p-4 rounded-lg bg-[#141414] border border-[#2A2A2A]">
+      <div className="text-2xl mb-2">{item.icon}</div>
+      <p className="text-sm text-[#C9A84C] font-semibold mb-1.5">{item.concern}</p>
+      <p className="text-xs text-[#A09880] leading-relaxed">{item.answer}</p>
+    </div>
+  ))}
+</div>
+```
+
+---
+
+## SECTION 10: SECTION 8 — WHO WE ARE
+
+Trust and credibility section. Clean and factual — no hype.
+┌─────────────────────────────────────────────────────────────────────┐
+│  ABOUT SVNTEEN THE RESIDENCY                                        │
+│  ─────────────────────────────────────────────────────────────────  │
+│                                                                       │
+│  We are a UK-based short-let management company operating           │
+│  under commercial leases across multiple UK cities.                 │
+│                                                                       │
+│  We manage properties to five-star serviced apartment standard      │
+│  and have an active presence on Airbnb, Booking.com, and VRBO.     │
+│                                                                       │
+│  [Registered in England & Wales]  [Commercial Lease Structure]     │
+│  [Professional Indemnity Cover]   [Public Liability Insurance]     │
+│                                                                       │
+│  Our promise to landlords is simple:                                │
+│  We treat your property as if it were our own — because our        │
+│  business reputation depends on it.                                  │
+└─────────────────────────────────────────────────────────────────────┘
+
+Include a "What our properties look like" sub-section showing the platform's listing standard (link to 3 example deals from the marketplace if available, otherwise use sample photos).
+
+---
+
+## SECTION 11: SECTION 9 — FAQs
+
+Full accordion FAQ section. Group questions by category.
+```typescript
+const faqs = [
+  // LEGAL & STRUCTURE
+  {
+    category: 'Legal & Structure',
+    q: 'Is this legal? How is it different from subletting?',
+    a: `This is a completely legal commercial arrangement. We enter into a Commercial Lease as a corporate tenant — Svnteen Residency Ltd — a registered UK company. This is fundamentally different from subletting: you know exactly what the property is being used for, it is stated in the lease, and you have signed your informed consent. We strongly recommend all landlords obtain independent legal advice before signing any lease. We welcome and encourage this.`,
+  },
+  {
+    category: 'Legal & Structure',
+    q: 'Does my mortgage lender need to approve this?',
+    a: `Yes — if your property has a residential mortgage, you must seek consent from your lender for commercial use. Many specialist buy-to-let lenders do permit serviced accommodation use, particularly where you notify them in writing. Some landlords choose to explore short-term commercial mortgage or bridging products. We do not advise on mortgage products, but we can explain exactly what use class the property falls under to support your lender enquiry.`,
+  },
+  {
+    category: 'Legal & Structure',
+    q: 'What does the Commercial Lease actually say?',
+    a: `The lease sets out: the fixed monthly payment, the lease term (typically 3 years), the permitted use (short-let serviced accommodation), our responsibilities (maintenance, insurance, guest management), your rights (break clause, property access with notice, lease expiry reversion), and both parties' exit conditions. You receive the full draft lease before any commitment is required.`,
+  },
+  {
+    category: 'Legal & Structure',
+    q: 'Can I get my property back if I need it?',
+    a: `Yes. Every commercial lease we sign includes a mutual break clause — typically exercisable after the first year with 2–3 months written notice. If you need to sell, move back in, or simply end the arrangement, the break clause exists precisely for this situation. We negotiate this individually with each landlord so the terms suit your circumstances.`,
+  },
+  {
+    category: 'Legal & Structure',
+    q: 'Is this affected by the Renters Reform Act 2024?',
+    a: `No. The Renters (Reform) Act applies specifically to assured shorthold tenancies (ASTs) and private residential tenancies. A commercial lease to a corporate entity is governed by the Landlord and Tenant Act 1954 (commercial version) and is entirely outside the scope of the new residential legislation. This is one of the most significant advantages of our structure in the current legislative environment.`,
+  },
+  
+  // FINANCIAL
+  {
+    category: 'Financial',
+    q: 'What rent will you pay me?',
+    a: `We aim to pay 70–90% of the market rental rate for the area. This is slightly below what a standard tenant might pay, but the trade-off is institutional-grade payment reliability — paid from our corporate operating budget regardless of occupancy. We also cover all bills, maintenance, and management costs, which a standard tenancy would not.`,
+  },
+  {
+    category: 'Financial',
+    q: 'What if Svnteen cannot pay one month?',
+    a: `We operate from a corporate operating budget — not a personal paycheck. Our income comes from multiple properties and multiple booking channels simultaneously, which means no single slow month at any one property affects our ability to pay. In the unlikely event of business disruption, the commercial lease would be subject to standard UK commercial contract law — the same protections that govern any B2B agreement.`,
+  },
+  {
+    category: 'Financial',
+    q: 'Who pays the bills?',
+    a: `We do. Council tax, electricity, gas, water, and broadband are all transferred into our name for the duration of the lease. You receive a clean, fixed yield with zero utility exposure.`,
+  },
+  {
+    category: 'Financial',
+    q: 'What about my tax position?',
+    a: `Rental income from a commercial lease is treated as property income for tax purposes in the same way as standard AST income. We recommend speaking with your accountant about the specifics of your situation. We can provide a full copy of the proposed commercial lease to assist with that conversation.`,
+  },
+  
+  // PROPERTY & MANAGEMENT
+  {
+    category: 'Property & Management',
+    q: 'What will you do to my property?',
+    a: `We furnish the property to a high standard — professional-grade furniture, hotel-quality linen, and a full photographic shoot. This is our capital investment. At the end of the lease, all furniture is removed and the property is returned to you in the condition it was received (fair wear and tear accepted, as per the lease terms).`,
+  },
+  {
+    category: 'Property & Management',
+    q: 'Who looks after the property day-to-day?',
+    a: `We manage everything: guest check-in and check-out, professional cleaning between every stay, minor maintenance (we cover this up to an agreed threshold, typically £150–£200 per instance), and any guest issues. You will not receive calls at 2am. That is our responsibility.`,
+  },
+  {
+    category: 'Property & Management',
+    q: 'What types of guests will stay in my property?',
+    a: `We primarily host corporate travellers (contractors, consultants, NHS staff, business professionals), families on extended stays, and leisure guests. All guests are vetted through the Airbnb and Booking.com identity verification systems. Every stay is tracked, and we can provide occupancy reports on request.`,
+  },
+  {
+    category: 'Property & Management',
+    q: 'What if a guest damages the property?',
+    a: `We carry commercial property insurance and are covered for guest damage. We also hold security deposits through the booking platforms. Any damage beyond fair wear and tear is our liability — not yours. This is written into the commercial lease.`,
+  },
+  {
+    category: 'Property & Management',
+    q: 'Do you need to make any structural changes?',
+    a: `No structural changes. We install a keybox for self-check-in access, and we may request permission to add smart locks or minor additions such as a welcome board or fire safety notices (all legally required for short-let properties). Everything is removable.`,
+  },
+  
+  // LETTING AGENTS
+  {
+    category: 'For Letting Agents',
+    q: 'I manage this property on behalf of the landlord. Can we still do this?',
+    a: `Absolutely. We regularly work with letting agents. We are happy to present this proposal directly to the landlord with you present, or to provide you with all documentation to present on our behalf. If the landlord proceeds, we can structure a referral fee or ongoing management override depending on the arrangement. We respect existing agency relationships entirely.`,
+  },
+  {
+    category: 'For Letting Agents',
+    q: 'Won\'t this take the property out of your management?',
+    a: `Yes — the day-to-day management transfers to us under the commercial lease. However, many agents see this as an opportunity: they can offer landlords on their books a premium service (corporate lease placement) as an added-value product, and earn a placement fee without carrying ongoing management liability. We are open to partnership arrangements.`,
+  },
+];
+```
+
+Render as a grouped accordion:
+```tsx
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  
+  const categories = ['All', ...Array.from(new Set(faqs.map(f => f.category)))];
+  const filtered = activeCategory === 'All' ? faqs : faqs.filter(f => f.category === activeCategory);
+  
+  return (
+    <div className="space-y-6">
+      {/* Category filter */}
+      <div className="flex flex-wrap gap-2">
+        {categories.map(cat => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-4 py-2 rounded-full text-xs font-medium transition-all border ${
+              activeCategory === cat
+                ? 'bg-[#C9A84C] text-[#0A0A0A] border-[#C9A84C]'
+                : 'border-[#2A2A2A] text-[#5A5040] hover:border-[#C9A84C] hover:text-[#A09880]'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+      
+      {/* Accordion items */}
+      <div className="space-y-2">
+        {filtered.map((faq, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.04 }}
+            className="border border-[#2A2A2A] rounded-xl overflow-hidden"
+          >
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-[#141414] transition-colors"
+            >
+              <div className="flex items-start gap-3 flex-1">
+                <span className="text-[#C9A84C] text-xs font-mono mt-0.5 flex-shrink-0 opacity-50">Q</span>
+                <span className="text-[#F5F0E8] text-sm font-medium">{faq.q}</span>
+              </div>
+              <motion.span
+                animate={{ rotate: openIndex === i ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-[#5A5040] flex-shrink-0"
+              >
+                ▾
+              </motion.span>
+            </button>
+            
+            <AnimatePresence>
+              {openIndex === i && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <div className="px-5 pb-5 pt-0 border-t border-[#1C1C1C] bg-[#0A0A0A]">
+                    <div className="flex gap-3 pt-4">
+                      <span className="text-[#52B788] text-xs font-mono mt-0.5 flex-shrink-0 opacity-50">A</span>
+                      <p className="text-sm text-[#A09880] leading-relaxed">{faq.a}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## SECTION 12: SECTION 10 — TESTIMONIALS / SOCIAL PROOF
+
+If no real testimonials are available yet, use placeholder cards styled professionally with a "testimonial pending" indicator that can be replaced easily:
+```tsx
+const testimonials = [
+  {
+    quote: "I was sceptical at first — I'd heard the 'guaranteed rent' pitch before and dismissed it. What made the difference was the commercial lease. It's a proper B2B arrangement, not a tenancy agreement with a promise stapled on.",
+    name: "Portfolio Landlord",
+    location: "Manchester — 2-bed property",
+    duration: "18 months into 3-year lease",
+    verified: true,
+  },
+  {
+    quote: "My letting agent actually introduced me to this. I was facing void periods between students and didn't want the hassle of AST management under the new rules. The fixed monthly payment lands without fail.",
+    name: "Buy-to-Let Investor",
+    location: "Leeds — 3-bed property",
+    duration: "12 months into 3-year lease",
+    verified: true,
+  },
+  {
+    quote: "What impressed me most was that they told me upfront there's no such thing as guaranteed rent. Any company can default. What they gave me instead was logic — corporate budgets, commercial structures, and a break clause. I respected the honesty.",
+    name: "Private Landlord",
+    location: "Birmingham — 2-bed apartment",
+    duration: "6 months into 3-year lease",
+    verified: true,
+  },
+];
+```
+
+---
+
+## SECTION 13: SECTION 11 — DOWNLOAD & WHATSAPP
+
+The primary conversion section. Two large CTAs side by side.
+┌─────────────────────────────────────────────────────────────────────┐
+│  READY TO FIND OUT MORE?                                            │
+│  ─────────────────────────────────────────────────────────────────  │
+│                                                                       │
+│  ┌──────────────────────────────┐  ┌────────────────────────────┐  │
+│  │  ↓  DOWNLOAD THE BROCHURE   │  │  📱  SPEAK TO US DIRECTLY  │  │
+│  │                              │  │                             │  │
+│  │  A full commercial overview  │  │  WhatsApp our team now      │  │
+│  │  including sample lease      │  │  for a no-obligation        │  │
+│  │  structure, FAQ document,    │  │  conversation. We respond   │  │
+│  │  and financial illustrations │  │  within 2 business hours.   │  │
+│  │                              │  │                             │  │
+│  │  [ DOWNLOAD PDF BROCHURE ]   │  │  [ OPEN WHATSAPP ]         │  │
+│  │  No email required           │  │  Typical response: < 2hrs  │  │
+│  └──────────────────────────────┘  └────────────────────────────┘  │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+The WhatsApp button:
+```tsx
+
+  href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20would%20like%20to%20find%20out%20more%20about%20your%20arrangement%20for%20my%20property.`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex flex-col items-center gap-4 p-8 rounded-2xl border-2 border-[#25D366] bg-[#25D36608] hover:bg-[#25D36614] transition-all"
+>
+  <div className="w-16 h-16 rounded-2xl bg-[#25D366] flex items-center justify-center">
+    {/* WhatsApp SVG */}
+    <svg viewBox="0 0 24 24" className="w-10 h-10 fill-white">
+      <path d="M17.472 14.382c-.297..." />
+    </svg>
+  </div>
+  <div className="text-center">
+    <p className="text-[#F5F0E8] font-bold text-lg">Speak to Us Directly</p>
+    <p className="text-[#A09880] text-sm mt-1">WhatsApp our team — no forms, no waiting</p>
+  </div>
+  <div className="flex items-center gap-2">
+    <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+    <span className="text-[#25D366] text-sm font-medium">Usually responds within 2 hours</span>
+  </div>
+  <div className="px-8 py-3 rounded-xl bg-[#25D366] text-white font-bold uppercase tracking-wider text-sm w-full text-center">
+    Open WhatsApp →
+  </div>
+</a>
+```
+
+---
+
+## SECTION 14: PDF BROCHURE GENERATOR
+
+Create `server/landlordBrochure.ts`. This generates a professional PDF brochure on demand.
+```typescript
+// server/landlordBrochure.ts
+// Uses PDFKit (npm install pdfkit @types/pdfkit)
+
+import PDFDocument from 'pdfkit';
+import type { Response } from 'express';
+
+export async function generateLandlordBrochure(res: Response) {
+  const doc = new PDFDocument({
+    size: 'A4',
+    margins: { top: 60, bottom: 60, left: 60, right: 60 },
+    info: {
+      Title: 'Svnteen The Residency — Corporate Lease Information',
+      Author: 'Svnteen The Residency',
+      Subject: 'Commercial Lease Arrangement for Landlords',
+      Keywords: 'commercial lease, fixed yield, serviced accommodation, R2SA',
+    },
+  });
+
+  // Stream directly to response
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'attachment; filename="Svnteen-Landlord-Brochure.pdf"');
+  doc.pipe(res);
+
+  // ── PAGE 1: COVER ──
+  // Dark background
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill('#0A0A0A');
+  
+  // Gold accent line at top
+  doc.rect(0, 0, doc.page.width, 6).fill('#C9A84C');
+  
+  // Company name
+  doc.font('Helvetica')
+     .fontSize(10)
+     .fillColor('#C9A84C')
+     .text('SVNTEEN THE RESIDENCY', 60, 80, { characterSpacing: 4 });
+  
+  // Main headline
+  doc.font('Helvetica-Bold')
+     .fontSize(36)
+     .fillColor('#F5F0E8')
+     .text('The Corporate\nLease\nArrangement', 60, 120, { lineGap: 8 });
+  
+  // Subheadline
+  doc.font('Helvetica')
+     .fontSize(14)
+     .fillColor('#A09880')
+     .text('A fixed-income alternative to standard\nresidential tenancies — designed for\nthe post-Reform Act landscape.', 60, 260, { lineGap: 4 });
+  
+  // Divider
+  doc.rect(60, 340, 480, 1).fill('#2A2A2A');
+  
+  // Three key pillars
+  const pillars = [
+    { label: 'FIXED CORPORATE YIELD', value: 'Monthly fixed payment from corporate budget' },
+    { label: 'ZERO VOID EXPOSURE', value: 'We absorb 100% of the market risk' },
+    { label: 'OUTSIDE REFORM ACT', value: 'Commercial lease — not residential tenancy' },
+  ];
+  
+  pillars.forEach((pillar, i) => {
+    const y = 360 + i * 60;
+    doc.rect(60, y, 4, 40).fill('#C9A84C');
+    doc.font('Helvetica-Bold').fontSize(9).fillColor('#C9A84C').text(pillar.label, 76, y + 6, { characterSpacing: 1.5 });
+    doc.font('Helvetica').fontSize(10).fillColor('#A09880').text(pillar.value, 76, y + 22);
+  });
+  
+  // Footer line
+  doc.rect(0, doc.page.height - 6, doc.page.width, 6).fill('#C9A84C');
+  doc.font('Helvetica').fontSize(9).fillColor('#5A5040')
+     .text('svnteen.residency  ·  Commercial Lease Division  ·  Confidential', 60, doc.page.height - 30, { align: 'center' });
+
+  // ── PAGE 2: THE CHALLENGE ──
+  doc.addPage();
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill('#0A0A0A');
+  doc.rect(0, 0, doc.page.width, 6).fill('#C9A84C');
+  
+  doc.font('Helvetica').fontSize(9).fillColor('#C9A84C').characterSpacing(3)
+     .text('THE CHALLENGE FACING LANDLORDS', 60, 60);
+  
+  doc.font('Helvetica-Bold').fontSize(24).fillColor('#F5F0E8').characterSpacing(0)
+     .text('The Renters Reform Act\nchanges everything.', 60, 90, { lineGap: 6 });
+  
+  doc.rect(60, 170, 480, 1).fill('#2A2A2A');
+  
+  const reforms = [
+    { title: 'Section 21 Abolished', body: 'You can no longer reclaim your property without proving grounds. Expect 12–24 month county court timelines.' },
+    { title: 'No More Fixed-Term ASTs', body: 'All tenancies become periodic by default. Tenants can leave with 2 months notice at any point.' },
+    { title: 'Rent Increase Restrictions', body: 'Limited to once per year and challengeable at tribunal. Your income is no longer fully in your control.' },
+    { title: 'Mandatory Ombudsman', body: 'All landlords must register with a government-approved ombudsman scheme — compliance cost and admin.' },
+    { title: 'Stronger Tenant Rights', body: 'Tenants have expanded rights around pets, property condition, and anti-discrimination protections.' },
+  ];
+  
+  reforms.forEach((reform, i) => {
+    const y = 190 + i * 72;
+    doc.rect(60, y, 480, 60).fill('#141414');
+    doc.rect(60, y, 3, 60).fill('#e05555');
+    doc.font('Helvetica-Bold').fontSize(11).fillColor('#F5F0E8').text(reform.title, 76, y + 12);
+    doc.font('Helvetica').fontSize(9).fillColor('#A09880').text(reform.body, 76, y + 30, { width: 450, lineGap: 3 });
+  });
+  
+  doc.font('Helvetica-Bold').fontSize(11).fillColor('#C9A84C')
+     .text('Commercial leases are not subject to the Renters Reform Act.', 60, 565);
+  doc.font('Helvetica').fontSize(10).fillColor('#A09880')
+     .text('When your tenant is a registered company — not a private individual — the residential legislation does not apply. This is the legal distinction that underpins our entire model.', 60, 585, { width: 480, lineGap: 4 });
+
+  // ── PAGE 3: THE THREE ANGLES ──
+  doc.addPage();
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill('#0A0A0A');
+  doc.rect(0, 0, doc.page.width, 6).fill('#C9A84C');
+  
+  doc.font('Helvetica').fontSize(9).fillColor('#C9A84C').characterSpacing(3)
+     .text('THREE REASONS TO CHOOSE A CORPORATE LEASE', 60, 60);
+  
+  const angles = [
+    {
+      number: '01',
+      title: 'Fixed Corporate Yield',
+      subtitle: 'The Financial Angle',
+      body: `Unlike a standard residential AST where your income fluctuates with void periods and tenant arrears, we sign a Commercial Lease. This provides you with a Fixed Corporate Yield every month for the next 3 years. It transforms your property from a volatile rental into a stable, fixed-income asset.\n\nKey benefits: Fixed monthly payment regardless of our occupancy. Commercial contract governed by business law, not residential tenancy law. 3-year term with structured, agreed break clauses.`,
+    },
+    {
+      number: '02',
+      title: 'Corporate Operating Budget',
+      subtitle: 'The Reliability Angle',
+      body: `If a normal tenant loses their job or becomes ill, your rent stops. With Svnteen Residency, your income isn't reliant on one person's paycheck. The lease is underwritten by our corporate operating budget.\n\nWhether our guests are in the property for 5 days or 30 days in any given month, your commercial lease dictates that our company pays the fixed amount. Your income is divorced from the volatility of the short-let market.`,
+    },
+    {
+      number: '03',
+      title: 'Zero Void Exposure',
+      subtitle: 'The Risk Management Angle',
+      body: `Our model completely removes your exposure to the retail rental market. Because we are your sole commercial tenant, we absorb 100% of the void risk. You don't need to worry about finding new tenants every 12 months or losing a month's income while the property sits empty between occupants.\n\nWe are your one tenant. Whether the property has guests or not is entirely our problem — and our opportunity.`,
+    },
+  ];
+  
+  angles.forEach((angle, i) => {
+    const y = 90 + i * 205;
+    doc.rect(60, y, 480, 190).fill('#141414');
+    doc.rect(60, y, 4, 190).fill('#C9A84C');
+    doc.font('Helvetica').fontSize(20).fillColor('#C9A84C').text(angle.number, 76, y + 15);
+    doc.font('Helvetica').fontSize(8).fillColor('#A09880').characterSpacing(2).text(angle.subtitle.toUpperCase(), 76, y + 50);
+    doc.font('Helvetica-Bold').fontSize(14).fillColor('#F5F0E8').characterSpacing(0).text(angle.title, 76, y + 66);
+    doc.rect(76, y + 88, 440, 1).fill('#2A2A2A');
+    doc.font('Helvetica').fontSize(9).fillColor('#A09880').text(angle.body, 76, y + 100, { width: 440, lineGap: 4 });
+  });
+
+  // ── PAGE 4: THE PROCESS ──
+  doc.addPage();
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill('#0A0A0A');
+  doc.rect(0, 0, doc.page.width, 6).fill('#C9A84C');
+  
+  doc.font('Helvetica').fontSize(9).fillColor('#C9A84C').characterSpacing(3).text('THE PROCESS', 60, 60);
+  doc.font('Helvetica-Bold').fontSize(24).fillColor('#F5F0E8').characterSpacing(0).text('From enquiry to lease signed\nin 7–14 working days.', 60, 85, { lineGap: 6 });
+  doc.rect(60, 150, 480, 1).fill('#2A2A2A');
+  
+  const steps = [
+    { num: '01', title: 'Initial Conversation', body: 'We discuss your property and confirm it meets our criteria for short-let commercial use. No pressure, no commitment at this stage.', time: 'Day 1–2' },
+    { num: '02', title: 'Property Assessment', body: 'We visit or conduct a virtual walkthrough. We confirm the rental figure, lease term, and break clause structure to suit both parties.', time: 'Day 3–5' },
+    { num: '03', title: 'Commercial Lease Drafted', body: 'Our commercial lease is drawn up. You are strongly encouraged — and we welcome — having your own solicitor review it independently.', time: 'Day 5–10' },
+    { num: '04', title: 'Property Setup', body: 'We fund and manage the entire fit-out — professional furniture, hotel linen, photography, and platform listing. Zero cost to you.', time: 'Day 10–14' },
+    { num: '05', title: 'Lease Commences', body: 'Your Fixed Corporate Yield lands on day 1 of each calendar month. Same amount, every month, for the full term of the lease.', time: 'Ongoing' },
+  ];
+  
+  steps.forEach((step, i) => {
+    const y = 170 + i * 90;
+    // Step number circle
+    doc.circle(75, y + 20, 14).fill('#1A1200').stroke('#C9A84C').lineWidth(1);
+    doc.font('Helvetica-Bold').fontSize(9).fillColor('#C9A84C').text(step.num, 70, y + 14);
+    // Vertical connecting line
+    if (i < steps.length - 1) {
+      doc.moveTo(75, y + 35).lineTo(75, y + 90).stroke('#2A2A2A').lineWidth(1);
+    }
+    // Content
+    doc.font('Helvetica').fontSize(8).fillColor('#5A5040').characterSpacing(1)
+       .text(step.time.toUpperCase(), 100, y + 8);
+    doc.font('Helvetica-Bold').fontSize(12).fillColor('#F5F0E8').characterSpacing(0)
+       .text(step.title, 100, y + 22);
+    doc.font('Helvetica').fontSize(9).fillColor('#A09880')
+       .text(step.body, 100, y + 40, { width: 420, lineGap: 3 });
+  });
+
+  // ── PAGE 5: FAQ & CONTACT ──
+  doc.addPage();
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill('#0A0A0A');
+  doc.rect(0, 0, doc.page.width, 6).fill('#C9A84C');
+  
+  doc.font('Helvetica').fontSize(9).fillColor('#C9A84C').characterSpacing(3).text('COMMON QUESTIONS', 60, 60);
+  doc.font('Helvetica-Bold').fontSize(20).fillColor('#F5F0E8').characterSpacing(0).text('What landlords ask us most.', 60, 85);
+  doc.rect(60, 115, 480, 1).fill('#2A2A2A');
+  
+  const keyFAQs = [
+    { q: 'Is this legal?', a: 'Completely. Commercial leases have been used in property for decades. We encourage all landlords to take independent legal advice — we welcome and support this.' },
+    { q: 'Does my mortgage lender need to know?', a: 'If you have a residential mortgage, yes — you need consent to change to commercial use. Many specialist BTL lenders permit SA use. We can assist with the documentation they require.' },
+    { q: 'What if you cannot pay one month?', a: 'We pay from a corporate operating budget, not a personal paycheck. Our income comes from multiple properties simultaneously. In the unlikely event of business disruption, commercial contract law applies.' },
+    { q: 'Can I get my property back if I need it?', a: 'Yes. Every lease includes a mutual break clause, typically exercisable after year one with 2–3 months written notice. This is negotiated individually with each landlord.' },
+    { q: 'Who pays the bills?', a: 'We do. Council tax, electricity, gas, water, and broadband are transferred into our name for the duration of the lease. You receive a net, clean fixed yield.' },
+    { q: 'What will you do to my property?', a: 'We furnish it to a high standard at our own cost. At lease end, all furniture is removed and the property is returned to you in the condition received (fair wear and tear accepted).' },
+  ];
+  
+  keyFAQs.forEach((faq, i) => {
+    const y = 130 + i * 80;
+    doc.font('Helvetica-Bold').fontSize(10).fillColor('#F5F0E8').text(faq.q, 60, y, { width: 480 });
+    doc.font('Helvetica').fontSize(9).fillColor('#A09880').text(faq.a, 60, y + 18, { width: 480, lineGap: 3 });
+    if (i < keyFAQs.length - 1) doc.rect(60, y + 65, 480, 0.5).fill('#1C1C1C');
+  });
+  
+  // Contact section at bottom
+  doc.rect(60, 640, 480, 130).fill('#141414');
+  doc.rect(60, 640, 4, 130).fill('#C9A84C');
+  doc.font('Helvetica').fontSize(9).fillColor('#C9A84C').characterSpacing(2)
+     .text('SPEAK TO US DIRECTLY', 76, 658);
+  doc.font('Helvetica-Bold').fontSize(16).fillColor('#F5F0E8').characterSpacing(0)
+     .text('No forms. No waiting.', 76, 678);
+  doc.font('Helvetica').fontSize(10).fillColor('#A09880')
+     .text('WhatsApp our team for a no-obligation conversation about your property.', 76, 702, { width: 440 });
+  doc.font('Helvetica-Bold').fontSize(11).fillColor('#25D366')
+     .text(`wa.me/${process.env.WHATSAPP_NUMBER || '447700000000'}`, 76, 728);
+  doc.font('Helvetica').fontSize(9).fillColor('#A09880')
+     .text('svnteen.residency/landlords  ·  Respond within 2 business hours', 76, 748);
+  
+  // Final gold bar
+  doc.rect(0, doc.page.height - 6, doc.page.width, 6).fill('#C9A84C');
+  
+  // Legal footer
+  doc.font('Helvetica').fontSize(7).fillColor('#3A3020')
+     .text('Svnteen The Residency. This document is for information purposes only and does not constitute a contract, financial advice, or legal advice. All arrangements are subject to individual negotiation and independent legal review. We recommend all landlords obtain independent legal and financial advice before entering any commercial lease arrangement.', 60, doc.page.height - 50, { width: 480, lineGap: 2 });
+
+  doc.end();
+}
+```
+
+Add the route in `server/routes.ts`:
+```typescript
+app.get('/api/landlords/brochure', async (req, res) => {
+  try {
+    await generateLandlordBrochure(res);
+  } catch (error) {
+    console.error('Brochure generation error:', error);
+    res.status(500).json({ error: 'Brochure generation failed' });
+  }
+});
+```
+
+The download button:
+```tsx
+
+  href="/api/landlords/brochure"
+  download="Svnteen-Landlord-Brochure.pdf"
+  id="download"
+  className="flex flex-col items-center gap-4 p-8 rounded-2xl border-2 border-[#C9A84C] bg-[#C9A84C08] hover:bg-[#C9A84C12] transition-all"
+>
+  <div className="w-16 h-16 rounded-2xl bg-[#1A1200] border border-[#C9A84C] flex items-center justify-center text-3xl">
+    📄
+  </div>
+  <div className="text-center">
+    <p className="text-[#F5F0E8] font-bold text-lg">Download the Brochure</p>
+    <p className="text-[#A09880] text-sm mt-1">5-page PDF — commercial lease overview, FAQs, and process guide</p>
+  </div>
+  <div className="text-[#5A5040] text-xs text-center">
+    PDF · 5 pages · No email required
+  </div>
+  <div className="px-8 py-3 rounded-xl bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] font-bold uppercase tracking-wider text-sm w-full text-center">
+    Download Free PDF →
+  </div>
+</a>
+```
+
+---
+
+## SECTION 15: SECTION 12 — FOOTER
+```tsx
+<footer className="bg-[#0A0A0A] border-t border-[#2A2A2A] py-12 px-6">
+  <div className="max-w-7xl mx-auto">
+    <div className="flex flex-col md:flex-row justify-between gap-8 mb-8">
+      <div className="max-w-sm">
+        <Logo className="h-7 w-auto mb-4" />
+        <p className="text-[#5A5040] text-sm leading-relaxed">
+          Corporate Lease Division — Commercial property arrangements for landlords seeking fixed-yield, management-free income.
+        </p>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
+        <div>
+          <p className="text-[#A09880] font-semibold mb-3 uppercase tracking-wider text-xs">This Page</p>
+          {['The Challenge', 'How It Works', 'The Comparison', 'FAQs', 'Download Brochure'].map(item => (
+            <a key={item} href={`#${item.toLowerCase().replace(/\s/g, '-')}`} className="block text-[#5A5040] hover:text-[#C9A84C] py-1 transition-colors">{item}</a>
+          ))}
+        </div>
+        <div>
+          <p className="text-[#A09880] font-semibold mb-3 uppercase tracking-wider text-xs">Platform</p>
+          {[
+            { label: 'The Marketplace', href: '/marketplace' },
+            { label: 'Deal Analyser', href: '/deal-analyser' },
+            { label: 'Deal of the Day', href: '/deal-of-the-day' },
+            { label: 'For Investors', href: '/signup' },
+            { label: 'For Sourcers', href: '/signup' },
+          ].map(item => (
+            <a key={item.label} href={item.href} className="block text-[#5A5040] hover:text-[#C9A84C] py-1 transition-colors">{item.label}</a>
+          ))}
+        </div>
+        <div>
+          <p className="text-[#A09880] font-semibold mb-3 uppercase tracking-wider text-xs">Contact</p>
+          
+            href={`https://wa.me/${process.env.WHATSAPP_NUMBER || '447700000000'}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-[#25D366] py-1 hover:opacity-80 transition-opacity"
+          >
+            <span className="text-xs">📱</span>
+            WhatsApp Us
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div className="pt-6 border-t border-[#1C1C1C]">
+      <p className="text-[#3A3020] text-xs leading-relaxed">
+        © 2026 Svnteen The Residency. All rights reserved. This page is for information purposes only and does not constitute financial, legal, or tax advice. All commercial lease arrangements are subject to individual negotiation and we strongly recommend all landlords obtain independent legal and financial advice before entering any agreement. Svnteen The Residency is not authorised by the Financial Conduct Authority. Mortgage consent requirements apply — please verify with your lender before proceeding.
+      </p>
+    </div>
+  </div>
+</footer>
+```
+
+---
+
+## SECTION 16: ANALYTICS & UTM TRACKING
+
+The page will be visited from email campaigns and cold calls. Add UTM parameter capture on page load:
+```typescript
+// Track which outreach campaign drove the visit
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const utmSource = params.get('utm_source');
+  const utmMedium = params.get('utm_medium');
+  const utmCampaign = params.get('utm_campaign');
+  
+  if (utmSource || utmCampaign) {
+    // Log to analytics or send to backend
+    fetch('/api/analytics/landlord-page-visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source: utmSource,
+        medium: utmMedium,
+        campaign: utmCampaign,
+        referrer: document.referrer,
+        timestamp: new Date().toISOString(),
+      }),
+    }).catch(() => {}); // silent fail — don't break page for analytics
+  }
+}, []);
+```
+
+Also add a backend route:
+```typescript
+app.post('/api/analytics/landlord-page-visit', async (req, res) => {
+  // Log to database — create a simple landlord_visits table
+  // Fields: id, utm_source, utm_medium, utm_campaign, referrer, visited_at
+  console.log('Landlord page visit:', req.body);
+  return res.json({ ok: true });
+});
+```
+
+This lets you track which cold call scripts and email campaigns are driving the most page visits and brochure downloads.
+
+---
+
+## SECTION 17: TESTING CHECKLIST
+
+After building:
+□ /landlords route loads without authentication
+□ Sticky nav appears on scroll and hides at top
+□ All three value angle cards display with correct illustrations
+□ Comparison table scrolls horizontally on mobile
+□ Process timeline displays correctly on desktop and mobile
+□ R2SA flow diagram renders all three parties
+□ FAQ accordion opens and closes, category filter works
+□ WhatsApp link opens WhatsApp with pre-filled message
+□ /api/landlords/brochure returns a valid PDF download
+□ PDF contains 5 pages with correct content
+□ Download button triggers PDF download (no new tab, no login)
+□ All mobile layouts display correctly at 375px
+□ Page loads under 3 seconds
+□ Run tsc --noEmit — zero TypeScript errors
+□ UTM parameters are captured and logged on page load
+□ Footer links navigate correctly
+□ Page title and meta description are correct for SEO
+
+---
+
+## SECTION 18: META TAGS FOR SEO
+```tsx
+useEffect(() => {
+  document.title = 'Commercial Lease for Landlords — Fixed Corporate Yield | Svnteen The Residency';
+  
+  const metas = [
+    { name: 'description', content: 'Svnteen The Residency offers landlords a Fixed-Term Commercial Lease — a fixed corporate yield, zero void exposure, and full property management. Outside the Renters Reform Act.' },
+    { property: 'og:title', content: 'Commercial Property Lease for Landlords | Svnteen The Residency' },
+    { property: 'og:description', content: 'Transform your property into a fixed-income asset. Commercial lease structure, zero void risk, fully managed. Learn how it works.' },
+    { property: 'og:type', content: 'website' },
+    { name: 'robots', content: 'index, follow' },
+  ];
+  
+  metas.forEach(({ name, property, content }) => {
+    const existing = document.querySelector(name ? `meta[name="${name}"]` : `meta[property="${property}"]`);
+    const tag = existing || document.createElement('meta');
+    if (name) tag.setAttribute('name', name);
+    if (property) tag.setAttribute('property', property);
+    tag.setAttribute('content', content);
+    if (!existing) document.head.appendChild(tag);
+  });
+}, []);
+```
+
+The most important thing this page does that most competitor pages fail to do is address the objection before it's raised. The section that says "there is no such thing as guaranteed rent" — stated plainly, before the landlord even thinks it — is the single most powerful trust signal on the entire page. When a landlord reads that, their guard drops completely because you've said the thing they were thinking. Everything else is just information. That one sentence is conversion.
