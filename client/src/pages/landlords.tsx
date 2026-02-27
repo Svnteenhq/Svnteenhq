@@ -7,6 +7,8 @@ import {
   Search, ClipboardList, Wrench, DollarSign, Star, Phone,
   Users, Award, MapPin, Clock
 } from "lucide-react";
+import logoImage from "@assets/svnteen-logo-white_1772226325057.png";
+import apartmentHero from "@assets/svnteen-apartment-hero_1772226325057.png";
 
 const WHATSAPP_NUMBER = "447700000000";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20have%20a%20few%20questions.`;
@@ -22,12 +24,12 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
 
 function SvnteenLogo({ className = "h-7 w-auto" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#C9A84C] to-[#8B6914] flex items-center justify-center">
-        <span className="text-[#0A0A0A] font-bold text-xs">S</span>
-      </div>
-      <span className="text-[#F5F0E8] font-bold text-sm tracking-wider">SVNTEEN</span>
-    </div>
+    <img
+      src={logoImage}
+      alt="Svnteen. TheResidency."
+      className={`object-contain ${className}`}
+      style={{ mixBlendMode: 'screen' }}
+    />
   );
 }
 
@@ -231,86 +233,97 @@ function HeroSection() {
   ];
   return (
     <section
-      className="relative min-h-screen flex items-center pt-16"
-      style={{ background: 'radial-gradient(ellipse at center, #141414 0%, #0A0A0A 70%)' }}
+      className="relative min-h-screen flex items-center pt-16 overflow-hidden"
       data-testid="section-hero"
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 w-full py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] font-medium"
+      <img
+        src={apartmentHero}
+        alt="Premium serviced apartment — Svnteen The Residency"
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectPosition: 'center center' }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.88) 100%)'
+        }}
+      />
+      <div className="absolute inset-0 hidden lg:block pointer-events-none">
+        <div className="h-full flex items-center justify-end max-w-7xl mx-auto px-4 md:px-8">
+          <BuildingIllustration />
+        </div>
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full py-20">
+        <div className="max-w-2xl space-y-8">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-[#C9A84C] text-xs uppercase tracking-[0.3em] font-medium"
+          >
+            A Message to Landlords & Letting Agents
+          </motion.p>
+          <div className="w-16 h-px bg-[#C9A84C] opacity-40" />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
+            data-testid="text-hero-headline"
+          >
+            The rental market is about to change more dramatically than it has in 30 years.
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-white/70 text-lg leading-relaxed max-w-lg"
+          >
+            The question isn't whether you should act. It's whether you act before the bill lands or after the damage is done. We've built a commercial structure that removes your exposure to the new legislation entirely.
+          </motion.p>
+          <div className="w-full h-px bg-white/10" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap gap-3"
+          >
+            <a
+              href="#how-it-works"
+              className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] font-bold text-sm"
+              data-testid="link-how-it-works"
             >
-              A Message to Landlords & Letting Agents
-            </motion.p>
-            <div className="w-16 h-px bg-[#C9A84C] opacity-40" />
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#F5F0E8] leading-tight"
-              data-testid="text-hero-headline"
+              Read How It Works
+              <ChevronDown className="w-4 h-4" />
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-3 rounded-md border border-[#25D366] text-[#25D366] font-medium text-sm transition-all backdrop-blur-sm bg-black/20"
+              data-testid="link-whatsapp-hero"
             >
-              The rental market is about to change more dramatically than it has in 30 years.
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[#A09880] text-lg leading-relaxed max-w-lg"
-            >
-              The question isn't whether you should act. It's whether you act before the bill lands or after the damage is done. We've built a commercial structure that removes your exposure to the new legislation entirely.
-            </motion.p>
-            <div className="w-full h-px bg-[#2A2A2A]" />
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-3"
-            >
-              <a
-                href="#how-it-works"
-                className="flex items-center gap-2 px-6 py-3 rounded-md bg-gradient-to-r from-[#C9A84C] to-[#8B6914] text-[#0A0A0A] font-bold text-sm"
-                data-testid="link-how-it-works"
+              <WhatsAppIcon />
+              Speak to Us on WhatsApp
+            </a>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-wrap gap-3"
+          >
+            {stats.map((stat, idx) => (
+              <span
+                key={stat}
+                className="flex items-center gap-2 text-xs text-white/80 bg-black/40 backdrop-blur-sm border border-white/10 px-3 py-1.5 rounded-full"
+                data-testid={`stat-pill-${idx}`}
               >
-                Read How It Works
-                <ChevronDown className="w-4 h-4" />
-              </a>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-md border border-[#25D366] text-[#25D366] font-medium text-sm transition-all"
-                data-testid="link-whatsapp-hero"
-              >
-                <WhatsAppIcon />
-                Speak to Us on WhatsApp
-              </a>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap gap-3"
-            >
-              {stats.map((stat, idx) => (
-                <span
-                  key={stat}
-                  className="flex items-center gap-2 text-xs text-[#A09880] bg-[#141414] border border-[#2A2A2A] px-3 py-1.5 rounded-full"
-                  data-testid={`stat-pill-${idx}`}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#C9A84C]" />
-                  {stat}
-                </span>
-              ))}
-            </motion.div>
-          </div>
-          <div className="hidden lg:flex justify-center">
-            <BuildingIllustration />
-          </div>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C9A84C]" />
+                {stat}
+              </span>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
@@ -883,6 +896,20 @@ function WhoWeAreSection() {
             </div>
           </div>
           <div className="space-y-4">
+            <div className="relative rounded-md overflow-hidden h-48 mb-4">
+              <img
+                src={apartmentHero}
+                alt="Svnteen serviced apartment interior"
+                className="w-full h-full object-cover"
+                style={{ objectPosition: 'center center' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
+              <div className="absolute bottom-3 left-3">
+                <span className="text-[10px] uppercase tracking-widest text-white/70 bg-black/50 backdrop-blur-sm px-2 py-1 rounded-full">
+                  What our properties look like
+                </span>
+              </div>
+            </div>
             <div className="p-6 rounded-md bg-[#141414] border border-[#2A2A2A]">
               <p className="text-xs uppercase tracking-widest text-[#5A5040] mb-4">Our Standards</p>
               {[

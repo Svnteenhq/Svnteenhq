@@ -25,7 +25,7 @@ A standalone, premium marketing page at `/landlords` designed to convert landlor
 
 ## Page Sections
 1. Sticky navigation bar (logo + WhatsApp + Brochure CTAs)
-2. Hero section with animated building SVG illustration
+2. Hero section with apartment photo background, gradient overlay, and animated building SVG
 3. Renters Reform Bill warning (6-card grid)
 4. Three value angles (yield, reliability, void protection) with SVG illustrations
 5. Process timeline (5-step)
@@ -48,6 +48,10 @@ A standalone, premium marketing page at `/landlords` designed to convert landlor
 - Red (negative): #e05555
 - Green (positive): #52B788
 - WhatsApp green: #25D366
+
+## Assets
+- `@assets/svnteen-logo-white_1772226325057.png` — White logo (uses mixBlendMode: screen on dark bg)
+- `@assets/svnteen-apartment-hero_1772226325057.png` — Apartment interior hero photo
 
 ## Dependencies
 - pdfkit — PDF generation for brochure

@@ -1,0 +1,231 @@
+I have uploaded two new asset files into the project. Your job is to find them and replace all existing logo and hero image references across the entire codebase. Do not change anything else.
+
+---
+
+## STEP 1 — LOCATE THE UPLOADED FILES
+
+Run this to find the newly uploaded files:
+```bash
+find client/src/assets -type f | sort
+find client/public -type f | sort
+find . -name "*.png" | grep -v node_modules | sort
+```
+
+You are looking for two files:
+- `svnteen-logo-white.png` — the new Svnteen. TheResidency. logo (white text on black/transparent background)
+- `svnteen-apartment-hero.png` — the interior apartment photo (warm evening lighting, city view, champagne on coffee table)
+
+Note the exact file paths where they were uploaded. All replacements below use these actual paths.
+
+---
+
+## STEP 2 — REPLACE THE LOGO EVERYWHERE
+
+### 2A — Update the Logo component
+
+Find `client/src/components/logo.tsx` (or wherever the Logo component is defined). Replace the imported image with the new logo file:
+```tsx
+// Replace whatever is currently imported with:
+import logoImage from '../assets/svnteen-logo-white.png'; // adjust path if needed
+
+interface LogoProps {
+  className?: string;
+}
+
+export function Logo({ className = 'h-8 w-auto' }: LogoProps) {
+  return (
+    <img
+      src={logoImage}
+      alt="Svnteen. TheResidency."
+      className={`object-contain ${className}`}
+      style={{ 
+        // The logo has a black background — use mix-blend-mode to make it
+        // transparent on dark backgrounds, or if the PNG has transparency, remove this
+        mixBlendMode: 'screen',
+      }}
+      fetchPriority="high"
+    />
+  );
+}
+```
+
+Important note on the logo background: The logo PNG has a black background. On the site's dark `#0A0A0A` background, `mixBlendMode: 'screen'` will make the black invisible and only show the white text — this is the correct behaviour for a dark site. Test this visually. If it looks wrong, try `mixBlendMode: 'lighten'` as an alternative.
+
+If the logo appears too large or small in the navbar, adjust the height:
+- Navbar desktop: `h-9 w-auto` (36px tall)
+- Navbar mobile: `h-7 w-auto` (28px tall)  
+- Auth pages (centred): `h-14 w-auto` (56px tall)
+- Footer: `h-7 w-auto`
+- Deal of the Day sticky header: `h-6 w-auto`
+- Landlord page sticky header: `h-7 w-auto`
+
+### 2B — Search for every other logo reference
+
+Run this to find every place that currently references the old logo:
+```bash
+grep -rn "logo\|Logo\|WhatsApp-Image\|svnteen-logo\|logoImage\|brand-logo" client/src --include="*.tsx" --include="*.ts" | grep -v "node_modules"
+```
+
+For every file that imports or references a logo image directly (not through the `<Logo />` component), update the import to point to `svnteen-logo-white.png`.
+
+For every file that uses the `<Logo />` component — no change needed, it will automatically use the new image.
+
+### 2C — Check the favicon and PWA icons
+
+In `client/index.html`, check what favicon is set:
+```bash
+grep -n "favicon\|icon\|apple-touch" client/index.html
+```
+
+If the favicon is currently the old logo or a generic icon, update it:
+```html
+<!-- In client/index.html <head>: -->
+<link rel="icon" type="image/png" href="/assets/svnteen-logo-white.png" />
+<link rel="apple-touch-icon" href="/assets/svnteen-logo-white.png" />
+```
+
+If `client/public/manifest.json` exists, update the icon paths there too.
+
+---
+
+## STEP 3 — REPLACE THE HERO APARTMENT IMAGE EVERYWHERE
+
+The apartment photo (`svnteen-apartment-hero.png`) should be used in these specific locations:
+
+### 3A — Homepage hero (guest view)
+
+In `client/src/pages/home.tsx`, find the static hero/background image that shows to non-logged-in users. This is currently set to a London townhouse Unsplash URL or similar. Replace it:
+```tsx
+// At the top of home.tsx, add:
+import apartmentHero from '../assets/svnteen-apartment-hero.png';
+
+// Find the hero image element (likely an <img> or CSS background-image):
+// Replace the src or url() with the imported apartmentHero variable.
+
+// If it's an <img> tag:
+<img
+  src={apartmentHero}
+  alt="Premium serviced apartment — Svnteen The Residency"
+  className="w-full h-full object-cover"
+  style={{ objectPosition: 'center center' }}
+  fetchPriority="high"
+/>
+
+// If it's a CSS background-image inline style:
+style={{ backgroundImage: `url(${apartmentHero})` }}
+```
+
+Image positioning for this specific photo:
+- `object-position: 'center center'` — centres on the sofa and coffee table which is the hero moment
+- Do NOT use `object-position: top` — the sky view through the windows is at the back, not top
+- On mobile: `object-position: '40% center'` — shifts slightly left to show the city view window
+
+The existing gradient overlay on the hero should remain. The apartment photo is warm and bright, so the overlay needs to be slightly darker than the London townhouse was. Update the gradient to:
+```tsx
+style={{
+  background: 'linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.88) 100%)'
+}}
+```
+
+### 3B — Deal of the Day fallback (StaticHeroFallback component)
+
+In `client/src/components/DealOfTheDay.tsx` (or wherever the `StaticHeroFallback` function is), find the fallback image that shows when no deal is available. Replace it with the apartment photo:
+```tsx
+import apartmentHero from '../assets/svnteen-apartment-hero.png';
+
+function StaticHeroFallback({ onSignupClick }: { onSignupClick: () => void }) {
+  return (
+    <div className="relative w-full h-screen overflow-hidden bg-[#0A0A0A]">
+      <img
+        src={apartmentHero}
+        alt="Premium serviced apartment — Svnteen The Residency"
+        className="w-full h-full object-cover"
+        style={{ objectPosition: 'center center' }}
+        fetchPriority="high"
+      />
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.88) 100%)' }}
+      />
+      {/* Keep all existing text and CTA content unchanged */}
+    </div>
+  );
+}
+```
+
+### 3C — Landlord page hero
+
+In `client/src/pages/landlords.tsx`, if there is any hero background image or property photo, replace it with the apartment photo. This gives landlords a visual of the standard we maintain — a premium, hotel-quality interior. Place it with a dark overlay since the landlord page hero is text-heavy.
+
+### 3D — Any other property placeholder images
+
+Search for any other Unsplash URLs or placeholder property images across the codebase:
+```bash
+grep -rn "unsplash\|placeholder\|property-hero\|hero-image\|bg-image" client/src --include="*.tsx" --include="*.css" | grep -v "node_modules"
+```
+
+For each one found — if it is being used as a property interior or lifestyle shot, replace with `apartmentHero`. If it is being used as something entirely different (e.g. a user avatar placeholder), leave it alone.
+
+---
+
+## STEP 4 — VERIFY NOTHING IS BROKEN
+
+After making all replacements:
+```bash
+# Check TypeScript compiles cleanly
+npx tsc --noEmit
+
+# Check all imports resolve
+grep -rn "from.*assets" client/src --include="*.tsx" | sort
+```
+
+Then manually verify:
+1. Start the dev server
+2. Open the homepage logged out — apartment photo should fill the hero
+3. The Svnteen. TheResidency. logo should appear in the navbar in white
+4. The logo black background should be invisible on the dark site background (mixBlendMode: 'screen' makes black transparent)
+5. Logo should appear correctly on: navbar, auth pages, footer, admin dashboard, sourcer dashboard
+6. On the Deal of the Day page fallback, the apartment photo should show
+7. No broken image icons anywhere on the site
+8. Logo is not distorted or stretched — always `object-contain` with `w-auto`
+
+---
+
+## STEP 5 — HANDLE THE LOGO BACKGROUND ISSUE
+
+The logo PNG has a solid black background. Test the result after Step 2A. One of these three approaches will look correct depending on the exact PNG:
+
+**Option A (most likely correct) — mixBlendMode screen:**
+```tsx
+style={{ mixBlendMode: 'screen' }}
+```
+Black becomes transparent, white text remains white. Works perfectly on dark backgrounds.
+
+**Option B — if screen doesn't work:**
+```tsx
+style={{ mixBlendMode: 'lighten' }}
+```
+
+**Option C — if the PNG actually has transparency (check file):**
+```bash
+file client/src/assets/svnteen-logo-white.png
+# If it says "PNG" with alpha channel, no mixBlendMode needed at all
+```
+If the PNG has a transparent background already, remove the mixBlendMode style entirely and just use:
+```tsx
+<img src={logoImage} alt="Svnteen. TheResidency." className={`object-contain ${className}`} />
+```
+
+Try Option A first. If the logo appears with a black box around it, try Option B. If that also has issues, check for transparency with Option C.
+
+---
+
+## DO NOT CHANGE
+
+- Any text content, copy, or page structure
+- Any colours, spacing, or layout  
+- Any component logic or functionality
+- Any other images that are not the logo or hero property image
+- Any API routes or database schema
+
+Before you paste that into Replit — make sure you drag and drop both PNG files from your downloads into the client/src/assets/ folder in the Replit file panel first. If you drop them somewhere else (like client/public/) the import paths will differ, but the prompt instructs Replit to find them with find commands first so it will locate them wherever they land.
