@@ -804,97 +804,6 @@ const processSteps = [
   },
 ];
 
-function LandlordYieldCalculator() {
-  const [rent, setRent] = useState(1200);
-
-  const annualAST = rent * 12;
-  const voidWeeks = 6;
-  const voidLoss = (rent / 4.33) * voidWeeks;
-  const maintenanceCost = rent * 12 * 0.08;
-  const astNetYield = annualAST - voidLoss - maintenanceCost;
-
-  const svnteenRate = 0.8;
-  const svnteenMonthly = Math.round(rent * svnteenRate);
-  const svnteenAnnual = svnteenMonthly * 12;
-  const difference = svnteenAnnual - astNetYield;
-
-  return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-yield-calculator">
-      <div className="max-w-4xl mx-auto">
-        <Reveal><SectionLabel>Yield Calculator</SectionLabel></Reveal>
-        <Reveal delay={1}><SectionHeading className="mb-4">
-          Compare your real yield
-        </SectionHeading></Reveal>
-        <Reveal delay={2}>
-          <p style={{ fontFamily: "var(--font-body)" }} className="text-white/40 text-sm mb-12 max-w-md">
-            Drag the slider to set your current monthly rent and see how the numbers compare.
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8">
-          <Reveal delay={3} className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-            <label style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase" }} className="text-white/30 block mb-4">
-              Current Monthly Rent (£)
-            </label>
-            <div className="mb-6">
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, color: "#F5F0E8" }}>
-                £<CountUp value={rent} />
-              </span>
-            </div>
-            <input
-              type="range"
-              min={500}
-              max={3000}
-              step={50}
-              value={rent}
-              onChange={(e) => setRent(Number(e.target.value))}
-              className="w-full accent-white cursor-pointer"
-              data-testid="input-rent-slider"
-              style={{ accentColor: "white" }}
-            />
-            <div className="flex justify-between mt-2" style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "rgba(255,255,255,0.2)" }}>
-              <span>£500</span>
-              <span>£3,000</span>
-            </div>
-          </Reveal>
-
-          <Reveal delay={4} className="grid grid-cols-2 gap-4">
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase" }} className="text-white/25 block mb-3">
-                Standard AST (Net)
-              </span>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 300, color: "rgba(255,255,255,0.5)" }}>
-                £<CountUp value={Math.round(astNetYield)} />
-              </span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9 }} className="text-white/20 block mt-1">
-                / year after voids & maintenance
-              </span>
-            </div>
-            <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/[0.1]">
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.15em", textTransform: "uppercase" }} className="text-white/25 block mb-3">
-                Svnteen Corporate Lease
-              </span>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 300, color: "#F5F0E8" }}>
-                £<CountUp value={svnteenAnnual} />
-              </span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9 }} className="text-white/20 block mt-1">
-                / year — zero voids, zero costs
-              </span>
-            </div>
-            <div className="col-span-2 p-5 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase" }} className="text-white/30">
-                Net difference
-              </span>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "1.5rem", fontWeight: 300, color: difference > 0 ? "#52B788" : "#F5F0E8" }}>
-                {difference > 0 ? "+" : ""}£<CountUp value={Math.abs(Math.round(difference))} /><span style={{ fontFamily: "var(--font-mono)", fontSize: 10 }} className="text-white/20 ml-1">/ year</span>
-              </span>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function ProcessSection() {
   return (
@@ -1661,7 +1570,6 @@ export function LandlordsPage() {
       <HeroSection />
       <ReformBillSection />
       <ValueAnglesSection />
-      <LandlordYieldCalculator />
       <ProcessSection />
       <ComparisonSection />
       <R2SASection />
