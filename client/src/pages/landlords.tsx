@@ -692,11 +692,17 @@ function ReformBillSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-12 p-8 rounded-xl border border-black/[0.1] bg-black/[0.04]"
+          className="mt-12 p-6 rounded-xl border border-black/[0.08] bg-black/[0.04] transition-all duration-300 hover:bg-black/[0.06] hover:border-black/[0.12]"
         >
-          <p className="text-center text-[#2A2520]/90 text-lg font-medium leading-relaxed">
-            Commercial leases fall outside the scope of the Renters Reform Act.<br />
-            <span className="text-[#2A2520] font-semibold">When your tenant is a company, not a person, the rules change entirely.</span>
+          <div className="flex items-center justify-between mb-4">
+            <Shield className="w-5 h-5 text-[#2A2520]" />
+            <span className="text-[10px] uppercase tracking-widest text-[#2A2520] font-bold font-mono bg-black/[0.08] px-2.5 py-1 rounded-full">
+              EXEMPT
+            </span>
+          </div>
+          <h3 className="text-[#2A2520] font-semibold text-sm mb-2.5">Commercial Leases Are Exempt</h3>
+          <p className="text-[13px] text-[#2A2520]/90 leading-relaxed">
+            The Renters Reform Act does not apply to commercial leases. When your tenant is a company, not a person, the rules change entirely.
           </p>
         </motion.div>
 
