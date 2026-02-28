@@ -1101,7 +1101,6 @@ function WhoWeAreSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-who-we-are">
       <div className="max-w-7xl mx-auto">
-        <Reveal><SectionLabel>About Svnteen The Residency</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-14">
           Who we are
         </SectionHeading></Reveal>
