@@ -970,14 +970,13 @@ function R2SASection() {
               </div>
             </motion.div>
 
-            <div className="flex flex-col items-center gap-1 rotate-90 md:rotate-0">
-              <div className="h-16 w-px md:w-24 md:h-px bg-white/20 relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0A0A0A] px-2 py-1 whitespace-nowrap">
-                  <p className="text-white/60 text-[10px] font-mono uppercase tracking-wider">Commercial Lease</p>
-                  <p className="text-white/25 text-[9px] text-center">Fixed monthly yield</p>
-                </div>
+            <div className="flex flex-col md:flex-row items-center gap-0 rotate-0">
+              <div className="flex flex-col items-center">
+                <p className="text-white/60 text-[10px] font-mono uppercase tracking-wider whitespace-nowrap">Commercial Lease</p>
+                <p className="text-white/25 text-[9px] text-center whitespace-nowrap">Fixed monthly yield</p>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#FFFFFF] rotate-90 md:rotate-0" />
+              <div className="h-8 w-px md:w-12 md:h-px bg-white/20 flex-shrink-0" />
+              <ArrowRight className="w-5 h-5 text-white rotate-90 md:rotate-0 flex-shrink-0" />
             </div>
 
             <motion.div
