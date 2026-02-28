@@ -1108,10 +1108,10 @@ function WhoWeAreSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <p className="text-[14px] text-white/45 leading-[1.8]">
+            <p className="text-[14px] text-white/80 leading-[1.8]">
               We are a UK-based short-let management company operating under commercial leases across multiple UK cities. We manage properties to five-star serviced apartment standard and have an active presence on Airbnb, Booking.com, and VRBO.
             </p>
-            <p className="text-[14px] text-white/45 leading-[1.8]">
+            <p className="text-[14px] text-white/80 leading-[1.8]">
               Our promise to landlords is simple: we treat your property as if it were our own — because our business reputation depends on it.
             </p>
             <div className="grid grid-cols-2 gap-3 mt-8">
@@ -1119,8 +1119,8 @@ function WhoWeAreSection() {
                 const Icon = cred.icon;
                 return (
                   <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04]">
-                    <Icon className="w-4 h-4 text-white/40 flex-shrink-0" />
-                    <span className="text-[12px] text-white/45">{cred.label}</span>
+                    <Icon className="w-4 h-4 text-white/70 flex-shrink-0" />
+                    <span className="text-[12px] text-white/80">{cred.label}</span>
                   </div>
                 );
               })}
@@ -1136,13 +1136,13 @@ function WhoWeAreSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4">
-                <span className="text-[10px] uppercase tracking-widest text-white/60 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full">
+                <span className="text-[10px] uppercase tracking-widest text-white/90 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full">
                   What our properties look like
                 </span>
               </div>
             </div>
             <div className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-              <p className="text-[11px] uppercase tracking-widest text-white/25 mb-5">Our Standards</p>
+              <p className="text-[11px] uppercase tracking-widest text-white/60 mb-5">Our Standards</p>
               {[
                 { icon: Star, label: 'Five-star serviced apartment standard' },
                 { icon: Users, label: 'Professional guest management team' },
@@ -1152,8 +1152,8 @@ function WhoWeAreSection() {
                 const Icon = item.icon;
                 return (
                   <div key={i} className="flex items-center gap-3 py-3 border-b border-white/[0.04] last:border-0">
-                    <Icon className="w-4 h-4 text-white/35" />
-                    <span className="text-[13px] text-white/50">{item.label}</span>
+                    <Icon className="w-4 h-4 text-white/70" />
+                    <span className="text-[13px] text-white/80">{item.label}</span>
                   </div>
                 );
               })}
