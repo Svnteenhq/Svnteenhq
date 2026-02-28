@@ -1520,7 +1520,7 @@ function ContactSection() {
               <WhatsAppIcon className="w-8 h-8 text-white" />
             </div>
             <div className="text-center">
-              <p className="text-[#2A2520] font-bold text-base">WhatsApp — Line 1</p>
+              <p className="text-[#2A2520] font-bold text-base">WhatsApp — Kyle</p>
               <p className="text-[#2A2520]/70 text-xs mt-1">07939 788 269</p>
             </div>
             <div className="px-5 py-2.5 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-xs w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
@@ -1540,7 +1540,7 @@ function ContactSection() {
               <WhatsAppIcon className="w-8 h-8 text-white" />
             </div>
             <div className="text-center">
-              <p className="text-[#2A2520] font-bold text-base">WhatsApp — Line 2</p>
+              <p className="text-[#2A2520] font-bold text-base">WhatsApp — Georgia</p>
               <p className="text-[#2A2520]/70 text-xs mt-1">07979 943 161</p>
             </div>
             <div className="px-5 py-2.5 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-xs w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
