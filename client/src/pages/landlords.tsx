@@ -1312,12 +1312,12 @@ const faqs = [
   {
     category: 'For Letting Agents',
     q: 'I manage this property on behalf of the landlord. Can we still do this?',
-    a: 'Absolutely. We regularly work with letting agents. We are happy to present this proposal directly to the landlord with you present, or to provide you with all documentation to present on our behalf. If the landlord proceeds, we can structure a referral fee or ongoing management override depending on the arrangement. We respect existing agency relationships entirely.',
+    a: 'Yes — we work alongside letting agents regularly. We are happy to meet with both you and the landlord, or provide everything you need to present the opportunity yourself. If the landlord proceeds, we can agree a referral arrangement that works for both sides. We value agency relationships and see them as partnerships, not competition.',
   },
   {
     category: 'For Letting Agents',
     q: "Won't this take the property out of your management?",
-    a: 'Yes — the day-to-day management transfers to us under the commercial lease. However, many agents see this as an opportunity: they can offer landlords on their books a premium service (corporate lease placement) as an added-value product, and earn a placement fee without carrying ongoing management liability. We are open to partnership arrangements.',
+    a: 'The day-to-day management does transfer to us for the duration of the lease. But for many agents, this is actually a stronger offer to bring to your landlords — guaranteed rent, no tenant headaches, and no exposure to the new regulations. You can position it as a premium placement service, earn a fee upfront, and remove the ongoing management risk from your book. We are always open to discussing how we can work together.',
   },
 ];
 
