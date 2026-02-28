@@ -324,8 +324,8 @@ function YieldIllustration() {
         <circle key={i} cx={x} cy={svnteenY} r="2.5" fill="#52B788" />
       ))}
 
-      <text x="45" y={svnteenY - 8} fill="#52B788" fontSize="8" fontFamily="monospace" fontWeight="bold">SVNTEEN</text>
-      <text x="45" y="45" fill="#2A2520" fontSize="7" fontFamily="monospace" opacity="0.5">Standard AST</text>
+      <text x="45" y={svnteenY - 10} fill="#52B788" fontSize="8" fontFamily="monospace" fontWeight="bold">SVNTEEN</text>
+      <text x="170" y="45" fill="#2A2520" fontSize="7" fontFamily="monospace" opacity="0.5">Standard AST</text>
 
       {['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'].map((m, i) => (
         <text key={i} x={40 + i * 46} y="168" fill="#706858" fontSize="7" textAnchor="middle" fontFamily="monospace">{m}</text>
