@@ -287,37 +287,49 @@ function BuildingIllustration() {
 }
 
 function YieldIllustration() {
-  const bars = [
-    { x: 55, h: 80, isVoid: false },
-    { x: 80, h: 0, isVoid: true },
-    { x: 105, h: 65, isVoid: false },
-    { x: 130, h: 70, isVoid: false },
-    { x: 155, h: 0, isVoid: true },
-    { x: 180, h: 55, isVoid: false },
-    { x: 205, h: 72, isVoid: false },
-    { x: 230, h: 68, isVoid: false },
-  ];
+  const astPath = "M40,60 L65,55 L90,70 L115,150 L140,145 L165,65 L190,80 L215,150 L240,140 L265,75";
+  const astFill = "M40,60 L65,55 L90,70 L115,150 L140,145 L165,65 L190,80 L215,150 L240,140 L265,75 L265,155 L40,155 Z";
+  const svnteenY = 55;
+
   return (
     <svg viewBox="0 0 300 180" className="w-full max-w-xs opacity-80">
-      <line x1="40" y1="20" x2="40" y2="150" stroke="#B0A898" strokeWidth="1" />
-      <line x1="40" y1="150" x2="280" y2="150" stroke="#B0A898" strokeWidth="1" />
-      {bars.map((bar, i) => (
-        <rect key={i} x={bar.x} y={150 - bar.h} width="18" height={Math.max(bar.h, 2)}
-          fill={bar.isVoid ? '#F0D0D0' : '#D8D0C0'}
-          stroke={bar.isVoid ? '#e05555' : '#A09080'}
-          strokeWidth="0.5" rx="1"
-        />
+      <defs>
+        <linearGradient id="astGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2A2520" stopOpacity="0.12" />
+          <stop offset="100%" stopColor="#2A2520" stopOpacity="0.02" />
+        </linearGradient>
+        <linearGradient id="svnGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#52B788" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#52B788" stopOpacity="0.02" />
+        </linearGradient>
+      </defs>
+
+      <line x1="40" y1="155" x2="270" y2="155" stroke="#B0A898" strokeWidth="0.5" />
+      {[40, 90, 140, 190, 240].map((x, i) => (
+        <line key={i} x1={x} y1="30" x2={x} y2="155" stroke="#B0A898" strokeWidth="0.3" strokeDasharray="2 3" />
       ))}
-      <line x1="45" y1="75" x2="275" y2="75" stroke="#2A2520" strokeWidth="2.5" />
-      {[55, 80, 105, 130, 155, 180, 205, 230, 255].map((x, i) => (
-        <circle key={i} cx={x + 9} cy="75" r="3" fill="#2A2520" />
+
+      <path d={astFill} fill="url(#astGrad)" />
+      <path d={astPath} fill="none" stroke="#2A2520" strokeWidth="1.5" strokeOpacity="0.4" strokeLinecap="round" strokeLinejoin="round" />
+      {[{x:115,y:150},{x:215,y:150}].map((p, i) => (
+        <g key={i}>
+          <circle cx={p.x} cy={p.y} r="4" fill="#e05555" opacity="0.8" />
+          <text x={p.x} y={p.y + 13} fill="#e05555" fontSize="6.5" textAnchor="middle" fontFamily="monospace">VOID</text>
+        </g>
       ))}
-      <text x="45" y="170" fill="#706858" fontSize="9" fontFamily="monospace">Month 1</text>
-      <text x="240" y="170" fill="#706858" fontSize="9" fontFamily="monospace">Month 12</text>
-      <text x="250" y="78" fill="#2A2520" fontSize="9" fontFamily="monospace">Svnteen</text>
-      <text x="145" y="115" fill="#A09080" fontSize="9" fontFamily="monospace">Standard AST</text>
-      <text x="72" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
-      <text x="148" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
+
+      <rect x="40" y={svnteenY - 3} width="225" height="6" rx="3" fill="url(#svnGrad)" />
+      <line x1="40" y1={svnteenY} x2="265" y2={svnteenY} stroke="#52B788" strokeWidth="2" strokeLinecap="round" />
+      {[40, 90, 140, 190, 240, 265].map((x, i) => (
+        <circle key={i} cx={x} cy={svnteenY} r="2.5" fill="#52B788" />
+      ))}
+
+      <text x="270" y={svnteenY + 3} fill="#52B788" fontSize="8" fontFamily="monospace" fontWeight="bold">SVNTEEN</text>
+      <text x="270" y="78" fill="#2A2520" fontSize="7" fontFamily="monospace" opacity="0.5">Standard AST</text>
+
+      {['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'].map((m, i) => (
+        <text key={i} x={40 + i * 46} y="168" fill="#706858" fontSize="7" textAnchor="middle" fontFamily="monospace">{m}</text>
+      ))}
     </svg>
   );
 }
