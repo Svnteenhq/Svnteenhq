@@ -533,7 +533,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, duration: 0.5 }}
-          className="flex flex-nowrap gap-2 mb-8 overflow-x-auto"
+          className="flex flex-wrap gap-2 mb-8"
         >
           {stats.map((pill, i) => (
             <motion.span
@@ -542,7 +542,7 @@ function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
               style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}
-              className="px-3 py-1.5 rounded-full border border-white/30 bg-white/10 text-white whitespace-nowrap flex-shrink-0"
+              className="px-3 py-1.5 rounded-full border border-white/30 bg-white/10 text-white whitespace-nowrap"
               data-testid={`stat-pill-${i}`}
             >
               {pill}
