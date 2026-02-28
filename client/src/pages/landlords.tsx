@@ -486,8 +486,8 @@ function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.8 }}
-          className="mb-8 max-w-lg"
-          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "rgba(255,255,255,0.45)" }}
+          className="mb-8 max-w-lg font-semibold"
+          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "rgba(255,255,255,0.6)" }}
         >
           More dramatically than it has in 30&nbsp;years.
           We've built a commercial structure that removes your exposure
