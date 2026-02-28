@@ -664,7 +664,7 @@ function ReformBillSection() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <Icon className="w-5 h-5 text-[#e05555]/80" />
-                  <span className="text-[10px] uppercase tracking-widest text-[#e05555] font-mono bg-[#e05555]/10 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] uppercase tracking-widest text-[#2A2520] font-bold font-mono bg-black/[0.08] px-2.5 py-1 rounded-full">
                     {card.status}
                   </span>
                 </div>
