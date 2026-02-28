@@ -105,7 +105,7 @@ function AnimatedHeadline({ text, delay = 0, italic = false, accent = false }: {
           style={{
             display: "inline-block",
             fontStyle: italic ? "italic" : "normal",
-            color: accent ? "#2A2520" : undefined,
+            color: accent ? "#FFFFFF" : undefined,
           }}
         >
           {word}
@@ -503,14 +503,14 @@ function HeroSection() {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(180deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.1) 30%, rgba(10,10,10,0.05) 50%, rgba(10,10,10,0.4) 70%, rgba(237,230,208,0.95) 100%)"
+          background: "linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.4) 30%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.6) 70%, rgba(237,230,208,0.95) 100%)"
         }}
       />
 
       <GoldParticles count={35} />
 
       <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0 z-10 flex flex-col justify-end pb-16 md:pb-20 px-5 sm:px-8 lg:px-16 max-w-5xl">
-        <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#2A2520" }} data-testid="text-hero-headline">
+        <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#FFFFFF" }} data-testid="text-hero-headline">
           <AnimatedHeadline text="The rental market" delay={0} />
           <AnimatedHeadline text="is about to" delay={3} />
           <AnimatedHeadline text="change." delay={6} italic accent />
@@ -521,7 +521,7 @@ function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.8 }}
           className="mb-8 max-w-lg font-semibold"
-          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "#2A2520" }}
+          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "#FFFFFF" }}
         >
           More dramatically than it has in 30&nbsp;years.
           We've built a commercial structure that removes your exposure
@@ -541,7 +541,7 @@ function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
               style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}
-              className="px-3 py-1.5 rounded-full border border-black/[0.15] bg-black/[0.06] text-[#2A2520]"
+              className="px-3 py-1.5 rounded-full border border-white/30 bg-white/10 text-white"
               data-testid={`stat-pill-${i}`}
             >
               {pill}
@@ -557,7 +557,7 @@ function HeroSection() {
         >
           <a
             href="#how-it-works"
-            className="px-8 py-4 font-semibold uppercase tracking-widest text-sm rounded-lg bg-[#2A2520] text-[#EDE6D0] transition-all duration-300 hover:shadow-xl hover:shadow-black/15 hover:scale-[1.02]"
+            className="px-8 py-4 font-semibold uppercase tracking-widest text-sm rounded-lg bg-white text-[#2A2520] transition-all duration-300 hover:shadow-xl hover:shadow-black/15 hover:scale-[1.02]"
             data-testid="link-how-it-works"
           >
             Read How It Works ↓
