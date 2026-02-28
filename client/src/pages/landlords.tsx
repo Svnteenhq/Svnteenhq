@@ -1553,20 +1553,6 @@ function FooterSection() {
               ))}
             </div>
             <div>
-              <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">Platform</p>
-              {[
-                { label: 'The Marketplace', href: '/marketplace' },
-                { label: 'Deal Analyser', href: '/deal-analyser' },
-                { label: 'Deal of the Day', href: '/deal-of-the-day' },
-                { label: 'For Investors', href: '/signup' },
-                { label: 'For Sourcers', href: '/signup' },
-              ].map(item => (
-                <a key={item.label} href={item.href} className="block text-[#2A2520]/70 py-1.5 transition-colors duration-200 hover:text-[#2A2520]/90 text-[13px]" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
-                  {item.label}
-                </a>
-              ))}
-            </div>
-            <div>
               <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
               <a
                 href={WHATSAPP_URL}
