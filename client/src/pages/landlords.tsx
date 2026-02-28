@@ -9,6 +9,17 @@ import {
 } from "lucide-react";
 import logoImage from "@assets/svnteen-logo-white_1772226325057.png";
 import apartmentHero from "@assets/svnteen-apartment-hero_1772226325057.png";
+import propertyInterior1 from "@assets/property-interior-1.png";
+import propertyInterior2 from "@assets/property-interior-2.png";
+import propertyInterior3 from "@assets/property-interior-3.png";
+import propertyInterior4 from "@assets/property-interior-4.png";
+
+const propertyImages = [
+  { src: propertyInterior1, label: "Living Room" },
+  { src: propertyInterior2, label: "Bedroom" },
+  { src: propertyInterior3, label: "Kitchen" },
+  { src: propertyInterior4, label: "Bathroom" },
+];
 
 const WHATSAPP_NUMBER = "447700000000";
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20have%20a%20few%20questions.`;
@@ -1090,6 +1101,51 @@ function R2SASection() {
   );
 }
 
+function PropertyCarousel() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % propertyImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="relative rounded-2xl overflow-hidden h-52" data-testid="carousel-properties">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={current}
+          src={propertyImages[current].src}
+          alt={`Svnteen property — ${propertyImages[current].label}`}
+          className="absolute inset-0 w-full h-full object-cover"
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </AnimatePresence>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
+      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+        <span className="text-[10px] uppercase tracking-widest text-white/90 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full">
+          {propertyImages[current].label}
+        </span>
+        <div className="flex gap-1.5">
+          {propertyImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-white w-5' : 'bg-white/30 hover:bg-white/50'}`}
+              data-testid={`button-carousel-dot-${i}`}
+              aria-label={`View ${propertyImages[i].label}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WhoWeAreSection() {
   const credentials = [
     { icon: Building2, label: 'Registered in England & Wales' },
@@ -1126,20 +1182,7 @@ function WhoWeAreSection() {
             </div>
           </div>
           <div className="space-y-4">
-            <div className="relative rounded-2xl overflow-hidden h-52">
-              <img
-                src={apartmentHero}
-                alt="Svnteen serviced apartment interior"
-                className="w-full h-full object-cover"
-                style={{ objectPosition: 'center center' }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4">
-                <span className="text-[10px] uppercase tracking-widest text-white/90 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full">
-                  What our properties look like
-                </span>
-              </div>
-            </div>
+            <PropertyCarousel />
             <div className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06]">
               <p className="text-[11px] uppercase tracking-widest text-white/60 mb-5">Our Standards</p>
               {[
