@@ -94,7 +94,7 @@ function AnimatedHeadline({ text, delay = 0, italic = false, accent = false }: {
           style={{
             display: "inline-block",
             fontStyle: italic ? "italic" : "normal",
-            color: accent ? "rgba(255,255,255,0.7)" : undefined,
+            color: accent ? "#F5F0E8" : undefined,
           }}
         >
           {word}
