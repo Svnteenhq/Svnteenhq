@@ -188,13 +188,13 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-function SvnteenLogo({ className = "h-12 w-auto" }: { className?: string }) {
+function SvnteenLogo({ className = "h-16 w-auto" }: { className?: string }) {
   return (
     <img
       src={logoImage}
       alt="Svnteen. TheResidency."
       className={`object-contain ${className}`}
-      style={{ mixBlendMode: 'screen' }}
+      style={{ filter: 'brightness(1.4) contrast(1.1)' }}
     />
   );
 }
