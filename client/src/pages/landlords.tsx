@@ -200,13 +200,48 @@ function WhatsAppIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 function SvnteenLogo({ className = "h-16 w-auto" }: { className?: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [dataUrl, setDataUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const brightness = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        if (brightness > 80) {
+          data[i] = 42;
+          data[i + 1] = 37;
+          data[i + 2] = 32;
+          data[i + 3] = 255;
+        } else {
+          data[i + 3] = 0;
+        }
+      }
+      ctx.putImageData(imageData, 0, 0);
+      setDataUrl(canvas.toDataURL());
+    };
+    img.src = logoImage;
+  }, []);
+
   return (
-    <img
-      src={logoImage}
-      alt="Svnteen. TheResidency."
-      className={`object-contain ${className}`}
-      style={{ filter: 'invert(1) brightness(0.2)', mixBlendMode: 'multiply' }}
-    />
+    <>
+      <canvas ref={canvasRef} className="hidden" />
+      {dataUrl ? (
+        <img src={dataUrl} alt="Svnteen. TheResidency." className={`object-contain ${className}`} />
+      ) : (
+        <div className={className} />
+      )}
+    </>
   );
 }
 
@@ -986,12 +1021,7 @@ function R2SASection() {
               className="flex flex-col items-center gap-3 w-full md:w-64"
             >
               <div className="w-28 h-28 rounded-2xl bg-black/[0.06] flex items-center justify-center p-3">
-                <img
-                  src={logoImage}
-                  alt="Svnteen. TheResidency."
-                  className="w-full h-full object-contain"
-                  style={{ filter: "invert(1) brightness(0.2)", mixBlendMode: "multiply" }}
-                />
+                <SvnteenLogo className="w-full h-full" />
               </div>
               <div className="text-center">
                 <p className="text-[#2A2520] font-bold text-sm">Svnteen The Residency</p>
