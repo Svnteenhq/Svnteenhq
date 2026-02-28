@@ -533,7 +533,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.8, duration: 0.5 }}
-          className="flex flex-wrap gap-2 mb-8"
+          className="flex flex-nowrap gap-2 mb-8 overflow-x-auto"
         >
           {stats.map((pill, i) => (
             <motion.span
