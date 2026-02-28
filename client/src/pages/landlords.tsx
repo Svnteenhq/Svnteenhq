@@ -853,7 +853,7 @@ function ProcessSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" data-testid="section-process">
       <div className="max-w-7xl mx-auto">
-        <Reveal><SectionLabel>The Process</SectionLabel></Reveal>
+        <Reveal></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
           From enquiry to lease signed
         </SectionHeading></Reveal>
