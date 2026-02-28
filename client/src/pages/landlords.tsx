@@ -7,7 +7,7 @@ import {
   Search, ClipboardList, Wrench, DollarSign, Star, Phone,
   Users, Award, MapPin, Clock
 } from "lucide-react";
-import logoImage from "@assets/svnteen-logo-white_1772226325057.png";
+import logoImage from "@assets/cream_svnteen_the_residency_png_file__1772300013659.png";
 import apartmentHero from "@assets/svnteen-apartment-hero_1772226325057.png";
 import propertyInterior1 from "@assets/property-interior-1.png";
 import propertyInterior2 from "@assets/property-interior-2.png";
@@ -105,7 +105,7 @@ function AnimatedHeadline({ text, delay = 0, italic = false, accent = false }: {
           style={{
             display: "inline-block",
             fontStyle: italic ? "italic" : "normal",
-            color: accent ? "#F5F0E8" : undefined,
+            color: accent ? "#2A2520" : undefined,
           }}
         >
           {word}
@@ -168,7 +168,7 @@ function GoldParticles({ count = 35, className }: { count?: number; className?: 
         const alpha = p.opacity * 0.2;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.fillStyle = `rgba(42, 37, 32, ${alpha})`;
         ctx.fill();
         if (p.life >= p.maxLife) particles[i] = createParticle();
       });
@@ -205,7 +205,6 @@ function SvnteenLogo({ className = "h-16 w-auto" }: { className?: string }) {
       src={logoImage}
       alt="Svnteen. TheResidency."
       className={`object-contain ${className}`}
-      style={{ filter: 'brightness(1.4) contrast(1.1)' }}
     />
   );
 }
@@ -228,25 +227,25 @@ function BuildingIllustration() {
       animate={{ y: [0, -8, 0] }}
       transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
     >
-      <rect x="80" y="100" width="240" height="360" rx="4" fill="none" stroke="#FFFFFF" strokeWidth="1.5" strokeDasharray="4 2" />
+      <rect x="80" y="100" width="240" height="360" rx="4" fill="none" stroke="#2A2520" strokeWidth="1.5" strokeDasharray="4 2" />
       {windows.map((w) => (
         <rect key={w.key} x={w.x} y={w.y} width="35" height="28" rx="2"
-          fill={w.filled ? '#FFFFFF' : 'none'}
-          stroke="#FFFFFF" strokeWidth="0.5"
+          fill={w.filled ? '#2A2520' : 'none'}
+          stroke="#2A2520" strokeWidth="0.5"
           opacity={w.opacity}
         />
       ))}
-      <line x1="80" y1="200" x2="0" y2="200" stroke="#FFFFFF" strokeWidth="1" opacity="0.3" />
-      <line x1="320" y1="300" x2="400" y2="300" stroke="#FFFFFF" strokeWidth="1" opacity="0.3" />
+      <line x1="80" y1="200" x2="0" y2="200" stroke="#2A2520" strokeWidth="1" opacity="0.3" />
+      <line x1="320" y1="300" x2="400" y2="300" stroke="#2A2520" strokeWidth="1" opacity="0.3" />
       {[[80,100],[320,100],[80,460],[320,460]].map(([x,y], i) => (
         <g key={i}>
-          <circle cx={x} cy={y} r="4" fill="#FFFFFF" opacity="0.6" />
-          <circle cx={x} cy={y} r="8" fill="none" stroke="#FFFFFF" strokeWidth="0.5" opacity="0.3" />
+          <circle cx={x} cy={y} r="4" fill="#2A2520" opacity="0.6" />
+          <circle cx={x} cy={y} r="8" fill="none" stroke="#2A2520" strokeWidth="0.5" opacity="0.3" />
         </g>
       ))}
-      <text x="30" y="180" fill="#FFFFFF" fontSize="10" opacity="0.5" fontFamily="monospace">YIELD: FIXED</text>
-      <text x="340" y="280" fill="#FFFFFF" fontSize="10" opacity="0.5" fontFamily="monospace">VOID: 0%</text>
-      <text x="340" y="310" fill="#FFFFFF" fontSize="8" opacity="0.3" fontFamily="monospace">LEASE: COMMERCIAL</text>
+      <text x="30" y="180" fill="#2A2520" fontSize="10" opacity="0.5" fontFamily="monospace">YIELD: FIXED</text>
+      <text x="340" y="280" fill="#2A2520" fontSize="10" opacity="0.5" fontFamily="monospace">VOID: 0%</text>
+      <text x="340" y="310" fill="#2A2520" fontSize="8" opacity="0.3" fontFamily="monospace">LEASE: COMMERCIAL</text>
     </motion.svg>
   );
 }
@@ -264,23 +263,23 @@ function YieldIllustration() {
   ];
   return (
     <svg viewBox="0 0 300 180" className="w-full max-w-xs opacity-80">
-      <line x1="40" y1="20" x2="40" y2="150" stroke="#2A2A2A" strokeWidth="1" />
-      <line x1="40" y1="150" x2="280" y2="150" stroke="#2A2A2A" strokeWidth="1" />
+      <line x1="40" y1="20" x2="40" y2="150" stroke="#B0A898" strokeWidth="1" />
+      <line x1="40" y1="150" x2="280" y2="150" stroke="#B0A898" strokeWidth="1" />
       {bars.map((bar, i) => (
         <rect key={i} x={bar.x} y={150 - bar.h} width="18" height={Math.max(bar.h, 2)}
-          fill={bar.isVoid ? '#1F0A0A' : '#3A2A2A'}
-          stroke={bar.isVoid ? '#e05555' : '#5A4040'}
+          fill={bar.isVoid ? '#F0D0D0' : '#D8D0C0'}
+          stroke={bar.isVoid ? '#e05555' : '#A09080'}
           strokeWidth="0.5" rx="1"
         />
       ))}
-      <line x1="45" y1="75" x2="275" y2="75" stroke="#FFFFFF" strokeWidth="2.5" />
+      <line x1="45" y1="75" x2="275" y2="75" stroke="#2A2520" strokeWidth="2.5" />
       {[55, 80, 105, 130, 155, 180, 205, 230, 255].map((x, i) => (
-        <circle key={i} cx={x + 9} cy="75" r="3" fill="#FFFFFF" />
+        <circle key={i} cx={x + 9} cy="75" r="3" fill="#2A2520" />
       ))}
-      <text x="45" y="170" fill="#8A8078" fontSize="9" fontFamily="monospace">Month 1</text>
-      <text x="240" y="170" fill="#8A8078" fontSize="9" fontFamily="monospace">Month 12</text>
-      <text x="250" y="78" fill="#FFFFFF" fontSize="9" fontFamily="monospace">Svnteen</text>
-      <text x="145" y="115" fill="#5A4040" fontSize="9" fontFamily="monospace">Standard AST</text>
+      <text x="45" y="170" fill="#706858" fontSize="9" fontFamily="monospace">Month 1</text>
+      <text x="240" y="170" fill="#706858" fontSize="9" fontFamily="monospace">Month 12</text>
+      <text x="250" y="78" fill="#2A2520" fontSize="9" fontFamily="monospace">Svnteen</text>
+      <text x="145" y="115" fill="#A09080" fontSize="9" fontFamily="monospace">Standard AST</text>
       <text x="72" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
       <text x="148" y="145" fill="#e05555" fontSize="7" fontFamily="monospace">VOID</text>
     </svg>
@@ -292,11 +291,11 @@ function ReliabilityIllustration() {
   const corpLabels = ['Corporate Budget', 'Multiple Revenue', 'Business Insurance', 'Institutional Backing'];
   return (
     <svg viewBox="0 0 320 200" className="w-full max-w-xs opacity-80">
-      <text x="40" y="25" fill="#8A8078" fontSize="10" fontFamily="monospace" textAnchor="middle">INDIVIDUAL TENANT</text>
+      <text x="40" y="25" fill="#706858" fontSize="10" fontFamily="monospace" textAnchor="middle">INDIVIDUAL TENANT</text>
       {chainLabels.map((label, i) => (
         <g key={i}>
           <rect x="10" y={40 + i * 32} width="60" height="22" rx="11"
-            fill="#1C1C1C" stroke={i === 1 ? '#e05555' : '#3A3A3A'} strokeWidth={i === 1 ? 1.5 : 0.5}
+            fill="#E0D9C5" stroke={i === 1 ? '#e05555' : '#3A3A3A'} strokeWidth={i === 1 ? 1.5 : 0.5}
           />
           <text x="40" y={55 + i * 32} fill={i === 1 ? '#e05555' : '#8A8078'} fontSize="8" textAnchor="middle" fontFamily="monospace">
             {label}
@@ -305,16 +304,16 @@ function ReliabilityIllustration() {
         </g>
       ))}
       <text x="80" y="82" fill="#e05555" fontSize="8" fontFamily="monospace">BREAK</text>
-      <text x="230" y="25" fill="#FFFFFF" fontSize="10" fontFamily="monospace" textAnchor="middle">SVNTEEN RESIDENCY</text>
-      <rect x="175" y="40" width="110" height="140" rx="4" fill="#141414" stroke="#FFFFFF" strokeWidth="1.5" />
+      <text x="230" y="25" fill="#2A2520" fontSize="10" fontFamily="monospace" textAnchor="middle">SVNTEEN RESIDENCY</text>
+      <rect x="175" y="40" width="110" height="140" rx="4" fill="#E5DECA" stroke="#2A2520" strokeWidth="1.5" />
       {corpLabels.map((label, i) => (
         <g key={i}>
-          <rect x="185" y={52 + i * 30} width="90" height="20" rx="3" fill="#1C1C1C" stroke="#2A2A2A" strokeWidth="0.5" />
-          <text x="230" y={66 + i * 30} fill="#B8B0A8" fontSize="7.5" textAnchor="middle" fontFamily="monospace">{label}</text>
+          <rect x="185" y={52 + i * 30} width="90" height="20" rx="3" fill="#E0D9C5" stroke="#B0A898" strokeWidth="0.5" />
+          <text x="230" y={66 + i * 30} fill="#5A5248" fontSize="7.5" textAnchor="middle" fontFamily="monospace">{label}</text>
         </g>
       ))}
-      <text x="230" y="195" fill="#FFFFFF" fontSize="9" textAnchor="middle" fontFamily="monospace">PROTECTED</text>
-      <line x1="155" y1="30" x2="155" y2="175" stroke="#2A2A2A" strokeWidth="0.5" strokeDasharray="4 2" />
+      <text x="230" y="195" fill="#2A2520" fontSize="9" textAnchor="middle" fontFamily="monospace">PROTECTED</text>
+      <line x1="155" y1="30" x2="155" y2="175" stroke="#B0A898" strokeWidth="0.5" strokeDasharray="4 2" />
     </svg>
   );
 }
@@ -329,14 +328,14 @@ function ManagedIllustration() {
   ];
   return (
     <svg viewBox="0 0 300 200" className="w-full max-w-xs opacity-80">
-      <text x="150" y="18" fill="#FFFFFF" fontSize="10" textAnchor="middle" fontFamily="monospace">MANAGED BY SVNTEEN</text>
-      <rect x="30" y="30" width="240" height="145" rx="6" fill="#141414" stroke="#FFFFFF" strokeWidth="1" />
+      <text x="150" y="18" fill="#2A2520" fontSize="10" textAnchor="middle" fontFamily="monospace">MANAGED BY SVNTEEN</text>
+      <rect x="30" y="30" width="240" height="145" rx="6" fill="#E5DECA" stroke="#2A2520" strokeWidth="1" />
       {tasks.map((task, i) => (
         <g key={i}>
           <rect x={task.x} y={42 + i * 25} width="180" height="18" rx="4"
-            fill="#1C1C1C" stroke="#2A2A2A" strokeWidth="0.5"
+            fill="#E0D9C5" stroke="#B0A898" strokeWidth="0.5"
           />
-          <text x={task.x + 22} y={54 + i * 25} fill="#B8B0A8" fontSize="8" fontFamily="monospace">
+          <text x={task.x + 22} y={54 + i * 25} fill="#5A5248" fontSize="8" fontFamily="monospace">
             {task.label}
           </text>
           <circle cx={task.x + 10} cy={51 + i * 25} r="5" fill="none" stroke="#52B788" strokeWidth="1" />
@@ -344,7 +343,7 @@ function ManagedIllustration() {
           <text x="235" y={54 + i * 25} fill="#52B788" fontSize="7" textAnchor="middle" fontFamily="monospace">HANDLED</text>
         </g>
       ))}
-      <text x="150" y="192" fill="rgba(255,255,255,0.3)" fontSize="8" textAnchor="middle" fontFamily="monospace">YOU: COLLECT PAYMENT</text>
+      <text x="150" y="192" fill="rgba(42,37,32,0.4)" fontSize="8" textAnchor="middle" fontFamily="monospace">YOU: COLLECT PAYMENT</text>
     </svg>
   );
 }
@@ -354,7 +353,7 @@ function VoidIllustration() {
   const voidMonths = [0, 6, 7];
   return (
     <svg viewBox="0 0 320 180" className="w-full max-w-xs opacity-80">
-      <text x="60" y="20" fill="#8A8078" fontSize="9" textAnchor="middle" fontFamily="monospace">STANDARD AST</text>
+      <text x="60" y="20" fill="#706858" fontSize="9" textAnchor="middle" fontFamily="monospace">STANDARD AST</text>
       {months.map((m, i) => {
         const col = i % 4;
         const row = Math.floor(i / 4);
@@ -362,7 +361,7 @@ function VoidIllustration() {
         return (
           <g key={`ast-${i}`}>
             <rect x={10 + col * 28} y={30 + row * 32} width="24" height="24" rx="3"
-              fill={isVoid ? '#1F0A0A' : '#1C2A1C'}
+              fill={isVoid ? '#F0D0D0' : '#D5E8D5'}
               stroke={isVoid ? '#e05555' : '#52B788'}
               strokeWidth="0.8"
             />
@@ -373,23 +372,23 @@ function VoidIllustration() {
         );
       })}
       <text x="60" y="140" fill="#e05555" fontSize="8" textAnchor="middle" fontFamily="monospace">3 VOID MONTHS = LOST</text>
-      <line x1="130" y1="15" x2="130" y2="150" stroke="#2A2A2A" strokeWidth="0.5" strokeDasharray="4 2" />
-      <text x="220" y="20" fill="#FFFFFF" fontSize="9" textAnchor="middle" fontFamily="monospace">SVNTEEN LEASE</text>
+      <line x1="130" y1="15" x2="130" y2="150" stroke="#B0A898" strokeWidth="0.5" strokeDasharray="4 2" />
+      <text x="220" y="20" fill="#2A2520" fontSize="9" textAnchor="middle" fontFamily="monospace">SVNTEEN LEASE</text>
       {months.map((m, i) => {
         const col = i % 4;
         const row = Math.floor(i / 4);
         return (
           <g key={`sv-${i}`}>
             <rect x={150 + col * 28} y={30 + row * 32} width="24" height="24" rx="3"
-              fill="#1A1200" stroke="#FFFFFF" strokeWidth="0.8"
+              fill="#E5DECA" stroke="#2A2520" strokeWidth="0.8"
             />
-            <text x={162 + col * 28} y={46 + row * 32} fill="#FFFFFF"
+            <text x={162 + col * 28} y={46 + row * 32} fill="#2A2520"
               fontSize="8" textAnchor="middle" fontFamily="monospace"
             >{m}</text>
           </g>
         );
       })}
-      <text x="220" y="140" fill="#FFFFFF" fontSize="8" textAnchor="middle" fontFamily="monospace">12/12 MONTHS PAID</text>
+      <text x="220" y="140" fill="#2A2520" fontSize="8" textAnchor="middle" fontFamily="monospace">12/12 MONTHS PAID</text>
     </svg>
   );
 }
@@ -397,15 +396,15 @@ function VoidIllustration() {
 function StickyNav() {
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-[999] border-b border-white/[0.06]"
-      style={{ background: 'rgba(10,10,10,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+      className="fixed top-0 left-0 right-0 z-[999] border-b border-black/[0.08]"
+      style={{ background: 'rgba(237,230,208,0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
       data-testid="nav-sticky"
       role="navigation"
       aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 h-[72px] flex items-center justify-between gap-6">
         <SvnteenLogo />
-        <span className="hidden lg:block text-[11px] uppercase tracking-[0.25em] text-white font-light">
+        <span className="hidden lg:block text-[11px] uppercase tracking-[0.25em] text-[#2A2520] font-light">
           Corporate Lease Information — Landlords & Agents
         </span>
       </div>
@@ -415,7 +414,7 @@ function StickyNav() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-micro)", letterSpacing: "0.2em", textTransform: "uppercase" as const }} className="text-white/70 mb-4">
+    <p style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-micro)", letterSpacing: "0.2em", textTransform: "uppercase" as const }} className="text-[#2A2520]/80 mb-4">
       {children}
     </p>
   );
@@ -423,7 +422,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function SectionHeading({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <h2 className={`display-text ${className}`} style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, color: "#F5F0E8" }}>
+    <h2 className={`display-text ${className}`} style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.1, color: "#2A2520" }}>
       {children}
     </h2>
   );
@@ -468,14 +467,14 @@ function HeroSection() {
       <div
         className="absolute inset-0"
         style={{
-          background: "linear-gradient(180deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.1) 30%, rgba(10,10,10,0.05) 50%, rgba(10,10,10,0.5) 70%, rgba(10,10,10,0.95) 100%)"
+          background: "linear-gradient(180deg, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.1) 30%, rgba(10,10,10,0.05) 50%, rgba(10,10,10,0.4) 70%, rgba(237,230,208,0.95) 100%)"
         }}
       />
 
       <GoldParticles count={35} />
 
       <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0 z-10 flex flex-col justify-end pb-16 md:pb-20 px-5 sm:px-8 lg:px-16 max-w-5xl">
-        <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#F5F0E8" }} data-testid="text-hero-headline">
+        <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#2A2520" }} data-testid="text-hero-headline">
           <AnimatedHeadline text="The rental market" delay={0} />
           <AnimatedHeadline text="is about to" delay={3} />
           <AnimatedHeadline text="change." delay={6} italic accent />
@@ -486,7 +485,7 @@ function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.4, duration: 0.8 }}
           className="mb-8 max-w-lg font-semibold"
-          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "#F5F0E8" }}
+          style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.5vw, 1.1rem)", lineHeight: 1.65, color: "#2A2520" }}
         >
           More dramatically than it has in 30&nbsp;years.
           We've built a commercial structure that removes your exposure
@@ -506,7 +505,7 @@ function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
               style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}
-              className="px-3 py-1.5 rounded-full border border-white/[0.2] bg-white/[0.06] text-white"
+              className="px-3 py-1.5 rounded-full border border-black/[0.15] bg-black/[0.06] text-[#2A2520]"
               data-testid={`stat-pill-${i}`}
             >
               {pill}
@@ -522,7 +521,7 @@ function HeroSection() {
         >
           <a
             href="#how-it-works"
-            className="px-8 py-4 font-semibold uppercase tracking-widest text-sm rounded-lg bg-white text-[#0A0A0A] transition-all duration-300 hover:shadow-xl hover:shadow-white/15 hover:scale-[1.02]"
+            className="px-8 py-4 font-semibold uppercase tracking-widest text-sm rounded-lg bg-[#2A2520] text-[#EDE6D0] transition-all duration-300 hover:shadow-xl hover:shadow-black/15 hover:scale-[1.02]"
             data-testid="link-how-it-works"
           >
             Read How It Works ↓
@@ -531,7 +530,7 @@ function HeroSection() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 font-medium text-sm rounded-lg border border-[#25D366]/40 text-[#25D366] transition-all duration-300 hover:border-[#25D366] hover:bg-[#25D366]/10 backdrop-blur-md"
+            className="px-8 py-4 font-medium text-sm rounded-lg border border-[#25D366]/60 text-[#25D366] transition-all duration-300 hover:border-[#25D366] hover:bg-[#25D366]/10"
             data-testid="link-whatsapp-hero"
             aria-label="Speak to us on WhatsApp"
           >
@@ -549,9 +548,9 @@ function HeroSection() {
         <motion.div
           animate={{ y: [0, 7, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          style={{ width: 1, height: 40, background: "linear-gradient(180deg, transparent, rgba(255,255,255,0.3))" }}
+          style={{ width: 1, height: 40, background: "linear-gradient(180deg, transparent, rgba(42,37,32,0.3))" }}
         />
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: "rgba(255,255,255,0.15)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+        <span style={{ fontFamily: "var(--font-mono)", fontSize: 8, color: "rgba(42,37,32,0.4)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
           Scroll
         </span>
       </motion.div>
@@ -600,7 +599,7 @@ const reformCards = [
 
 function ReformBillSection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="the-challenge" data-testid="section-reform-bill">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" id="the-challenge" data-testid="section-reform-bill">
       <div className="max-w-7xl mx-auto">
         <Reveal>
           <SectionLabel>The Challenge</SectionLabel>
@@ -611,7 +610,7 @@ function ReformBillSection() {
           </SectionHeading>
         </Reveal>
         <Reveal delay={2}>
-          <p style={{ fontFamily: "var(--font-body)" }} className="text-white/80 text-sm mb-12 max-w-lg">
+          <p style={{ fontFamily: "var(--font-body)" }} className="text-[#2A2520]/90 text-sm mb-12 max-w-lg">
             What it means for landlords with standard AST tenancies
           </p>
         </Reveal>
@@ -626,7 +625,7 @@ function ReformBillSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.05] hover:border-white/[0.1]"
+                className="p-6 rounded-xl bg-black/[0.04] border border-black/[0.08] transition-all duration-300 hover:bg-black/[0.06] hover:border-black/[0.12]"
                 data-testid={`card-reform-${i}`}
               >
                 <div className="flex items-center justify-between mb-4">
@@ -635,8 +634,8 @@ function ReformBillSection() {
                     {card.status}
                   </span>
                 </div>
-                <h3 className="text-white font-semibold text-sm mb-2.5">{card.title}</h3>
-                <p className="text-[13px] text-white/80 leading-relaxed">{card.body}</p>
+                <h3 className="text-[#2A2520] font-semibold text-sm mb-2.5">{card.title}</h3>
+                <p className="text-[13px] text-[#2A2520]/90 leading-relaxed">{card.body}</p>
               </motion.div>
             );
           })}
@@ -647,15 +646,15 @@ function ReformBillSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-12 p-8 rounded-xl border border-white/[0.08] bg-white/[0.03]"
+          className="mt-12 p-8 rounded-xl border border-black/[0.1] bg-black/[0.04]"
         >
-          <p className="text-center text-white/90 text-lg font-medium leading-relaxed">
+          <p className="text-center text-[#2A2520]/90 text-lg font-medium leading-relaxed">
             Commercial leases fall outside the scope of the Renters Reform Act.<br />
-            <span className="text-white font-semibold">When your tenant is a company, not a person, the rules change entirely.</span>
+            <span className="text-[#2A2520] font-semibold">When your tenant is a company, not a person, the rules change entirely.</span>
           </p>
         </motion.div>
 
-        <p className="text-[10px] text-white/50 text-center mt-6">
+        <p className="text-[10px] text-[#2A2520]/60 text-center mt-6">
           Source: Renters (Reform) Bill 2024, UK Parliament
         </p>
       </div>
@@ -716,7 +715,7 @@ function ValueAnglesSection() {
   };
 
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="how-it-works" data-testid="section-value-angles">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" id="how-it-works" data-testid="section-value-angles">
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>Why Landlords Choose a Corporate Lease</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">Three reasons this outperforms<br />a standard tenancy</SectionHeading></Reveal>
@@ -729,22 +728,22 @@ function ValueAnglesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-8 md:p-10 rounded-2xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]`}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center p-8 md:p-10 rounded-2xl bg-black/[0.03] border border-black/[0.08] transition-all duration-300 hover:bg-black/[0.06] hover:border-black/[0.12]`}
               data-testid={`card-value-${i}`}
             >
               <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <div className="flex items-center gap-4 mb-5">
-                  <span className="text-white/60 text-3xl font-mono font-extralight">{angle.number}</span>
-                  <div className="w-px h-5 bg-white/10" />
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-white/70 font-light">{angle.sub}</span>
+                  <span className="text-[#2A2520]/70 text-3xl font-mono font-extralight">{angle.number}</span>
+                  <div className="w-px h-5 bg-black/[0.1]" />
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#2A2520]/80 font-light">{angle.sub}</span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-5 tracking-[-0.01em]">{angle.angle}</h3>
-                <p className="text-[14px] text-white/80 leading-[1.8] mb-7">{angle.content}</p>
+                <h3 className="text-xl font-bold text-[#2A2520] mb-5 tracking-[-0.01em]">{angle.angle}</h3>
+                <p className="text-[14px] text-[#2A2520]/90 leading-[1.8] mb-7">{angle.content}</p>
                 <div className="space-y-3">
                   {angle.bullets.map((bullet, j) => (
                     <div key={j} className="flex items-start gap-3">
                       <Check className="w-4 h-4 text-[#52B788]/80 mt-0.5 flex-shrink-0" />
-                      <span className="text-[14px] text-white/80">{bullet}</span>
+                      <span className="text-[14px] text-[#2A2520]/90">{bullet}</span>
                     </div>
                   ))}
                 </div>
@@ -806,7 +805,7 @@ const processSteps = [
 
 function ProcessSection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-process">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" data-testid="section-process">
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>The Process</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
@@ -814,7 +813,7 @@ function ProcessSection() {
         </SectionHeading></Reveal>
 
         <div className="relative">
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/[0.06] -translate-x-1/2" />
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-black/[0.08] -translate-x-1/2" />
           <div className="space-y-8">
             {processSteps.map((step, i) => {
               const Icon = step.icon;
@@ -829,25 +828,25 @@ function ProcessSection() {
                 >
                   <div className="absolute left-6 md:left-1/2 -translate-x-1/2 z-10">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center border transition-colors duration-300
-                      ${step.highlight ? 'border-white/30 bg-white/[0.08]' : 'border-white/[0.08] bg-white/[0.03]'}
+                      ${step.highlight ? 'border-black/[0.2] bg-black/[0.08]' : 'border-black/[0.1] bg-black/[0.04]'}
                     `}>
-                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-white' : 'text-white/70'}`} />
+                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-[#2A2520]' : 'text-[#2A2520]/80'}`} />
                     </div>
                   </div>
-                  <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-6 rounded-xl border bg-white/[0.02] transition-all duration-300 hover:bg-white/[0.04]
-                    ${step.highlight ? 'border-white/[0.12]' : 'border-white/[0.06]'}
+                  <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-6 rounded-xl border bg-black/[0.03] transition-all duration-300 hover:bg-black/[0.06]
+                    ${step.highlight ? 'border-black/[0.15]' : 'border-black/[0.08]'}
                     ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
                   `}>
                     <div className="flex items-center justify-between mb-3 gap-2">
-                      <span className="text-white/60 text-xs font-mono">{step.number}</span>
-                      <span className="text-[11px] text-white/70 bg-white/[0.05] px-2.5 py-1 rounded-full">
+                      <span className="text-[#2A2520]/70 text-xs font-mono">{step.number}</span>
+                      <span className="text-[11px] text-[#2A2520]/80 bg-black/[0.06] px-2.5 py-1 rounded-full">
                         {step.timeline}
                       </span>
                     </div>
-                    <h4 className={`font-semibold mb-2.5 ${step.highlight ? 'text-white' : 'text-white/90'}`}>
+                    <h4 className={`font-semibold mb-2.5 ${step.highlight ? 'text-[#2A2520]' : 'text-[#2A2520]/90'}`}>
                       {step.title}
                     </h4>
-                    <p className="text-[13px] text-white/80 leading-relaxed">{step.body}</p>
+                    <p className="text-[13px] text-[#2A2520]/90 leading-relaxed">{step.body}</p>
                   </div>
                 </motion.div>
               );
@@ -873,46 +872,46 @@ const comparisonRows = [
 
 function ComparisonSection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="the-comparison" data-testid="section-comparison">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" id="the-comparison" data-testid="section-comparison">
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>The Comparison</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
           Standard AST vs Commercial Lease
         </SectionHeading></Reveal>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
+        <div className="overflow-x-auto rounded-2xl border border-black/[0.08]">
           <table className="w-full min-w-[640px]" data-testid="table-comparison">
             <thead>
-              <tr className="border-b border-white/[0.06]">
-                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/70 font-light w-1/4">Consideration</th>
-                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/70 font-light w-[37.5%]">
+              <tr className="border-b border-black/[0.08]">
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-[#2A2520]/80 font-light w-1/4">Consideration</th>
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-[#2A2520]/80 font-light w-[37.5%]">
                   Standard AST Tenancy
                 </th>
-                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/90 font-medium w-[37.5%] bg-white/[0.02]">
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-[#2A2520]/90 font-medium w-[37.5%] bg-black/[0.03]">
                   Svnteen Commercial Lease
                 </th>
               </tr>
             </thead>
             <tbody>
               {comparisonRows.map((row, i) => (
-                <tr key={i} className={`border-b border-white/[0.04] transition-colors duration-200 hover:bg-white/[0.02]`} data-testid={`row-comparison-${i}`}>
-                  <td className="py-4 px-6 text-[11px] text-white/70 font-medium uppercase tracking-wide">
+                <tr key={i} className={`border-b border-black/[0.06] transition-colors duration-200 hover:bg-black/[0.03]`} data-testid={`row-comparison-${i}`}>
+                  <td className="py-4 px-6 text-[11px] text-[#2A2520]/80 font-medium uppercase tracking-wide">
                     {row.category}
                   </td>
-                  <td className="py-4 px-6 text-[13px] text-white/80">
+                  <td className="py-4 px-6 text-[13px] text-[#2A2520]/90">
                     <div className="flex items-start gap-2.5">
                       <X className="w-3.5 h-3.5 text-[#e05555]/70 mt-0.5 flex-shrink-0" />
                       <span>{row.ast}</span>
                     </div>
                   </td>
-                  <td className="py-4 px-6 text-[13px] bg-white/[0.02]">
+                  <td className="py-4 px-6 text-[13px] bg-black/[0.03]">
                     <div className="flex items-start gap-2.5">
                       {row.svnteenWins ? (
                         <Check className="w-3.5 h-3.5 text-[#52B788]/80 mt-0.5 flex-shrink-0" />
                       ) : (
                         <Minus className="w-3.5 h-3.5 text-[#f4a01c]/70 mt-0.5 flex-shrink-0" />
                       )}
-                      <span className={row.svnteenWins ? 'text-white/90' : 'text-white/70'}>
+                      <span className={row.svnteenWins ? 'text-[#2A2520]/90' : 'text-[#2A2520]/80'}>
                         {row.svnteen}
                       </span>
                     </div>
@@ -931,7 +930,7 @@ function ComparisonSection() {
 
 function R2SASection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-r2sa">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" data-testid="section-r2sa">
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>How R2SA Works</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
@@ -946,14 +945,14 @@ function R2SASection() {
               viewport={{ once: true }}
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
-              <div className="w-24 h-24 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-                <Home className="w-12 h-12 text-white" strokeWidth={2} />
+              <div className="w-24 h-24 rounded-2xl bg-black/[0.06] flex items-center justify-center">
+                <Home className="w-12 h-12 text-[#2A2520]" strokeWidth={2} />
               </div>
               <div className="text-center">
-                <p className="text-white font-semibold text-sm">The Landlord</p>
-                <p className="text-white/70 text-xs mt-1">Owns the property</p>
+                <p className="text-[#2A2520] font-semibold text-sm">The Landlord</p>
+                <p className="text-[#2A2520]/80 text-xs mt-1">Owns the property</p>
               </div>
-              <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-2">
+              <div className="w-full bg-black/[0.03] border border-black/[0.08] rounded-xl p-4 space-y-2">
                 {[
                   'Signs commercial lease',
                   'Receives fixed yield monthly',
@@ -963,7 +962,7 @@ function R2SASection() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <Check className="w-3 h-3 text-[#52B788]/70 mt-0.5 flex-shrink-0" />
-                    <p className="text-[12px] text-white/80">{item}</p>
+                    <p className="text-[12px] text-[#2A2520]/90">{item}</p>
                   </div>
                 ))}
               </div>
@@ -985,19 +984,19 @@ function R2SASection() {
               transition={{ delay: 0.2 }}
               className="flex flex-col items-center gap-3 w-full md:w-64"
             >
-              <div className="w-28 h-28 rounded-2xl bg-white/[0.05] flex items-center justify-center p-3">
+              <div className="w-28 h-28 rounded-2xl bg-black/[0.06] flex items-center justify-center p-3">
                 <img
                   src={logoImage}
                   alt="Svnteen. TheResidency."
                   className="w-full h-full object-contain"
-                  style={{ mixBlendMode: "screen", filter: "brightness(1.3) contrast(1.2)" }}
+                  style={{ filter: "brightness(0.8) contrast(1.2)" }}
                 />
               </div>
               <div className="text-center">
-                <p className="text-white font-bold text-sm">Svnteen The Residency</p>
-                <p className="text-white/70 text-xs mt-1">The commercial tenant</p>
+                <p className="text-[#2A2520] font-bold text-sm">Svnteen The Residency</p>
+                <p className="text-[#2A2520]/80 text-xs mt-1">The commercial tenant</p>
               </div>
-              <div className="w-full bg-white/[0.03] border border-white/[0.1] rounded-xl p-4 space-y-2">
+              <div className="w-full bg-black/[0.04] border border-black/[0.12] rounded-xl p-4 space-y-2">
                 {[
                   'Manages the property entirely',
                   'Furnishes to hotel standard',
@@ -1006,8 +1005,8 @@ function R2SASection() {
                   'Pays landlord from operating budget',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <ArrowRight className="w-3 h-3 text-white/70 mt-0.5 flex-shrink-0" />
-                    <p className="text-[12px] text-white/80">{item}</p>
+                    <ArrowRight className="w-3 h-3 text-[#2A2520]/80 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-[#2A2520]/90">{item}</p>
                   </div>
                 ))}
               </div>
@@ -1029,14 +1028,14 @@ function R2SASection() {
               transition={{ delay: 0.4 }}
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
-              <div className="w-24 h-24 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-                <Luggage className="w-12 h-12 text-white" strokeWidth={2} />
+              <div className="w-24 h-24 rounded-2xl bg-black/[0.06] flex items-center justify-center">
+                <Luggage className="w-12 h-12 text-[#2A2520]" strokeWidth={2} />
               </div>
               <div className="text-center">
-                <p className="text-white font-semibold text-sm">Short-Stay Guests</p>
-                <p className="text-white/70 text-xs mt-1">Corporate & leisure travellers</p>
+                <p className="text-[#2A2520] font-semibold text-sm">Short-Stay Guests</p>
+                <p className="text-[#2A2520]/80 text-xs mt-1">Corporate & leisure travellers</p>
               </div>
-              <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-2">
+              <div className="w-full bg-black/[0.03] border border-black/[0.08] rounded-xl p-4 space-y-2">
                 {[
                   'Book via Airbnb / Booking.com',
                   'Stay 1-30 nights',
@@ -1045,16 +1044,16 @@ function R2SASection() {
                   'Pay nightly rate to Svnteen',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <ArrowRight className="w-3 h-3 text-white/70 mt-0.5 flex-shrink-0" />
-                    <p className="text-[12px] text-white/80">{item}</p>
+                    <ArrowRight className="w-3 h-3 text-[#2A2520]/80 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-[#2A2520]/90">{item}</p>
                   </div>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          <div className="mt-10 p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
-            <p className="text-[14px] text-white leading-relaxed">
+          <div className="mt-10 p-6 rounded-xl bg-black/[0.03] border border-black/[0.08] text-center">
+            <p className="text-[14px] text-[#2A2520] leading-relaxed">
               <span className="font-semibold">The critical point: </span>
               You have <span className="font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
               The revolving door of guests never involves you. They have no residential rights in your property.
@@ -1087,12 +1086,12 @@ function R2SASection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]"
+              className="p-6 rounded-xl bg-black/[0.03] border border-black/[0.08] transition-all duration-300 hover:bg-black/[0.06] hover:border-black/[0.12]"
               data-testid={`card-concern-${i}`}
             >
-              <item.icon className="w-5 h-5 text-white/70 mb-4" />
-              <p className="text-sm text-white font-semibold mb-2">{item.concern}</p>
-              <p className="text-[13px] text-white/80 leading-relaxed">{item.answer}</p>
+              <item.icon className="w-5 h-5 text-[#2A2520]/80 mb-4" />
+              <p className="text-sm text-[#2A2520] font-semibold mb-2">{item.concern}</p>
+              <p className="text-[13px] text-[#2A2520]/90 leading-relaxed">{item.answer}</p>
             </motion.div>
           ))}
         </div>
@@ -1140,7 +1139,7 @@ function PropertyCarousel() {
         </motion.div>
       ))}
 
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0) 30%, rgba(10,10,10,0) 50%, rgba(10,10,10,0.6) 100%)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(237,230,208,0.15) 0%, rgba(237,230,208,0) 30%, rgba(237,230,208,0) 50%, rgba(237,230,208,0.6) 100%)" }} />
 
     </div>
   );
@@ -1155,7 +1154,7 @@ function WhoWeAreSection() {
   ];
 
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-who-we-are">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" data-testid="section-who-we-are">
       <div className="max-w-7xl mx-auto">
         <Reveal delay={1}><SectionHeading className="mb-14">
           Who we are
@@ -1163,19 +1162,19 @@ function WhoWeAreSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-6">
-            <p className="text-[14px] text-white/80 leading-[1.8]">
+            <p className="text-[14px] text-[#2A2520]/90 leading-[1.8]">
               We are a UK-based short-let management company operating under commercial leases across multiple UK cities. We manage properties to five-star serviced apartment standard and have an active presence on Airbnb, Booking.com, and VRBO.
             </p>
-            <p className="text-[14px] text-white/80 leading-[1.8]">
+            <p className="text-[14px] text-[#2A2520]/90 leading-[1.8]">
               Our promise to landlords is simple: we treat your property as if it were our own — because our business reputation depends on it.
             </p>
             <div className="grid grid-cols-2 gap-3 mt-8">
               {credentials.map((cred, i) => {
                 const Icon = cred.icon;
                 return (
-                  <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04]">
-                    <Icon className="w-4 h-4 text-white/70 flex-shrink-0" />
-                    <span className="text-[12px] text-white/80">{cred.label}</span>
+                  <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-black/[0.03] border border-black/[0.08] transition-all duration-300 hover:bg-black/[0.06]">
+                    <Icon className="w-4 h-4 text-[#2A2520]/80 flex-shrink-0" />
+                    <span className="text-[12px] text-[#2A2520]/90">{cred.label}</span>
                   </div>
                 );
               })}
@@ -1183,8 +1182,8 @@ function WhoWeAreSection() {
           </div>
           <div className="space-y-4">
             <PropertyCarousel />
-            <div className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-              <p className="text-[11px] uppercase tracking-widest text-white/60 mb-5">Our Standards</p>
+            <div className="p-6 rounded-xl bg-black/[0.03] border border-black/[0.08]">
+              <p className="text-[11px] uppercase tracking-widest text-[#2A2520]/70 mb-5">Our Standards</p>
               {[
                 { icon: Star, label: 'Five-star serviced apartment standard' },
                 { icon: Users, label: 'Professional guest management team' },
@@ -1193,9 +1192,9 @@ function WhoWeAreSection() {
               ].map((item, i) => {
                 const Icon = item.icon;
                 return (
-                  <div key={i} className="flex items-center gap-3 py-3 border-b border-white/[0.04] last:border-0">
-                    <Icon className="w-4 h-4 text-white/70" />
-                    <span className="text-[13px] text-white/80">{item.label}</span>
+                  <div key={i} className="flex items-center gap-3 py-3 border-b border-black/[0.06] last:border-0">
+                    <Icon className="w-4 h-4 text-[#2A2520]/80" />
+                    <span className="text-[13px] text-[#2A2520]/90">{item.label}</span>
                   </div>
                 );
               })}
@@ -1298,7 +1297,7 @@ function FAQSection() {
   const filtered = activeCategory === 'All' ? faqs : faqs.filter(f => f.category === activeCategory);
 
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="faqs" data-testid="section-faqs">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" id="faqs" data-testid="section-faqs">
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>Frequently Asked Questions</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-10">
@@ -1312,8 +1311,8 @@ function FAQSection() {
               onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
               className={`px-4 py-2.5 rounded-full text-[12px] font-medium transition-all duration-300 border
                 ${activeCategory === cat
-                  ? 'bg-white text-[#0A0A0A] border-white'
-                  : 'bg-white/[0.03] text-white/70 border-white/[0.06] hover:bg-white/[0.06] hover:text-white/90'
+                  ? 'bg-[#2A2520] text-[#EDE6D0] border-[#2A2520]'
+                  : 'bg-black/[0.04] text-[#2A2520]/80 border-black/[0.08] hover:bg-black/[0.08] hover:text-[#2A2520]/90'
                 }
               `}
               data-testid={`button-faq-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1334,7 +1333,7 @@ function FAQSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.03, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="border border-white/[0.06] rounded-xl transition-colors duration-200 hover:border-white/[0.1]"
+                className="border border-black/[0.08] rounded-xl transition-colors duration-200 hover:border-black/[0.12]"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : globalIndex)}
@@ -1343,12 +1342,12 @@ function FAQSection() {
                   aria-expanded={isOpen}
                 >
                   <div className="flex items-center gap-3 flex-1">
-                    <span className="text-[10px] text-white/70 bg-white/[0.05] px-2.5 py-1 rounded-full flex-shrink-0">
+                    <span className="text-[10px] text-[#2A2520]/80 bg-black/[0.06] px-2.5 py-1 rounded-full flex-shrink-0">
                       {faq.category}
                     </span>
-                    <span className="text-[14px] text-white/80 font-medium">{faq.q}</span>
+                    <span className="text-[14px] text-[#2A2520]/90 font-medium">{faq.q}</span>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-white/60 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-[#2A2520]/70 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {isOpen && (
@@ -1360,8 +1359,8 @@ function FAQSection() {
                       className="overflow-hidden"
                     >
                       <div className="px-5 pb-5 pt-0">
-                        <div className="pl-0 md:pl-[calc(0.625rem+0.75rem+0.5rem)] border-t border-white/[0.04] pt-4">
-                          <p className="text-[14px] text-white/80 leading-[1.8]">{faq.a}</p>
+                        <div className="pl-0 md:pl-[calc(0.625rem+0.75rem+0.5rem)] border-t border-black/[0.06] pt-4">
+                          <p className="text-[14px] text-[#2A2520]/90 leading-[1.8]">{faq.a}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -1402,7 +1401,7 @@ const testimonials = [
 
 function TestimonialsSection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" data-testid="section-testimonials">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" data-testid="section-testimonials">
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>Landlord Perspectives</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-14">
@@ -1417,22 +1416,22 @@ function TestimonialsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="p-7 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex flex-col transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]"
+              className="p-7 rounded-2xl bg-black/[0.03] border border-black/[0.08] flex flex-col transition-all duration-300 hover:bg-black/[0.06] hover:border-black/[0.12]"
               data-testid={`card-testimonial-${i}`}
             >
               <div className="flex gap-1 mb-5">
                 {[...Array(5)].map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 text-white/80 fill-white/80" />
+                  <Star key={j} className="w-3.5 h-3.5 text-[#2A2520]/80 fill-[#2A2520]/80" />
                 ))}
               </div>
-              <p className="text-[14px] text-white/80 leading-[1.8] italic flex-1">
+              <p className="text-[14px] text-[#2A2520]/90 leading-[1.8] italic flex-1">
                 "{t.quote}"
               </p>
-              <div className="mt-7 pt-5 border-t border-white/[0.04]">
-                <p className="text-sm text-white font-semibold">{t.name}</p>
-                <p className="text-[12px] text-white/60 mt-1">{t.location}</p>
+              <div className="mt-7 pt-5 border-t border-black/[0.06]">
+                <p className="text-sm text-[#2A2520] font-semibold">{t.name}</p>
+                <p className="text-[12px] text-[#2A2520]/70 mt-1">{t.location}</p>
                 <div className="flex items-center justify-between mt-2.5">
-                  <span className="text-[12px] text-white/60">{t.duration}</span>
+                  <span className="text-[12px] text-[#2A2520]/70">{t.duration}</span>
                   {t.verified && (
                     <span className="flex items-center gap-1 text-[10px] text-[#52B788]/70">
                       <Check className="w-3 h-3" />
@@ -1451,13 +1450,13 @@ function TestimonialsSection() {
 
 function ContactSection() {
   return (
-    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#0A0A0A]" id="contact" data-testid="section-contact">
+    <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" id="contact" data-testid="section-contact">
       <div className="max-w-3xl mx-auto text-center">
         <Reveal><SectionLabel>Ready to Find Out More?</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-6">
           Speak to us directly
         </SectionHeading></Reveal>
-        <p className="text-white/80 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
+        <p className="text-[#2A2520]/90 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
           No forms, no waiting lists, no sales pressure. Message our team on WhatsApp and get straight answers about how a commercial lease could work for your property.
         </p>
 
@@ -1473,8 +1472,8 @@ function ContactSection() {
             <WhatsAppIcon className="w-12 h-12 text-white" />
           </div>
           <div className="text-center">
-            <p className="text-white font-bold text-xl">WhatsApp Our Team</p>
-            <p className="text-white/80 text-sm mt-2">No forms, no waiting — just message us</p>
+            <p className="text-[#2A2520] font-bold text-xl">WhatsApp Our Team</p>
+            <p className="text-[#2A2520]/90 text-sm mt-2">No forms, no waiting — just message us</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
@@ -1491,18 +1490,18 @@ function ContactSection() {
 
 function FooterSection() {
   return (
-    <footer className="bg-[#0A0A0A] border-t border-white/[0.04] py-16 px-5 sm:px-8 lg:px-10" data-testid="section-footer" role="contentinfo">
+    <footer className="bg-[#EDE6D0] border-t border-black/[0.06] py-16 px-5 sm:px-8 lg:px-10" data-testid="section-footer" role="contentinfo">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-12">
           <div className="max-w-sm">
             <SvnteenLogo className="h-7 w-auto mb-5" />
-            <p className="text-white/70 text-[13px] leading-relaxed">
+            <p className="text-[#2A2520]/80 text-[13px] leading-relaxed">
               Corporate Lease Division — Commercial property arrangements for landlords seeking fixed-yield, management-free income.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-10 text-sm">
             <div>
-              <p className="text-white/80 font-medium mb-4 uppercase tracking-wider text-[11px]">This Page</p>
+              <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">This Page</p>
               {[
                 { label: 'The Challenge', href: '#the-challenge' },
                 { label: 'How It Works', href: '#how-it-works' },
@@ -1510,13 +1509,13 @@ function FooterSection() {
                 { label: 'FAQs', href: '#faqs' },
                 { label: 'Contact Us', href: '#contact' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-white/60 py-1.5 transition-colors duration-200 hover:text-white/90 text-[13px]" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-[#2A2520]/70 py-1.5 transition-colors duration-200 hover:text-[#2A2520]/90 text-[13px]" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-white/80 font-medium mb-4 uppercase tracking-wider text-[11px]">Platform</p>
+              <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">Platform</p>
               {[
                 { label: 'The Marketplace', href: '/marketplace' },
                 { label: 'Deal Analyser', href: '/deal-analyser' },
@@ -1524,13 +1523,13 @@ function FooterSection() {
                 { label: 'For Investors', href: '/signup' },
                 { label: 'For Sourcers', href: '/signup' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-white/60 py-1.5 transition-colors duration-200 hover:text-white/90 text-[13px]" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-[#2A2520]/70 py-1.5 transition-colors duration-200 hover:text-[#2A2520]/90 text-[13px]" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-white/80 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
+              <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -1546,8 +1545,8 @@ function FooterSection() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/[0.04]">
-          <p className="text-white/50 text-[11px] leading-relaxed">
+        <div className="pt-8 border-t border-black/[0.06]">
+          <p className="text-[#2A2520]/60 text-[11px] leading-relaxed">
             2026 Svnteen The Residency. All rights reserved. This page is for information purposes only and does not constitute financial, legal, or tax advice. All commercial lease arrangements are subject to individual negotiation and we strongly recommend all landlords obtain independent legal and financial advice before entering any agreement. Svnteen The Residency is not authorised by the Financial Conduct Authority. Mortgage consent requirements apply — please verify with your lender before proceeding.
           </p>
         </div>
@@ -1592,7 +1591,7 @@ export function LandlordsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]" style={{ fontFamily: "var(--font-body)" }}>
+    <div className="min-h-screen bg-[#EDE6D0] text-[#2A2520]" style={{ fontFamily: "var(--font-body)" }}>
       <StickyNav />
       <HeroSection />
       <WhoWeAreSection />
