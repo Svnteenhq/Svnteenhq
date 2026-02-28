@@ -1142,7 +1142,7 @@ function PropertyCarousel() {
   }, []);
 
   return (
-    <div className="relative rounded-2xl overflow-hidden h-64" data-testid="carousel-properties">
+    <div className="relative rounded-2xl overflow-hidden h-80 md:h-96" data-testid="carousel-properties">
       {propertyImages.map((img, i) => (
         <motion.div
           key={i}
