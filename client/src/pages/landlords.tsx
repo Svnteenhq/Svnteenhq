@@ -415,7 +415,7 @@ function StickyNav() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-micro)", letterSpacing: "0.2em", textTransform: "uppercase" as const }} className="text-white/30 mb-4">
+    <p style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-micro)", letterSpacing: "0.2em", textTransform: "uppercase" as const }} className="text-white/70 mb-4">
       {children}
     </p>
   );
@@ -611,7 +611,7 @@ function ReformBillSection() {
           </SectionHeading>
         </Reveal>
         <Reveal delay={2}>
-          <p style={{ fontFamily: "var(--font-body)" }} className="text-white/40 text-sm mb-12 max-w-lg">
+          <p style={{ fontFamily: "var(--font-body)" }} className="text-white/80 text-sm mb-12 max-w-lg">
             What it means for landlords with standard AST tenancies
           </p>
         </Reveal>
@@ -636,7 +636,7 @@ function ReformBillSection() {
                   </span>
                 </div>
                 <h3 className="text-white font-semibold text-sm mb-2.5">{card.title}</h3>
-                <p className="text-[13px] text-white/45 leading-relaxed">{card.body}</p>
+                <p className="text-[13px] text-white/80 leading-relaxed">{card.body}</p>
               </motion.div>
             );
           })}
@@ -655,7 +655,7 @@ function ReformBillSection() {
           </p>
         </motion.div>
 
-        <p className="text-[10px] text-white/15 text-center mt-6">
+        <p className="text-[10px] text-white/50 text-center mt-6">
           Source: Renters (Reform) Bill 2024, UK Parliament
         </p>
       </div>
@@ -734,17 +734,17 @@ function ValueAnglesSection() {
             >
               <div className={`${i % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <div className="flex items-center gap-4 mb-5">
-                  <span className="text-white/20 text-3xl font-mono font-extralight">{angle.number}</span>
+                  <span className="text-white/60 text-3xl font-mono font-extralight">{angle.number}</span>
                   <div className="w-px h-5 bg-white/10" />
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-light">{angle.sub}</span>
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-white/70 font-light">{angle.sub}</span>
                 </div>
                 <h3 className="text-xl font-bold text-white mb-5 tracking-[-0.01em]">{angle.angle}</h3>
-                <p className="text-[14px] text-white/45 leading-[1.8] mb-7">{angle.content}</p>
+                <p className="text-[14px] text-white/80 leading-[1.8] mb-7">{angle.content}</p>
                 <div className="space-y-3">
                   {angle.bullets.map((bullet, j) => (
                     <div key={j} className="flex items-start gap-3">
                       <Check className="w-4 h-4 text-[#52B788]/80 mt-0.5 flex-shrink-0" />
-                      <span className="text-[14px] text-white/50">{bullet}</span>
+                      <span className="text-[14px] text-white/80">{bullet}</span>
                     </div>
                   ))}
                 </div>
@@ -831,7 +831,7 @@ function ProcessSection() {
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center border transition-colors duration-300
                       ${step.highlight ? 'border-white/30 bg-white/[0.08]' : 'border-white/[0.08] bg-white/[0.03]'}
                     `}>
-                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-white' : 'text-white/35'}`} />
+                      <Icon className={`w-5 h-5 ${step.highlight ? 'text-white' : 'text-white/70'}`} />
                     </div>
                   </div>
                   <div className={`ml-20 md:ml-0 md:w-[calc(50%-32px)] p-6 rounded-xl border bg-white/[0.02] transition-all duration-300 hover:bg-white/[0.04]
@@ -839,15 +839,15 @@ function ProcessSection() {
                     ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
                   `}>
                     <div className="flex items-center justify-between mb-3 gap-2">
-                      <span className="text-white/20 text-xs font-mono">{step.number}</span>
-                      <span className="text-[11px] text-white/30 bg-white/[0.05] px-2.5 py-1 rounded-full">
+                      <span className="text-white/60 text-xs font-mono">{step.number}</span>
+                      <span className="text-[11px] text-white/70 bg-white/[0.05] px-2.5 py-1 rounded-full">
                         {step.timeline}
                       </span>
                     </div>
                     <h4 className={`font-semibold mb-2.5 ${step.highlight ? 'text-white' : 'text-white/90'}`}>
                       {step.title}
                     </h4>
-                    <p className="text-[13px] text-white/40 leading-relaxed">{step.body}</p>
+                    <p className="text-[13px] text-white/80 leading-relaxed">{step.body}</p>
                   </div>
                 </motion.div>
               );
@@ -884,11 +884,11 @@ function ComparisonSection() {
           <table className="w-full min-w-[640px]" data-testid="table-comparison">
             <thead>
               <tr className="border-b border-white/[0.06]">
-                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/25 font-light w-1/4">Consideration</th>
-                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/25 font-light w-[37.5%]">
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/70 font-light w-1/4">Consideration</th>
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/70 font-light w-[37.5%]">
                   Standard AST Tenancy
                 </th>
-                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/50 font-medium w-[37.5%] bg-white/[0.02]">
+                <th className="py-5 px-6 text-left text-[11px] uppercase tracking-widest text-white/90 font-medium w-[37.5%] bg-white/[0.02]">
                   Svnteen Commercial Lease
                 </th>
               </tr>
@@ -896,10 +896,10 @@ function ComparisonSection() {
             <tbody>
               {comparisonRows.map((row, i) => (
                 <tr key={i} className={`border-b border-white/[0.04] transition-colors duration-200 hover:bg-white/[0.02]`} data-testid={`row-comparison-${i}`}>
-                  <td className="py-4 px-6 text-[11px] text-white/30 font-medium uppercase tracking-wide">
+                  <td className="py-4 px-6 text-[11px] text-white/70 font-medium uppercase tracking-wide">
                     {row.category}
                   </td>
-                  <td className="py-4 px-6 text-[13px] text-white/40">
+                  <td className="py-4 px-6 text-[13px] text-white/80">
                     <div className="flex items-start gap-2.5">
                       <X className="w-3.5 h-3.5 text-[#e05555]/70 mt-0.5 flex-shrink-0" />
                       <span>{row.ast}</span>
@@ -912,7 +912,7 @@ function ComparisonSection() {
                       ) : (
                         <Minus className="w-3.5 h-3.5 text-[#f4a01c]/70 mt-0.5 flex-shrink-0" />
                       )}
-                      <span className={row.svnteenWins ? 'text-white/70' : 'text-white/40'}>
+                      <span className={row.svnteenWins ? 'text-white/90' : 'text-white/70'}>
                         {row.svnteen}
                       </span>
                     </div>
@@ -951,7 +951,7 @@ function R2SASection() {
               </div>
               <div className="text-center">
                 <p className="text-white font-semibold text-sm">The Landlord</p>
-                <p className="text-white/30 text-xs mt-1">Owns the property</p>
+                <p className="text-white/70 text-xs mt-1">Owns the property</p>
               </div>
               <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-2">
                 {[
@@ -963,7 +963,7 @@ function R2SASection() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <Check className="w-3 h-3 text-[#52B788]/70 mt-0.5 flex-shrink-0" />
-                    <p className="text-[12px] text-white/45">{item}</p>
+                    <p className="text-[12px] text-white/80">{item}</p>
                   </div>
                 ))}
               </div>
@@ -995,7 +995,7 @@ function R2SASection() {
               </div>
               <div className="text-center">
                 <p className="text-white font-bold text-sm">Svnteen The Residency</p>
-                <p className="text-white/30 text-xs mt-1">The commercial tenant</p>
+                <p className="text-white/70 text-xs mt-1">The commercial tenant</p>
               </div>
               <div className="w-full bg-white/[0.03] border border-white/[0.1] rounded-xl p-4 space-y-2">
                 {[
@@ -1006,8 +1006,8 @@ function R2SASection() {
                   'Pays landlord from operating budget',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <ArrowRight className="w-3 h-3 text-white/40 mt-0.5 flex-shrink-0" />
-                    <p className="text-[12px] text-white/45">{item}</p>
+                    <ArrowRight className="w-3 h-3 text-white/70 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-white/80">{item}</p>
                   </div>
                 ))}
               </div>
@@ -1034,7 +1034,7 @@ function R2SASection() {
               </div>
               <div className="text-center">
                 <p className="text-white font-semibold text-sm">Short-Stay Guests</p>
-                <p className="text-white/30 text-xs mt-1">Corporate & leisure travellers</p>
+                <p className="text-white/70 text-xs mt-1">Corporate & leisure travellers</p>
               </div>
               <div className="w-full bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-2">
                 {[
@@ -1045,8 +1045,8 @@ function R2SASection() {
                   'Pay nightly rate to Svnteen',
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
-                    <ArrowRight className="w-3 h-3 text-white/25 mt-0.5 flex-shrink-0" />
-                    <p className="text-[12px] text-white/45">{item}</p>
+                    <ArrowRight className="w-3 h-3 text-white/70 mt-0.5 flex-shrink-0" />
+                    <p className="text-[12px] text-white/80">{item}</p>
                   </div>
                 ))}
               </div>
@@ -1090,9 +1090,9 @@ function R2SASection() {
               className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.1]"
               data-testid={`card-concern-${i}`}
             >
-              <item.icon className="w-5 h-5 text-white/40 mb-4" />
+              <item.icon className="w-5 h-5 text-white/70 mb-4" />
               <p className="text-sm text-white font-semibold mb-2">{item.concern}</p>
-              <p className="text-[13px] text-white/40 leading-relaxed">{item.answer}</p>
+              <p className="text-[13px] text-white/80 leading-relaxed">{item.answer}</p>
             </motion.div>
           ))}
         </div>
@@ -1313,7 +1313,7 @@ function FAQSection() {
               className={`px-4 py-2.5 rounded-full text-[12px] font-medium transition-all duration-300 border
                 ${activeCategory === cat
                   ? 'bg-white text-[#0A0A0A] border-white'
-                  : 'bg-white/[0.03] text-white/35 border-white/[0.06] hover:bg-white/[0.06] hover:text-white/50'
+                  : 'bg-white/[0.03] text-white/70 border-white/[0.06] hover:bg-white/[0.06] hover:text-white/90'
                 }
               `}
               data-testid={`button-faq-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
@@ -1343,12 +1343,12 @@ function FAQSection() {
                   aria-expanded={isOpen}
                 >
                   <div className="flex items-center gap-3 flex-1">
-                    <span className="text-[10px] text-white/30 bg-white/[0.05] px-2.5 py-1 rounded-full flex-shrink-0">
+                    <span className="text-[10px] text-white/70 bg-white/[0.05] px-2.5 py-1 rounded-full flex-shrink-0">
                       {faq.category}
                     </span>
                     <span className="text-[14px] text-white/80 font-medium">{faq.q}</span>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-white/25 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-white/60 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {isOpen && (
@@ -1361,7 +1361,7 @@ function FAQSection() {
                     >
                       <div className="px-5 pb-5 pt-0">
                         <div className="pl-0 md:pl-[calc(0.625rem+0.75rem+0.5rem)] border-t border-white/[0.04] pt-4">
-                          <p className="text-[14px] text-white/40 leading-[1.8]">{faq.a}</p>
+                          <p className="text-[14px] text-white/80 leading-[1.8]">{faq.a}</p>
                         </div>
                       </div>
                     </motion.div>
@@ -1422,17 +1422,17 @@ function TestimonialsSection() {
             >
               <div className="flex gap-1 mb-5">
                 {[...Array(5)].map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 text-white/50 fill-white/50" />
+                  <Star key={j} className="w-3.5 h-3.5 text-white/80 fill-white/80" />
                 ))}
               </div>
-              <p className="text-[14px] text-white/50 leading-[1.8] italic flex-1">
+              <p className="text-[14px] text-white/80 leading-[1.8] italic flex-1">
                 "{t.quote}"
               </p>
               <div className="mt-7 pt-5 border-t border-white/[0.04]">
                 <p className="text-sm text-white font-semibold">{t.name}</p>
-                <p className="text-[12px] text-white/25 mt-1">{t.location}</p>
+                <p className="text-[12px] text-white/60 mt-1">{t.location}</p>
                 <div className="flex items-center justify-between mt-2.5">
-                  <span className="text-[12px] text-white/25">{t.duration}</span>
+                  <span className="text-[12px] text-white/60">{t.duration}</span>
                   {t.verified && (
                     <span className="flex items-center gap-1 text-[10px] text-[#52B788]/70">
                       <Check className="w-3 h-3" />
@@ -1457,7 +1457,7 @@ function ContactSection() {
         <Reveal delay={1}><SectionHeading className="mb-6">
           Speak to us directly
         </SectionHeading></Reveal>
-        <p className="text-white/40 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
+        <p className="text-white/80 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
           No forms, no waiting lists, no sales pressure. Message our team on WhatsApp and get straight answers about how a commercial lease could work for your property.
         </p>
 
@@ -1474,7 +1474,7 @@ function ContactSection() {
           </div>
           <div className="text-center">
             <p className="text-white font-bold text-xl">WhatsApp Our Team</p>
-            <p className="text-white/40 text-sm mt-2">No forms, no waiting — just message us</p>
+            <p className="text-white/80 text-sm mt-2">No forms, no waiting — just message us</p>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
@@ -1496,13 +1496,13 @@ function FooterSection() {
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-12">
           <div className="max-w-sm">
             <SvnteenLogo className="h-7 w-auto mb-5" />
-            <p className="text-white/25 text-[13px] leading-relaxed">
+            <p className="text-white/70 text-[13px] leading-relaxed">
               Corporate Lease Division — Commercial property arrangements for landlords seeking fixed-yield, management-free income.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-10 text-sm">
             <div>
-              <p className="text-white/50 font-medium mb-4 uppercase tracking-wider text-[11px]">This Page</p>
+              <p className="text-white/80 font-medium mb-4 uppercase tracking-wider text-[11px]">This Page</p>
               {[
                 { label: 'The Challenge', href: '#the-challenge' },
                 { label: 'How It Works', href: '#how-it-works' },
@@ -1510,13 +1510,13 @@ function FooterSection() {
                 { label: 'FAQs', href: '#faqs' },
                 { label: 'Contact Us', href: '#contact' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-white/20 py-1.5 transition-colors duration-200 hover:text-white/50 text-[13px]" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-white/60 py-1.5 transition-colors duration-200 hover:text-white/90 text-[13px]" data-testid={`link-footer-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-white/50 font-medium mb-4 uppercase tracking-wider text-[11px]">Platform</p>
+              <p className="text-white/80 font-medium mb-4 uppercase tracking-wider text-[11px]">Platform</p>
               {[
                 { label: 'The Marketplace', href: '/marketplace' },
                 { label: 'Deal Analyser', href: '/deal-analyser' },
@@ -1524,13 +1524,13 @@ function FooterSection() {
                 { label: 'For Investors', href: '/signup' },
                 { label: 'For Sourcers', href: '/signup' },
               ].map(item => (
-                <a key={item.label} href={item.href} className="block text-white/20 py-1.5 transition-colors duration-200 hover:text-white/50 text-[13px]" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
+                <a key={item.label} href={item.href} className="block text-white/60 py-1.5 transition-colors duration-200 hover:text-white/90 text-[13px]" data-testid={`link-footer-platform-${item.label.toLowerCase().replace(/\s/g, '-')}`}>
                   {item.label}
                 </a>
               ))}
             </div>
             <div>
-              <p className="text-white/50 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
+              <p className="text-white/80 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -1547,7 +1547,7 @@ function FooterSection() {
         </div>
 
         <div className="pt-8 border-t border-white/[0.04]">
-          <p className="text-white/10 text-[11px] leading-relaxed">
+          <p className="text-white/50 text-[11px] leading-relaxed">
             2026 Svnteen The Residency. All rights reserved. This page is for information purposes only and does not constitute financial, legal, or tax advice. All commercial lease arrangements are subject to individual negotiation and we strongly recommend all landlords obtain independent legal and financial advice before entering any agreement. Svnteen The Residency is not authorised by the Financial Conduct Authority. Mortgage consent requirements apply — please verify with your lender before proceeding.
           </p>
         </div>
