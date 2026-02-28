@@ -205,7 +205,7 @@ function SvnteenLogo({ className = "h-16 w-auto" }: { className?: string }) {
       src={logoImage}
       alt="Svnteen. TheResidency."
       className={`object-contain ${className}`}
-      style={{ filter: 'invert(1) brightness(0.2)' }}
+      style={{ filter: 'invert(1) brightness(0.2)', mixBlendMode: 'multiply' }}
     />
   );
 }
@@ -990,7 +990,7 @@ function R2SASection() {
                   src={logoImage}
                   alt="Svnteen. TheResidency."
                   className="w-full h-full object-contain"
-                  style={{ filter: "invert(1) brightness(0.2)" }}
+                  style={{ filter: "invert(1) brightness(0.2)", mixBlendMode: "multiply" }}
                 />
               </div>
               <div className="text-center">
