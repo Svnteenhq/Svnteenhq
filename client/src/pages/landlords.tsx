@@ -947,8 +947,8 @@ function R2SASection() {
               viewport={{ once: true }}
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
-              <div className="w-20 h-20 rounded-2xl bg-white/[0.03] flex items-center justify-center">
-                <Home className="w-10 h-10 text-white/50" />
+              <div className="w-24 h-24 rounded-2xl bg-white/[0.04] flex items-center justify-center">
+                <Home className="w-12 h-12 text-white/70" strokeWidth={1.5} />
               </div>
               <div className="text-center">
                 <p className="text-white font-semibold text-sm">The Landlord</p>
@@ -987,8 +987,8 @@ function R2SASection() {
               transition={{ delay: 0.2 }}
               className="flex flex-col items-center gap-3 w-full md:w-64"
             >
-              <div className="w-24 h-24 rounded-2xl bg-white/[0.05] flex items-center justify-center">
-                <SvnteenLogo className="h-12 w-auto" />
+              <div className="w-28 h-28 rounded-2xl bg-white/[0.05] flex items-center justify-center">
+                <SvnteenLogo className="h-16 w-auto" style={{ imageRendering: "auto", filter: "contrast(1.1)" }} />
               </div>
               <div className="text-center">
                 <p className="text-white font-bold text-sm">Svnteen The Residency</p>
@@ -1027,8 +1027,8 @@ function R2SASection() {
               transition={{ delay: 0.4 }}
               className="flex flex-col items-center gap-3 w-full md:w-56"
             >
-              <div className="w-20 h-20 rounded-2xl bg-white/[0.03] flex items-center justify-center">
-                <Luggage className="w-10 h-10 text-white/50" />
+              <div className="w-24 h-24 rounded-2xl bg-white/[0.04] flex items-center justify-center">
+                <Luggage className="w-12 h-12 text-white/70" strokeWidth={1.5} />
               </div>
               <div className="text-center">
                 <p className="text-white font-semibold text-sm">Short-Stay Guests</p>
