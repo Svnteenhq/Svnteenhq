@@ -464,18 +464,6 @@ function HeroSection() {
       <GoldParticles count={35} />
 
       <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0 z-10 flex flex-col justify-end pb-16 md:pb-20 px-5 sm:px-8 lg:px-16 max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="flex items-center gap-3 mb-5"
-        >
-          <div className="w-6 h-px bg-white/30" />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
-            A Message to Landlords &amp; Letting Agents
-          </span>
-        </motion.div>
-
         <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#F5F0E8" }} data-testid="text-hero-headline">
           <AnimatedHeadline text="The rental market" delay={0} />
           <AnimatedHeadline text="is about to" delay={3} />
