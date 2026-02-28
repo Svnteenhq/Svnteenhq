@@ -1519,7 +1519,7 @@ function ContactSection() {
             </div>
             <div className="text-center">
               <p className="text-[#2A2520] font-bold text-lg">WhatsApp Our Team</p>
-              <p className="text-[#2A2520]/90 text-sm mt-1.5">Quick replies, no waiting</p>
+              <p className="text-[#2A2520]/90 text-sm mt-1.5">Message us directly</p>
             </div>
             <div className="px-6 py-3 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
               Open WhatsApp
