@@ -1532,7 +1532,7 @@ function FooterSection() {
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between gap-12 mb-12">
           <div className="max-w-sm">
-            <SvnteenLogo className="h-7 w-auto mb-5" />
+            <SvnteenLogo className="h-16 w-auto mb-5" />
             <p className="text-[#2A2520]/80 text-[13px] leading-relaxed">
               Corporate Lease Division — Commercial property arrangements for landlords seeking fixed-yield, management-free income.
             </p>
