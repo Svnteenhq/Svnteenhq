@@ -394,7 +394,7 @@ function StickyNav() {
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 h-[72px] flex items-center justify-between gap-6">
         <SvnteenLogo />
-        <span className="hidden lg:block text-[11px] uppercase tracking-[0.25em] text-white/30 font-light">
+        <span className="hidden lg:block text-[11px] uppercase tracking-[0.25em] text-white font-light">
           Corporate Lease Information — Landlords & Agents
         </span>
       </div>
