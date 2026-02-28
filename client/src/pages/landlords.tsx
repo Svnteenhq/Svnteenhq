@@ -870,7 +870,6 @@ const comparisonRows = [
   { category: 'Management Required', ast: 'Agent fees 8-15% or self-managed time cost', svnteen: 'Fully passive — zero management from you', svnteenWins: true },
   { category: 'Tenants in Property', ast: 'Individual(s) — full residential rights', svnteen: 'Short - mid term guests — no residential tenancy rights', svnteenWins: true },
 
-  { category: 'Property Use Control', ast: 'You retain residential use reversion rights', svnteen: 'Commercial use during lease — full residential rights return on expiry', svnteenWins: false },
 ];
 
 function ComparisonSection() {
