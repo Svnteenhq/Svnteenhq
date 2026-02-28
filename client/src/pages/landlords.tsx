@@ -1521,10 +1521,6 @@ function ContactSection() {
               <p className="text-[#2A2520] font-bold text-lg">WhatsApp Our Team</p>
               <p className="text-[#2A2520]/90 text-sm mt-1.5">Quick replies, no waiting</p>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-              <span className="text-[#25D366]/80 text-xs font-medium">Usually responds within 2 hours</span>
-            </div>
             <div className="px-6 py-3 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
               Open WhatsApp
             </div>
@@ -1542,10 +1538,6 @@ function ContactSection() {
             <div className="text-center">
               <p className="text-[#2A2520] font-bold text-lg">Email Us</p>
               <p className="text-[#2A2520]/90 text-sm mt-1.5">hello@svnteenhq.co.uk</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#EA4335] animate-pulse" />
-              <span className="text-[#EA4335]/80 text-xs font-medium">We reply within 24 hours</span>
             </div>
             <div className="px-6 py-3 rounded-lg bg-[#EA4335] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#EA4335]/20">
               Send Email
