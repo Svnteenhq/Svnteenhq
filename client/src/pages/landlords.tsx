@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useInView, useMotionValue, useSpring } from "framer-motion";
+import { SiGmail } from "react-icons/si";
 import {
   AlertTriangle, Shield, Building2, TrendingUp, Calendar,
   ChevronDown, FileText, MessageCircle, Check, X, Minus,
@@ -1501,32 +1502,56 @@ function ContactSection() {
           Speak to us directly
         </SectionHeading></Reveal>
         <p className="text-[#2A2520]/90 text-[14px] leading-[1.8] mb-12 max-w-xl mx-auto">
-          No forms, no waiting lists, no sales pressure. Message our team on WhatsApp and get straight answers about how a commercial lease could work for your property.
+          No forms, no waiting lists, no sales pressure. Get in touch with our team and get straight answers about how a commercial lease could work for your property.
         </p>
 
-        <a
-          href={WHATSAPP_URL_FULL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex flex-col items-center gap-6 p-12 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01] w-full max-w-md mx-auto"
-          data-testid="link-whatsapp-cta"
-          aria-label="Contact us on WhatsApp"
-        >
-          <div className="w-20 h-20 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-            <WhatsAppIcon className="w-12 h-12 text-white" />
-          </div>
-          <div className="text-center">
-            <p className="text-[#2A2520] font-bold text-xl">WhatsApp Our Team</p>
-            <p className="text-[#2A2520]/90 text-sm mt-2">No forms, no waiting — just message us</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-            <span className="text-[#25D366]/80 text-sm font-medium">Usually responds within 2 hours</span>
-          </div>
-          <div className="px-8 py-4 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
-            Open WhatsApp
-          </div>
-        </a>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <a
+            href={WHATSAPP_URL_FULL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-col items-center gap-5 p-10 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01]"
+            data-testid="link-whatsapp-cta"
+            aria-label="Contact us on WhatsApp"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <WhatsAppIcon className="w-9 h-9 text-white" />
+            </div>
+            <div className="text-center">
+              <p className="text-[#2A2520] font-bold text-lg">WhatsApp Our Team</p>
+              <p className="text-[#2A2520]/90 text-sm mt-1.5">Quick replies, no waiting</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
+              <span className="text-[#25D366]/80 text-xs font-medium">Usually responds within 2 hours</span>
+            </div>
+            <div className="px-6 py-3 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
+              Open WhatsApp
+            </div>
+          </a>
+
+          <a
+            href="mailto:hello@svnteenhq.co.uk"
+            className="inline-flex flex-col items-center gap-5 p-10 rounded-2xl border border-[#EA4335]/30 bg-[#EA4335]/[0.03] transition-all duration-300 group hover:bg-[#EA4335]/[0.08] hover:border-[#EA4335]/50 hover:scale-[1.01]"
+            data-testid="link-email-cta"
+            aria-label="Email us"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-[#EA4335] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <SiGmail className="w-9 h-9 text-white" />
+            </div>
+            <div className="text-center">
+              <p className="text-[#2A2520] font-bold text-lg">Email Us</p>
+              <p className="text-[#2A2520]/90 text-sm mt-1.5">hello@svnteenhq.co.uk</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-[#EA4335] animate-pulse" />
+              <span className="text-[#EA4335]/80 text-xs font-medium">We reply within 24 hours</span>
+            </div>
+            <div className="px-6 py-3 rounded-lg bg-[#EA4335] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#EA4335]/20">
+              Send Email
+            </div>
+          </a>
+        </div>
       </div>
     </section>
   );
@@ -1570,6 +1595,15 @@ function FooterSection() {
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 WhatsApp Us
+              </a>
+              <a
+                href="mailto:hello@svnteenhq.co.uk"
+                className="flex items-center gap-2 text-[#EA4335]/70 py-1.5 transition-colors duration-200 hover:text-[#EA4335] text-[13px]"
+                data-testid="link-footer-email"
+                aria-label="Email us"
+              >
+                <SiGmail className="w-3.5 h-3.5" />
+                hello@svnteenhq.co.uk
               </a>
             </div>
           </div>
