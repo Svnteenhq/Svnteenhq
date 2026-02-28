@@ -509,7 +509,7 @@ function HeroSection() {
 
       <GoldParticles count={35} />
 
-      <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0 z-10 flex flex-col justify-end pb-16 md:pb-20 px-5 sm:px-8 lg:px-16 max-w-5xl">
+      <motion.div style={{ opacity: heroOpacity }} className="absolute inset-0 z-10 flex flex-col justify-center px-5 sm:px-8 lg:px-16 max-w-5xl">
         <div className="mb-4 display-text" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem, 6vw, 5.5rem)", fontWeight: 300, letterSpacing: "-0.03em", lineHeight: 1.05, color: "#FFFFFF" }} data-testid="text-hero-headline">
           <AnimatedHeadline text="The rental market" delay={0} />
           <AnimatedHeadline text="is about to" delay={3} />
