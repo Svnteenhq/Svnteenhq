@@ -1103,42 +1103,94 @@ function R2SASection() {
 
 function PropertyCarousel() {
   const [current, setCurrent] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const DURATION = 5000;
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % propertyImages.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, []);
+    const start = Date.now();
+    let raf: number;
+    const tick = () => {
+      const elapsed = Date.now() - start;
+      const p = Math.min(elapsed / DURATION, 1);
+      setProgress(p);
+      if (p >= 1) {
+        setCurrent((prev) => (prev + 1) % propertyImages.length);
+        setProgress(0);
+      } else {
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [current]);
 
   return (
-    <div className="relative rounded-2xl overflow-hidden h-52" data-testid="carousel-properties">
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={current}
-          src={propertyImages[current].src}
-          alt={`Svnteen property — ${propertyImages[current].label}`}
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </AnimatePresence>
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/70 via-transparent to-transparent" />
-      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-        <span className="text-[10px] uppercase tracking-widest text-white/90 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full">
-          {propertyImages[current].label}
-        </span>
-        <div className="flex gap-1.5">
+    <div className="relative rounded-2xl overflow-hidden h-64" data-testid="carousel-properties">
+      {propertyImages.map((img, i) => (
+        <motion.div
+          key={i}
+          className="absolute inset-0"
+          animate={{
+            opacity: i === current ? 1 : 0,
+            scale: i === current ? 1 : 1.08,
+          }}
+          transition={{
+            opacity: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
+            scale: { duration: 6, ease: "linear" },
+          }}
+        >
+          <motion.img
+            src={img.src}
+            alt={`Svnteen property — ${img.label}`}
+            className="w-full h-full object-cover"
+            animate={{
+              scale: i === current ? [1, 1.06] : 1,
+            }}
+            transition={{
+              scale: { duration: 6, ease: "linear" },
+            }}
+          />
+        </motion.div>
+      ))}
+
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0) 30%, rgba(10,10,10,0) 50%, rgba(10,10,10,0.6) 100%)" }} />
+
+      <div className="absolute bottom-0 left-0 right-0 p-5">
+        <div className="flex items-end justify-between mb-3">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={current}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4 }}
+              className="text-[11px] uppercase tracking-[0.2em] text-white font-medium"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              {propertyImages[current].label}
+            </motion.span>
+          </AnimatePresence>
+          <span className="text-[10px] text-white/40 font-mono">
+            {String(current + 1).padStart(2, '0')} / {String(propertyImages.length).padStart(2, '0')}
+          </span>
+        </div>
+
+        <div className="flex gap-1">
           {propertyImages.map((_, i) => (
             <button
               key={i}
-              onClick={() => setCurrent(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-white w-5' : 'bg-white/30 hover:bg-white/50'}`}
+              onClick={() => { setCurrent(i); setProgress(0); }}
+              className="relative h-[2px] flex-1 rounded-full overflow-hidden bg-white/15"
               data-testid={`button-carousel-dot-${i}`}
               aria-label={`View ${propertyImages[i].label}`}
-            />
+            >
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-white rounded-full"
+                style={{
+                  width: i === current ? `${progress * 100}%` : i < current ? '100%' : '0%',
+                }}
+              />
+            </button>
           ))}
         </div>
       </div>
