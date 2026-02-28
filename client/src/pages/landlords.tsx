@@ -1266,8 +1266,8 @@ const faqs = [
   },
   {
     category: 'Financial',
-    q: 'What rent will you pay me?',
-    a: 'We aim to pay 70-90% of the market rental rate for the area. This is slightly below what a standard tenant might pay, but the trade-off is institutional-grade payment reliability — paid from our corporate operating budget regardless of occupancy. We also cover all bills, maintenance, and management costs, which a standard tenancy would not.',
+    q: 'How will you guarantee me rent?',
+    a: 'Your rent is written into a legally binding commercial lease between you and Svnteen Residency Ltd — a registered UK company. Payment is made from our corporate operating budget on the same date every month, regardless of whether the property is occupied. Unlike a private tenant whose income can fluctuate, our revenue is diversified across multiple properties and booking platforms. If we ever failed to pay, you would have the same legal recourse as any commercial landlord — including forfeiture of the lease.',
   },
   {
     category: 'Financial',
