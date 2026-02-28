@@ -507,7 +507,7 @@ function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
               style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}
-              className="px-3 py-1.5 rounded-full border border-white/[0.12] bg-white/[0.04] text-white/50"
+              className="px-3 py-1.5 rounded-full border border-white/[0.2] bg-white/[0.06] text-white"
               data-testid={`stat-pill-${i}`}
             >
               {pill}
