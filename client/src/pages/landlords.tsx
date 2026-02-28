@@ -1297,7 +1297,7 @@ const faqs = [
   {
     category: 'Property & Management',
     q: 'What types of guests will stay in my property?',
-    a: 'We primarily host corporate travellers (contractors, consultants, NHS staff, business professionals), families on extended stays, and leisure guests. All guests are vetted through the Airbnb and Booking.com identity verification systems. Every stay is tracked, and we can provide occupancy reports on request.',
+    a: 'We primarily host corporate travellers (contractors, consultants, NHS staff, business professionals), families on extended stays, and leisure guests. All guests are vetted through the identity verification systems built into our booking portals. Every stay is tracked, and we can provide occupancy reports on request.',
   },
   {
     category: 'Property & Management',
