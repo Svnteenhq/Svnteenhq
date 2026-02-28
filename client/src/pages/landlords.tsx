@@ -638,9 +638,6 @@ function ReformBillSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" id="the-challenge" data-testid="section-reform-bill">
       <div className="max-w-7xl mx-auto">
-        <Reveal>
-          <SectionLabel>The Challenge</SectionLabel>
-        </Reveal>
         <Reveal delay={1}>
           <SectionHeading className="mb-3">
             The Renters Reform Bill<br />Is Now&nbsp;Law
@@ -1536,7 +1533,7 @@ function FooterSection() {
             <div>
               <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">This Page</p>
               {[
-                { label: 'The Challenge', href: '#the-challenge' },
+                { label: 'Reform Bill', href: '#the-challenge' },
                 { label: 'How It Works', href: '#how-it-works' },
                 { label: 'The Comparison', href: '#the-comparison' },
                 { label: 'FAQs', href: '#faqs' },
