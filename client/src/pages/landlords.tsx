@@ -22,9 +22,14 @@ const propertyImages = [
   { src: propertyInterior4, label: "Bathroom" },
 ];
 
-const WHATSAPP_NUMBER = "447700000000";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20have%20a%20few%20questions.`;
-const WHATSAPP_URL_FULL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20would%20like%20to%20find%20out%20more%20about%20your%20arrangement%20for%20my%20property.`;
+const WHATSAPP_NUMBER_1 = "447939788269";
+const WHATSAPP_NUMBER_2 = "447979943161";
+const WHATSAPP_MSG = "Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20have%20a%20few%20questions.";
+const WHATSAPP_MSG_FULL = "Hi%20Svnteen%2C%20I%20received%20your%20email%20about%20a%20commercial%20lease%20and%20would%20like%20to%20find%20out%20more%20about%20your%20arrangement%20for%20my%20property.";
+const WHATSAPP_URL_1 = `https://wa.me/${WHATSAPP_NUMBER_1}?text=${WHATSAPP_MSG}`;
+const WHATSAPP_URL_2 = `https://wa.me/${WHATSAPP_NUMBER_2}?text=${WHATSAPP_MSG}`;
+const WHATSAPP_URL_FULL_1 = `https://wa.me/${WHATSAPP_NUMBER_1}?text=${WHATSAPP_MSG_FULL}`;
+const WHATSAPP_URL_FULL_2 = `https://wa.me/${WHATSAPP_NUMBER_2}?text=${WHATSAPP_MSG_FULL}`;
 
 const REVEAL_VARIANTS = {
   hidden: { opacity: 0, y: 28 },
@@ -577,7 +582,7 @@ function HeroSection() {
             Read How It Works ↓
           </a>
           <a
-            href={WHATSAPP_URL}
+            href={WHATSAPP_URL_1}
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 font-medium text-sm rounded-lg border border-[#25D366]/60 text-[#25D366] transition-all duration-300 hover:border-[#25D366] hover:bg-[#25D366]/10"
@@ -1502,41 +1507,61 @@ function ContactSection() {
           No forms, no waiting lists, no sales pressure. Get in touch with our team and get straight answers about how a commercial lease could work for your property.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <a
-            href={WHATSAPP_URL_FULL}
+            href={WHATSAPP_URL_FULL_1}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-col items-center gap-5 p-10 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01]"
-            data-testid="link-whatsapp-cta"
-            aria-label="Contact us on WhatsApp"
+            className="inline-flex flex-col items-center gap-5 p-8 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01]"
+            data-testid="link-whatsapp-cta-1"
+            aria-label="Contact us on WhatsApp - Line 1"
           >
-            <div className="w-16 h-16 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              <WhatsAppIcon className="w-9 h-9 text-white" />
+            <div className="w-14 h-14 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <WhatsAppIcon className="w-8 h-8 text-white" />
             </div>
             <div className="text-center">
-              <p className="text-[#2A2520] font-bold text-lg">WhatsApp Our Team</p>
-              <p className="text-[#2A2520]/90 text-sm mt-1.5">Message us directly</p>
+              <p className="text-[#2A2520] font-bold text-base">WhatsApp — Line 1</p>
+              <p className="text-[#2A2520]/70 text-xs mt-1">07939 788 269</p>
             </div>
-            <div className="px-6 py-3 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
+            <div className="px-5 py-2.5 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-xs w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
+              Open WhatsApp
+            </div>
+          </a>
+
+          <a
+            href={WHATSAPP_URL_FULL_2}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-col items-center gap-5 p-8 rounded-2xl border border-[#25D366]/30 bg-[#25D366]/[0.03] transition-all duration-300 group hover:bg-[#25D366]/[0.08] hover:border-[#25D366]/50 hover:scale-[1.01]"
+            data-testid="link-whatsapp-cta-2"
+            aria-label="Contact us on WhatsApp - Line 2"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-[#25D366] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <WhatsAppIcon className="w-8 h-8 text-white" />
+            </div>
+            <div className="text-center">
+              <p className="text-[#2A2520] font-bold text-base">WhatsApp — Line 2</p>
+              <p className="text-[#2A2520]/70 text-xs mt-1">07979 943 161</p>
+            </div>
+            <div className="px-5 py-2.5 rounded-lg bg-[#25D366] text-white font-semibold uppercase tracking-wider text-xs w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#25D366]/20">
               Open WhatsApp
             </div>
           </a>
 
           <a
             href="mailto:hello@svnteenhq.co.uk"
-            className="inline-flex flex-col items-center gap-5 p-10 rounded-2xl border border-[#EA4335]/30 bg-[#EA4335]/[0.03] transition-all duration-300 group hover:bg-[#EA4335]/[0.08] hover:border-[#EA4335]/50 hover:scale-[1.01]"
+            className="inline-flex flex-col items-center gap-5 p-8 rounded-2xl border border-[#EA4335]/30 bg-[#EA4335]/[0.03] transition-all duration-300 group hover:bg-[#EA4335]/[0.08] hover:border-[#EA4335]/50 hover:scale-[1.01]"
             data-testid="link-email-cta"
             aria-label="Email us"
           >
-            <div className="w-16 h-16 rounded-2xl bg-[#EA4335] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-              <SiGmail className="w-9 h-9 text-white" />
+            <div className="w-14 h-14 rounded-2xl bg-[#EA4335] flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <SiGmail className="w-8 h-8 text-white" />
             </div>
             <div className="text-center">
-              <p className="text-[#2A2520] font-bold text-lg">Email Us</p>
-              <p className="text-[#2A2520]/90 text-sm mt-1.5">hello@svnteenhq.co.uk</p>
+              <p className="text-[#2A2520] font-bold text-base">Email Us</p>
+              <p className="text-[#2A2520]/70 text-xs mt-1">hello@svnteenhq.co.uk</p>
             </div>
-            <div className="px-6 py-3 rounded-lg bg-[#EA4335] text-white font-semibold uppercase tracking-wider text-sm w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#EA4335]/20">
+            <div className="px-5 py-2.5 rounded-lg bg-[#EA4335] text-white font-semibold uppercase tracking-wider text-xs w-full text-center transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#EA4335]/20">
               Send Email
             </div>
           </a>
@@ -1575,15 +1600,26 @@ function FooterSection() {
             <div>
               <p className="text-[#2A2520]/90 font-medium mb-4 uppercase tracking-wider text-[11px]">Contact</p>
               <a
-                href={WHATSAPP_URL}
+                href={WHATSAPP_URL_1}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-[#25D366]/70 py-1.5 transition-colors duration-200 hover:text-[#25D366] text-[13px]"
-                data-testid="link-footer-whatsapp"
-                aria-label="Contact us on WhatsApp"
+                data-testid="link-footer-whatsapp-1"
+                aria-label="Contact us on WhatsApp - Line 1"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
-                WhatsApp Us
+                07939 788 269
+              </a>
+              <a
+                href={WHATSAPP_URL_2}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[#25D366]/70 py-1.5 transition-colors duration-200 hover:text-[#25D366] text-[13px]"
+                data-testid="link-footer-whatsapp-2"
+                aria-label="Contact us on WhatsApp - Line 2"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                07979 943 161
               </a>
               <a
                 href="mailto:hello@svnteenhq.co.uk"
