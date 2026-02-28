@@ -922,11 +922,6 @@ function ComparisonSection() {
               ))}
             </tbody>
             <tfoot>
-              <tr className="bg-white/[0.02]">
-                <td colSpan={3} className="py-4 px-6 text-[11px] text-white/20 text-center">
-                  ~ Indicates a trade-off. Svnteen offers slightly below-market rent in exchange for institutional-grade reliability.
-                </td>
-              </tr>
             </tfoot>
           </table>
         </div>
