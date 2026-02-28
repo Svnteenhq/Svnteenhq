@@ -860,7 +860,6 @@ function ProcessSection() {
   return (
     <section className="py-24 md:py-32 px-5 sm:px-8 lg:px-10 bg-[#EDE6D0]" data-testid="section-process">
       <div className="max-w-7xl mx-auto">
-        <Reveal></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
           From enquiry to lease signed
         </SectionHeading></Reveal>
@@ -890,8 +889,6 @@ function ProcessSection() {
                     ${step.highlight ? 'border-black/[0.15]' : 'border-black/[0.08]'}
                     ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
                   `}>
-                    <div className="mb-3">
-                    </div>
                     <h4 className={`font-semibold mb-2.5 ${step.highlight ? 'text-[#2A2520]' : 'text-[#2A2520]/90'}`}>
                       {step.title}
                     </h4>
