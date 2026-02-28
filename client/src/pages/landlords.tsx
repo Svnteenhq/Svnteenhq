@@ -1055,9 +1055,9 @@ function R2SASection() {
           </div>
 
           <div className="mt-10 p-6 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
-            <p className="text-[14px] text-white/50 leading-relaxed">
-              <span className="text-white font-semibold">The critical point: </span>
-              You have <span className="text-white font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
+            <p className="text-[14px] text-white leading-relaxed">
+              <span className="font-semibold">The critical point: </span>
+              You have <span className="font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
               The revolving door of guests never involves you. They have no residential rights in your property.
               Your agreement is entirely with us.
             </p>
