@@ -1182,6 +1182,7 @@ function WhoWeAreSection() {
     { icon: FileText, label: 'Commercial Lease Structure' },
     { icon: Shield, label: 'Professional Indemnity Cover' },
     { icon: Award, label: 'Public Liability Insurance' },
+    { icon: Scale, label: 'Member of the Property Redress Scheme' },
   ];
 
   return (
@@ -1203,7 +1204,7 @@ function WhoWeAreSection() {
               {credentials.map((cred, i) => {
                 const Icon = cred.icon;
                 return (
-                  <div key={i} className="flex items-center gap-3 p-3.5 rounded-xl bg-black/[0.03] border border-black/[0.08] transition-all duration-300 hover:bg-black/[0.06]">
+                  <div key={i} className={`flex items-center gap-3 p-3.5 rounded-xl bg-black/[0.03] border border-black/[0.08] transition-all duration-300 hover:bg-black/[0.06] ${i === credentials.length - 1 && credentials.length % 2 !== 0 ? 'col-span-2' : ''}`}>
                     <Icon className="w-4 h-4 text-[#2A2520]/80 flex-shrink-0" />
                     <span className="text-[12px] text-[#2A2520]/90">{cred.label}</span>
                   </div>
