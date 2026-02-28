@@ -883,11 +883,7 @@ function ProcessSection() {
                     ${step.highlight ? 'border-black/[0.15]' : 'border-black/[0.08]'}
                     ${i % 2 === 0 ? 'md:mr-16' : 'md:ml-16'}
                   `}>
-                    <div className="flex items-center justify-between mb-3 gap-2">
-                      <span className="text-[#2A2520]/70 text-xs font-mono">{step.number}</span>
-                      <span className="text-[11px] text-[#2A2520]/80 bg-black/[0.06] px-2.5 py-1 rounded-full">
-                        {step.timeline}
-                      </span>
+                    <div className="mb-3">
                     </div>
                     <h4 className={`font-semibold mb-2.5 ${step.highlight ? 'text-[#2A2520]' : 'text-[#2A2520]/90'}`}>
                       {step.title}
