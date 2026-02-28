@@ -973,7 +973,7 @@ function R2SASection() {
             <div className="flex flex-col md:flex-row items-center gap-0 rotate-0">
               <div className="flex flex-col items-center">
                 <p className="text-[#52B788] text-[10px] font-mono uppercase tracking-wider whitespace-nowrap">Commercial Lease</p>
-                <p className="text-[#8A8078] text-[9px] text-center whitespace-nowrap">Fixed monthly yield</p>
+                <p className="text-[#52B788] text-[9px] text-center whitespace-nowrap">Fixed monthly yield</p>
               </div>
               <div className="h-8 w-px md:w-12 md:h-px bg-[#52B788] flex-shrink-0" />
               <ArrowRight className="w-5 h-5 text-[#52B788] rotate-90 md:rotate-0 flex-shrink-0" />
@@ -1017,7 +1017,7 @@ function R2SASection() {
             <div className="flex flex-col md:flex-row items-center gap-0 rotate-0">
               <div className="flex flex-col items-center">
                 <p className="text-[#52B788] text-[10px] font-mono uppercase tracking-wider whitespace-nowrap">SA Revenue</p>
-                <p className="text-[#8A8078] text-[9px] text-center whitespace-nowrap">Per-night bookings</p>
+                <p className="text-[#52B788] text-[9px] text-center whitespace-nowrap">Per-night bookings</p>
               </div>
               <div className="h-8 w-px md:w-12 md:h-px bg-[#52B788] flex-shrink-0" />
               <ArrowRight className="w-5 h-5 text-[#52B788] rotate-90 md:rotate-0 flex-shrink-0" />
