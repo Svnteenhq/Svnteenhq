@@ -1280,6 +1280,11 @@ const faqs = [
     a: 'We do. Council tax, electricity, gas, water, and broadband are all transferred into our name for the duration of the lease. You receive a clean, fixed yield with zero utility exposure.',
   },
   {
+    category: 'Financial',
+    q: 'What about my tax position?',
+    a: 'Rental income from a commercial lease is treated as property income for tax purposes in the same way as standard AST income. We recommend speaking with your accountant about the specifics of your situation. We can provide a full copy of the proposed commercial lease to assist with that conversation.',
+  },
+  {
     category: 'Property & Management',
     q: 'What will you do to my property?',
     a: 'We furnish the property to a high standard — professional-grade furniture, hotel-quality linen, and a full photographic shoot. This is our capital investment. At the end of the lease, all furniture is removed and the property is returned to you in the condition it was received (fair wear and tear accepted, as per the lease terms).',
