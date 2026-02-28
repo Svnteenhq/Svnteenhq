@@ -1565,12 +1565,12 @@ export function LandlordsPage() {
     <div className="min-h-screen bg-[#0A0A0A] text-[#F5F0E8]" style={{ fontFamily: "var(--font-body)" }}>
       <StickyNav />
       <HeroSection />
+      <WhoWeAreSection />
       <ReformBillSection />
       <ValueAnglesSection />
       <ProcessSection />
       <ComparisonSection />
       <R2SASection />
-      <WhoWeAreSection />
       <FAQSection />
       <TestimonialsSection />
       <ContactSection />
