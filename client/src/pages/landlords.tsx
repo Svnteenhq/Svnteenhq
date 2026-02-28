@@ -542,7 +542,7 @@ function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 1.9 + i * 0.1, duration: 0.4 }}
               style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}
-              className="px-3 py-1.5 rounded-full border border-white/30 bg-white/10 text-white"
+              className="px-3 py-1.5 rounded-full border border-white/30 bg-white/10 text-white whitespace-nowrap flex-shrink-0"
               data-testid={`stat-pill-${i}`}
             >
               {pill}
