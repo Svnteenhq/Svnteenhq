@@ -1219,8 +1219,8 @@ function WhoWeAreSection() {
               {[
                 { icon: Star, label: 'Five-star serviced apartment standard' },
                 { icon: Users, label: 'Professional guest management team' },
-                { icon: MapPin, label: 'Active across multiple UK cities' },
-                { icon: Shield, label: 'Full commercial insurance coverage' },
+                { icon: Clock, label: '24/7 guest support & emergency response' },
+                { icon: ClipboardList, label: 'Regular property inspections & reporting' },
               ].map((item, i) => {
                 const Icon = item.icon;
                 return (
