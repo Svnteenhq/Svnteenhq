@@ -476,6 +476,7 @@ function HeroSection() {
     'Zero void exposure',
     'No new tenancy legislation risk',
     'Fixed monthly yield',
+    'Full management',
   ];
   return (
     <section
