@@ -1086,7 +1086,7 @@ function R2SASection() {
           <div className="mt-10 p-6 rounded-xl bg-black/[0.03] border border-black/[0.08] text-center">
             <p className="text-[14px] text-[#2A2520] leading-relaxed">
               <span className="font-semibold">The critical point: </span>
-              You have <span className="font-semibold">one tenant</span> — Svnteen Residency Ltd — a registered UK company.
+              You have <span className="font-semibold">one tenant</span> — Svnteen The Residency Ltd — a registered UK company.
               The revolving door of guests never involves you. They have no residential rights in your property.
               Your agreement is entirely with us.
             </p>
@@ -1242,7 +1242,7 @@ const faqs = [
   {
     category: 'Legal & Structure',
     q: 'Is this legal? How is it different from subletting?',
-    a: 'This is a completely legal commercial arrangement. We enter into a Commercial Lease as a corporate tenant — Svnteen Residency Ltd — a registered UK company. This is fundamentally different from subletting: you know exactly what the property is being used for, it is stated in the lease, and you have signed your informed consent. We strongly recommend all landlords obtain independent legal advice before signing any lease. We welcome and encourage this.',
+    a: 'This is a completely legal commercial arrangement. We enter into a Commercial Lease as a corporate tenant — Svnteen The Residency Ltd — a registered UK company. This is fundamentally different from subletting: you know exactly what the property is being used for, it is stated in the lease, and you have signed your informed consent. We strongly recommend all landlords obtain independent legal advice before signing any lease. We welcome and encourage this.',
   },
   {
     category: 'Legal & Structure',
@@ -1267,7 +1267,7 @@ const faqs = [
   {
     category: 'Financial',
     q: 'How will you guarantee me rent?',
-    a: 'Your rent is written into a legally binding commercial lease between you and Svnteen Residency Ltd — a registered UK company. Payment is made from our corporate operating budget on the same date every month, regardless of whether the property is occupied. Unlike a private tenant whose income can fluctuate, our revenue is diversified across multiple properties and booking platforms. If we ever failed to pay, you would have the same legal recourse as any commercial landlord — including forfeiture of the lease.',
+    a: 'Your rent is written into a legally binding commercial lease between you and Svnteen The Residency Ltd — a registered UK company. Payment is made from our corporate operating budget on the same date every month, regardless of whether the property is occupied. Unlike a private tenant whose income can fluctuate, our revenue is diversified across multiple properties and booking platforms. If we ever failed to pay, you would have the same legal recourse as any commercial landlord — including forfeiture of the lease.',
   },
   {
     category: 'Financial',
