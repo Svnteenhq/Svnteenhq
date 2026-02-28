@@ -879,7 +879,7 @@ function ComparisonSection() {
       <div className="max-w-7xl mx-auto">
         <Reveal><SectionLabel>The Comparison</SectionLabel></Reveal>
         <Reveal delay={1}><SectionHeading className="mb-16">
-          Standard AST vs Svnteen<br />Commercial Lease
+          Standard AST vs<br />Commercial Lease
         </SectionHeading></Reveal>
 
         <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
