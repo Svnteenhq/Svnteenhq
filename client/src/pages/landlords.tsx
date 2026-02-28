@@ -1588,6 +1588,21 @@ function FooterSection() {
 }
 
 export function LandlordsPage() {
+  const [pageReady, setPageReady] = useState(false);
+  const [curtainGone, setCurtainGone] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setPageReady(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (pageReady) {
+      const timer = setTimeout(() => setCurtainGone(true), 1800);
+      return () => clearTimeout(timer);
+    }
+  }, [pageReady]);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const utmSource = params.get('utm_source');
@@ -1624,6 +1639,24 @@ export function LandlordsPage() {
 
   return (
     <div className="min-h-screen bg-[#EDE6D0] text-[#2A2520]" style={{ fontFamily: "var(--font-body)" }}>
+      {!curtainGone && (
+        <motion.div
+          className="fixed inset-0 z-[9999] bg-black flex items-center justify-center"
+          initial={{ opacity: 1 }}
+          animate={{ opacity: pageReady ? 0 : 1 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+          onAnimationComplete={() => { if (pageReady) setCurtainGone(true); }}
+        >
+          <motion.img
+            src={logoImage}
+            alt="Svnteen. TheResidency."
+            className="h-10 w-auto object-contain"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: pageReady ? [0, 1, 1, 0] : 0, scale: pageReady ? [0.92, 1, 1, 0.96] : 0.92 }}
+            transition={{ duration: 1.4, times: [0, 0.3, 0.7, 1], ease: [0.22, 1, 0.36, 1] }}
+          />
+        </motion.div>
+      )}
       <StickyNav />
       <HeroSection />
       <WhoWeAreSection />
