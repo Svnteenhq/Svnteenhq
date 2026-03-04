@@ -8,6 +8,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import Lenis from "lenis";
 import NotFound from "@/pages/not-found";
 import { LandlordsPage } from "@/pages/landlords";
+import AboutPage from "@/pages/about";
+import ProgrammePage from "@/pages/programme";
+import ApplyPage from "@/pages/apply";
+import BlogPage from "@/pages/blog";
 
 function SmoothScroll() {
   useEffect(() => {
@@ -43,6 +47,10 @@ function Router() {
         <Switch>
           <Route path="/" component={LandlordsPage} />
           <Route path="/landlords" component={LandlordsPage} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/programme" component={ProgrammePage} />
+          <Route path="/apply" component={ApplyPage} />
+          <Route path="/blog" component={BlogPage} />
           <Route component={NotFound} />
         </Switch>
       </motion.div>
